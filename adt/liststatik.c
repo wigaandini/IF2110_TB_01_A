@@ -7,7 +7,7 @@
 // #define LISTSTATIK_H
 
 #include <stdio.h>
-#include "liststatik.h"
+#include "header/liststatik.h"
 
 // /*  Kamus Umum */
 // #define CAPACITY 100

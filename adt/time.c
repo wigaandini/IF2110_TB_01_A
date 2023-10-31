@@ -2,7 +2,7 @@
 // 30 Agustus 2023
 
 #include <stdio.h>
-#include "time.h"
+#include "header/time.h"
 #include <math.h>
 
 /* KELOMPOK VALIDASI TERHADAP TYPE                                   */

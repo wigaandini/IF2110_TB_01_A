@@ -3,10 +3,10 @@
 /* Representasi address dengan pointer */
 /* ElType adalah integer */
 
-#include "boolean.h"
+#include "header/boolean.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "listlinier.h"
+#include "header/listlinier.h"
 
 Address newNode(ElType val){
     Address p = (Address) malloc(sizeof(Node));

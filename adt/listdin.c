@@ -6,8 +6,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "listdin.h"
-#include "boolean.h"
+#include "header/listdin.h"
+#include "header/boolean.h"
 
 /* ********** KONSTRUKTOR ********** */
 /* Konstruktor : create list kosong  */

@@ -1,5 +1,5 @@
-#include "boolean.h"
-#include "prioqueuetime.h"
+#include "header/boolean.h"
+#include "header/prioqueuetime.h"
 #include <stdlib.h>
 #include <stdio.h>
 

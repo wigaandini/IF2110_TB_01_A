@@ -2,9 +2,9 @@
 /* Definisi Mesin Word: Model Akuisisi Versi I */
 
 #include <stdio.h>
-#include "boolean.h"
-#include "charmachine.h"
-#include "wordmachine.h"
+#include "header/boolean.h"
+#include "header/charmachine.h"
+#include "header/wordmachine.h"
 
 boolean EndWord;
 Word currentWord;

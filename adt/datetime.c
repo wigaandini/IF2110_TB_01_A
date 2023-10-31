@@ -2,9 +2,9 @@
 /* Tanggal: 30 Agustus 2023 */
 /* Definisi ADT DATETIME */
 
-#include "boolean.h"
-#include "time.h"
-#include "datetime.h"
+#include "header/boolean.h"
+#include "header/time.h"
+#include "header/datetime.h"
 #include <stdio.h>
 #include <math.h>
 // #include "time.c"
