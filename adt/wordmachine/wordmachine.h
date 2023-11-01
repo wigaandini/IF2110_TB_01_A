@@ -77,4 +77,5 @@ boolean compareString(Word str1, char str2[]);
 Word stringToWord(char str[], int len);
 
 Word MergeWord(Word word1, Word word2);
+
 #endif

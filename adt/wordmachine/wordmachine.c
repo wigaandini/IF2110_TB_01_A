@@ -250,3 +250,20 @@ Word MergeWord(Word word1, Word word2){
     }
     return res;
 }
+
+int StringToInt(char *str) {
+    int result = 0;
+    int i = 0;
+
+    while (str[i] != '\0') {
+        if (str[i] >= '0' && str[i] <= '9') {
+            result = result * 10 + (str[i] - '0');
+            i++;
+        } 
+        else {
+            return 0;
+        }
+    }
+
+    return result;
+}
