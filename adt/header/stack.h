@@ -6,12 +6,21 @@
 #define stackt_H
 
 #include "boolean.h"
+#include "wordmachine.h"
+#include "datetime.h"
+
+typedef struct
+{
+    Word Text;
+    int id;
+    DATETIME Waktu;
+}Draf;
 
 #define Nil -1
 #define MaxEl 100
 /* Nil adalah stack dengan elemen kosong . */
 
-typedef char infotype;
+typedef Draf infotype;
 typedef int address;   /* indeks tabel */
 
 /* Contoh deklarasi variabel bertype stack dengan ciri TOP : */
