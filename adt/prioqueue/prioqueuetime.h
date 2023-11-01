@@ -6,7 +6,7 @@
 #ifndef prioqueuetime_H
 #define prioqueuetime_H
 
-#include "boolean.h"
+#include "../adt/boolean.h"
 
 #define Nil -1
 /* Konstanta untuk mendefinisikan address tak terdefinisi */

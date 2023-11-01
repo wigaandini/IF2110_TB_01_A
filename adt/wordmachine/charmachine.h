@@ -4,12 +4,17 @@
 #ifndef __CHAR_MACHINE_H__
 #define __CHAR_MACHINE_H__
 
-#include "boolean.h"
+#include "../adt/boolean.h"
 
-#define MARK '.'
+#define LineMARK 10;
+#define MARK ';'
 /* State Mesin */
 extern char currentChar;
 extern boolean EOP;
+extern boolean EOFile;
+
+static FILE *pita;
+static int retval;
 
 void START();
 /* Mesin siap dioperasikan. Pita disiapkan untuk dibaca.
@@ -25,5 +30,9 @@ void ADV();
    F.S. : currentChar adalah karakter berikutnya dari currentChar yang lama,
           currentChar mungkin = MARK
           Jika  currentChar = MARK maka EOP akan menyala (true) */
+
+void STARTFILE(char namaFile[]);
+
+void END();
 
 #endif

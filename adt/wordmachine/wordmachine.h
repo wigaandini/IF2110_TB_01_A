@@ -4,7 +4,7 @@
 #ifndef __WORDMACHINE_H__
 #define __WORDMACHINE_H__
 
-#include "boolean.h"
+#include "../adt/boolean.h"
 #include "charmachine.h"
 
 #define NMax 50
@@ -50,4 +50,31 @@ void LowerCase();
 /* I.S. currentword terdefinisi sembarang tetapi tidak kosong */
 /* F.S. currentword menjadi lowercase di setiap karakternya */
 
+void IgnoreNotEnter();
+
+void CopySpace();
+
+void STARTSENTENCE();
+
+void STARTWORDFILE(char namaFile[]);
+
+void ADVNEWLINE();
+
+char* WordToString(Word word);
+
+int WordToInt(Word str);
+
+boolean compareWord(Word str1, Word str2);
+
+void displayWord(Word word);
+
+boolean WordIsInt(Word kata);
+
+boolean CharIsInt(char c);
+
+boolean compareString(Word str1, char str2[]);
+
+Word stringToWord(char str[], int len);
+
+Word MergeWord(Word word1, Word word2);
 #endif

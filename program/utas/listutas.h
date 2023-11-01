@@ -7,9 +7,12 @@
 #define listlinier_H
 
 #include "../adt/boolean.h"
+#include "../adt/time/datetime.h"
+#include "../adt/time/time.h"
+#include "../adt/wordmachine/wordmachine.h"
+#include "../adt/wordmachine/charmachine.h"
 
 /* Definisi Node : */
-typedef int ElType;
 typedef struct node* Address;
 typedef struct node {
     ElType info;
@@ -26,7 +29,14 @@ Address newNode(ElType val);
 /* Setiap elemen dengan Address p dapat diacu INFO(p), NEXT(p) */
 /* Elemen terakhir list: jika addressnya Last, maka NEXT(Last)=NULL */
 
-typedef Address List;
+typedef struct{
+    int idBalas;
+    char[280] text;
+    DATETIME waktu;
+    Address utas;
+} ElType;
+
+typedef ElType List;
 
 #define IDX_UNDEF (-1)
 #define FIRST(l) (l)

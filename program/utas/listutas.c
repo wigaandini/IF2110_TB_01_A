@@ -5,7 +5,16 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "listlinier.h"
+#include "listutas.h"
+
+typedef struct{
+    int idBalas;
+    char[280] text;
+    DATETIME waktu;
+    Address utas;
+} ElType;
+
+typedef Address List;
 
 Address newNode(ElType val){
     Address p = (Address) malloc(sizeof(Node));
