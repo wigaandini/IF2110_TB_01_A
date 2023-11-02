@@ -19,7 +19,7 @@ void CreateKicauan(Kicauan *k, int id, String text, int like, int idauthor, DATE
     //BALASAN(*k) = 0;
 }
 
-void DisplayKicau(Kicauan k){
+void DisplaySatuKicau(Kicauan k){
     printf("| ID = %d\n", ID(k));
     //printf("| %s", getauthornamefromidauthor);
     TulisDATETIME(WAKTU(k));
@@ -57,7 +57,7 @@ void KICAU(Kicauan *k){
     DisplayKicau(*k);
 }
 
-void KICAUAN(){
+void DisplayKicauan(){
    //ngestore list seluruh kicauan kan pake prioqueue time based,
    //bikin mekanisme print seluruh isi kicauan.config dengan kondisi
    //jika nilai pertemanan idauthor adalah true dengan idauthor yang sudah

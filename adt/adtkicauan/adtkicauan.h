@@ -62,13 +62,13 @@ void CreateKicauan(Kicauan *k, int id, String text, int like, int idauthor, DATE
 /* ***************************************************************** */
 /* KELOMPOK BACA/TULIS                                               */
 /* ***************************************************************** */
-void DisplayKicau(Kicauan k);
+void DisplaySatuKicau(Kicauan k);
 /* I.S. : Kicauan terdefinisi*/
 /* F.S. : Menampilkan seluruh komponen kicauan ke layar*/
 /* Proses : Membaca komponen id, text, like, idauthor,
     dan waktu kemudian menampilkannnya ke layar*/
 
-void KICAU(Kicauan *k);
+void Kicau(Kicauan *k);
 /* I.S. : Kicauan tidak terdefinisi */
 /* F.S. : Kicauan terdefinisi dan merupakan kicauan yang valid */
 /* Proses : Membaca komponen id, text, idauthor, dan waktu sehingga membentuk Kicauan
@@ -76,7 +76,7 @@ void KICAU(Kicauan *k);
 /* Pembacaan dilakukan dengan mengetikkan komponen text, membaca file Konfigurasi Kicauan untuk mendapat id kicauan 
     dan melakukan increment terhadap id kicauan terakhir, mengambil data pengguna untuk idauthor, serta membaca waktu.*/
 
-void KICAUAN();
+void DisplayKicauan();
 /* I.S. : File konfigurasi kicauan terdefinisi*/
 /* F.S. : Menampilkan seluruh komponen kicauan dari akun yang berteman dengan akun pengguna dan kicauan dirinya sendiri*/
 /* Proses : Membaca file konfigurasi kicauan, mengidentifikasi tiap kicauan yang ada dalam file konfigurasi dan menampilkannya
@@ -84,7 +84,7 @@ void KICAUAN();
 
 /* ********** TEST KOSONG/PENUH ********** */
 /* *** Test text kicauan penuh *** */
-boolean isFull(String text);
+boolean isKicauFull(String text);
 /* Mengirimkan true jika text kicauan penuh, yaitu jika panjang string mencapai 280,
     mengirimkan false jika tidak penuh*/
 
