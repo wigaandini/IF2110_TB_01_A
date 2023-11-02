@@ -18,7 +18,7 @@
 #define IDX_UNDEF -1
 /* Indeks tak terdefinisi*/
 // #define MARK ""
-/* Nilai elemen tak terdefinisi */
+/* Nilai elemen tak terdefinisi adalah elemen kosong (list kosong didefinisikan dibawah)*/
 
 enum Weton {   // Tipe Weton bikinan sendiri (EMPTYWETON, PAHING, KLIWON, WAGE, PON, dan LEGI)
    EMPTYWETON,
