@@ -1,4 +1,6 @@
 #include "mainProg.h"
+#include "../program/program.h"
+#include "../adt/adt.h"
 #include <stdio.h>
 #include <stdlib.h>
 
