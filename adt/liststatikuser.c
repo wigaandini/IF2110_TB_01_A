@@ -1,0 +1,196 @@
+#include <stdio.h>
+#include "header/liststatikuser.h"
+
+/* ********** KONSTRUKTOR ********** */
+/* Konstruktor : create List kosong  */
+void CreateListStatikUser(ListStatikUser *l){
+/* I.S. l sembarang */
+/* F.S. Terbentuk List l kosong dengan kapasitas CAPACITY */
+/* Proses: Inisialisasi semua elemen List l dengan elemen kosong */
+    IdxType i;
+    for(i=0; i<CAPACITY; i++){
+        for (int j=0; j<136; j++) {
+            if (j<21) {
+                UserName(*l, i, j) = '\0';
+                UserSandi(*l, i, j) = '\0';
+            }
+            UserBio(*l, i, j) = '\0';
+        }
+
+        UserId(*l, i) = i+1;
+
+        ListDin noHP;       // NEFF = 0 (list kosong)
+        CreateListDin(&noHP, 50);
+        l->data[i].noHP = noHP;
+
+        UserWeton(*l, i) = EMPTYWETON;
+
+        Matrix foto;
+        createMatrix(5, 5, &foto);
+        UserFoto(*l, i) = foto;
+
+        Matrix warnaFoto;
+        createMatrix(5, 5, &warnaFoto);
+        UserWarnaFoto(*l, i) = warnaFoto;
+    }
+}
+
+
+/* ********** SELEKTOR (TAMBAHAN) ********** */
+/* *** Banyaknya elemen *** */
+int banyakUser(ListStatikUser l){
+/* Mengirimkan banyaknya user yang terdaftar */
+/* Mengirimkan nol jika List kosong */  
+    IdxType i, count=0;
+    for(i=0; i<CAPACITY; i++){
+        if (UserName(l, i, 0) != '\0'){
+            count ++;
+        }
+    }
+    return count;
+}
+
+
+/* ********** TEST KOSONG/PENUH ********** */
+/* *** Test List kosong *** */
+boolean isUserDataEmpty(ListStatikUser l){
+/* Mengirimkan true jika List l kosong, mengirimkan false jika tidak */
+    return banyakUser(l) == 0;
+}
+
+/* *** Test List penuh *** */
+boolean isUserDataFull(ListStatikUser l){
+/* Mengirimkan true jika List l penuh, mengirimkan false jika tidak */
+    return banyakUser(l) == CAPACITY;
+}
+
+   
+void printListofUser(ListStatikUser l){
+    IdxType i;
+    if (isUserDataEmpty(l)){
+        printf("Belum ada User yang terdaftar\n");
+    }
+    else{
+        for(i=0; i<banyakUser(l); i++){         // iterasi tiap user
+            printf("ID\t: %d\n", UserId(l, i));
+
+            printf("Name\t: %s\n", l.data->nama);
+            
+            printf("Password\t: %s\n", l.data->sandi);
+            
+            printf("Bio\t: %s\n", l.data->bio);
+            
+            printf("No. HP\t: ");
+            for (int j=0; j<l.data->noHP.nEff; j++) {       // iterasi tiap nomor hp
+                printf("%d", UserNoHP(l, i, j));
+            }
+            printf("\n");
+
+            printf("Weton\t: ");
+            switch (UserWeton(l, i))
+            {
+            case PAHING:
+                printf("Pahing\n");
+                break;
+            case KLIWON:
+                printf("Kliwon\n");
+                break;
+            case WAGE:
+                printf("Wage\n");
+                break;
+            case PON:
+                printf("Pon\n");
+                break;
+            case LEGI:
+                printf("Legi\n");
+                break;
+            default:
+                break;
+            }
+
+            printf("Tipe\t: ");
+            switch (UserTipe(l, i))
+            {
+            case PUBLIK:
+                printf("Publik\n");
+                break;
+            case PRIVAT:
+                printf("Privat\n");
+                break;
+            default:
+                break;
+            }
+
+            printf("Foto\t:\n");
+            displayMatrix(UserFoto(l, i));
+
+            printf("Warna foto\t:\n");
+            displayMatrix(UserWarnaFoto(l, i));
+            
+        }
+    }
+}
+
+
+/* ********** SEARCHING ********** */
+/* ***  Perhatian : List boleh kosong!! *** */
+int indexUser(ListStatikUser l, Word name){
+    boolean found;
+    int i = 0;
+
+    if(banyakUser(l) == 0){
+        return IDX_UNDEF;
+    }
+    else{
+        found = false;
+        while(!found && i<banyakUser(l)){
+            if (UserName(l, i, 0) == name.TabWord[0]) {
+                boolean match = true;
+                for (int j=0; j<name.Length; j++) {
+                    if (UserName(l, i, j) != name.TabWord[j]) {
+                        match = false;
+                        break;
+                    }
+                }
+                found = match;
+            }
+            else{
+                found = false;
+                i++;
+            }
+        }
+
+        if(found){
+            return i;
+        }
+        else{
+            return IDX_UNDEF;
+        }
+    }
+}
+
+int idOf(ListStatikUser l, Word name) {
+    return indexUser(l, name) +1;
+}
+
+
+/* ********** MENAMBAH ELEMEN ********** */
+/* ********** MENAMBAH DATA USER ********** */
+void addUser(ListStatikUser *l, Word name, Word pw)         // Ini kayanya masukkan nya ga dalam Word dah, coba cari tau
+{
+    IdxType i, idx;
+    for(i=0; i<CAPACITY; i++){
+        if (UserName(*l, i, 0) != '\0'){
+            idx = i;
+            break;
+        }
+    }
+
+    for (int i=0; i<name.Length; i++) {
+        UserName(*l, idx, i) = name.TabWord[i];
+    }
+
+    for (int i=0; i<pw.Length; i++) {
+        UserSandi(*l, idx, i) = pw.TabWord[i];
+    }
+}
