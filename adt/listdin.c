@@ -304,7 +304,10 @@ void sort(ListDin *l, boolean asc){
 
 /* ********** MENAMBAH DAN MENGHAPUS ELEMEN DI AKHIR ********** */
 /* *** Menambahkan elemen terakhir *** */
-void insertLast(ListDin *l, ElType val){
+void insertLast(ListDin *l, ElType val){        
+    if (listLength(*l)+1 > 3*CAPACITY(*l)/4) {  // Di modifikasi agar capacity otomatis langsung menyesuaikan dengan jumlah elemen
+        expandList(l, CAPACITY(*l));    // Capacity dikali 2
+    }
     ELMT(*l, getLastIdx(*l)+1) = val;
     NEFF(*l) ++;
 }
@@ -314,6 +317,9 @@ void insertLast(ListDin *l, ElType val){
 /* ********** MENGHAPUS ELEMEN ********** */
 
 void deleteLast(ListDin *l, ElType *val){
+    if (listLength(*l)-1 < CAPACITY(*l)/4 && CAPACITY(*l) > 50) { // Di modifikasi agar capacity otomatis langsung menyesuaikan dengan jumlah elemen
+        shrinkList(l, CAPACITY(*l)/2);
+    }
     *val = ELMT(*l,getLastIdx(*l));
     NEFF(*l) --;
 }
