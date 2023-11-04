@@ -66,7 +66,7 @@ void readMatrix(Matrix *m, int nRow, int nCol){
     if (isMatrixIdxValid(nRow-1, nCol-1)){
         for(i = 0; i < nRow; i++){
             for(j = 0; j < nCol; j++){
-                scanf("%d", &ELMT(*m, i, j));
+                scanf("%c", &ELMT(*m, i, j));
             }
         }
     }
@@ -86,10 +86,10 @@ void displayMatrix(Matrix m){
     for(i = 0; i < ROW_EFF(m); i++){
         for(j = 0; j < COL_EFF(m); j++){
             if(j == getLastIdxCol(m)){
-                printf("%d\n", ELMT(m, i, j));
+                printf("%c\n", ELMT(m, i, j));
             }
             else{
-                printf("%d ", ELMT(m, i, j));
+                printf("%c ", ELMT(m, i, j));
             }
         }
     }

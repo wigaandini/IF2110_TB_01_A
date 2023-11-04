@@ -5,10 +5,10 @@
 /* Konstruktor : create List kosong  */
 void CreateListStatikUser(ListStatikUser *l){
 /* I.S. l sembarang */
-/* F.S. Terbentuk List l kosong dengan kapasitas CAPACITY */
+/* F.S. Terbentuk List l kosong dengan kapasitas CAPACITYUSER */
 /* Proses: Inisialisasi semua elemen List l dengan elemen kosong */
     IdxType i;
-    for(i=0; i<CAPACITY; i++){
+    for(i=0; i<CAPACITYUSER; i++){
         for (int j=0; j<136; j++) {
             if (j<21) {
                 UserName(*l, i, j) = '\0';
@@ -42,7 +42,7 @@ int banyakUser(ListStatikUser l){
 /* Mengirimkan banyaknya user yang terdaftar */
 /* Mengirimkan nol jika List kosong */  
     IdxType i, count=0;
-    for(i=0; i<CAPACITY; i++){
+    for(i=0; i<CAPACITYUSER; i++){
         if (UserName(l, i, 0) != '\0'){
             count ++;
         }
@@ -61,7 +61,7 @@ boolean isUserDataEmpty(ListStatikUser l){
 /* *** Test List penuh *** */
 boolean isUserDataFull(ListStatikUser l){
 /* Mengirimkan true jika List l penuh, mengirimkan false jika tidak */
-    return banyakUser(l) == CAPACITY;
+    return banyakUser(l) == CAPACITYUSER;
 }
 
    
@@ -74,11 +74,11 @@ void printListofUser(ListStatikUser l){
         for(i=0; i<banyakUser(l); i++){         // iterasi tiap user
             printf("ID\t: %d\n", UserId(l, i));
 
-            printf("Name\t: %s\n", l.data->nama);
+            printf("Name\t: %s\n", l.data[i].nama);
             
-            printf("Password\t: %s\n", l.data->sandi);
+            printf("Pass\t: %s\n", l.data[i].sandi);
             
-            printf("Bio\t: %s\n", l.data->bio);
+            printf("Bio\t: %s\n", l.data[i].bio);
             
             printf("No. HP\t: ");
             for (int j=0; j<l.data->noHP.nEff; j++) {       // iterasi tiap nomor hp
@@ -89,6 +89,9 @@ void printListofUser(ListStatikUser l){
             printf("Weton\t: ");
             switch (UserWeton(l, i))
             {
+            case EMPTYWETON:
+                printf("EmptyWeton\n");
+                break;
             case PAHING:
                 printf("Pahing\n");
                 break;
@@ -121,10 +124,10 @@ void printListofUser(ListStatikUser l){
                 break;
             }
 
-            printf("Foto\t:\n");
+            printf("Foto:\n");
             displayMatrix(UserFoto(l, i));
 
-            printf("Warna foto\t:\n");
+            printf("Warna foto:\n");
             displayMatrix(UserWarnaFoto(l, i));
             
         }
@@ -179,7 +182,7 @@ int idOf(ListStatikUser l, Word name) {
 void addUser(ListStatikUser *l, Word name, Word pw)         // Ini kayanya masukkan nya ga dalam Word dah, coba cari tau
 {
     IdxType i, idx;
-    for(i=0; i<CAPACITY; i++){
+    for(i=0; i<CAPACITYUSER; i++){
         if (UserName(*l, i, 0) != '\0'){
             idx = i;
             break;

@@ -56,7 +56,7 @@ boolean isIdxValid(ListDin l, IdxType i){
 /* Mengirimkan true jika i adalah indeks yang valid utk kapasitas list l */
 /* yaitu antara indeks yang terdefinisi utk container*/
 
-boolean isIdxEff(ListDin l, IdxType i){
+boolean isIdxEffDIN(ListDin l, IdxType i){
     return (i>=0 && i<=getLastIdx(l));
 }
 /* Mengirimkan true jika i adalah indeks yang terdefinisi utk list */
@@ -87,7 +87,7 @@ void readList(ListDin *l){
     NEFF(*l) = n;
     if (n!=0){
         for(i=0; i<NEFF(*l); i++){
-            scanf("%d", &ELMT(*l, i));
+            scanf("%d", &ELMTDIN(*l, i));
         }
     }
 }
@@ -110,10 +110,10 @@ void printList(ListDin l){
         printf("[");
         for(i=0; i<listLength(l); i++){
             if (i!=getLastIdx(l)){
-                printf("%d,", ELMT(l,i));
+                printf("%d,", ELMTDIN(l,i));
             }
             else{
-                printf("%d", ELMT(l,i));
+                printf("%d", ELMTDIN(l,i));
             }
         }
         printf("]");
@@ -137,10 +137,10 @@ ListDin plusMinusList(ListDin l1, ListDin l2, boolean plus){
     if (NEFF(l1) == NEFF(l2) && NEFF(l1) != 0 && NEFF(l2) != 0){
         for(i=0; i<NEFF(l3); i++){
             if(plus){
-                ELMT(l3,i) = ELMT(l1,i) + ELMT(l2,i);
+                ELMTDIN(l3,i) = ELMTDIN(l1,i) + ELMTDIN(l2,i);
             }
             else{
-                ELMT(l3,i) = ELMT(l1,i) - ELMT(l2,i);
+                ELMTDIN(l3,i) = ELMTDIN(l1,i) - ELMTDIN(l2,i);
             }
         }
     }
@@ -161,7 +161,7 @@ boolean isListEqual(ListDin l1, ListDin l2){
     }
     else{
         while(same && i<listLength(l1)){
-            if(ELMT(l1,i) == ELMT(l2,i)){
+            if(ELMTDIN(l1,i) == ELMTDIN(l2,i)){
                 same = true;
             }
             else{
@@ -176,7 +176,7 @@ boolean isListEqual(ListDin l1, ListDin l2){
 
 /* ********** SEARCHING ********** */
 /* ***  Perhatian : list boleh kosong!! *** */
-IdxType indexOf(ListDin l, ElType val){
+IdxType indexOf(ListDin l, ElTypeDIN val){
     boolean found;
     IdxType i = 0;
 
@@ -186,7 +186,7 @@ IdxType indexOf(ListDin l, ElType val){
     else{
         found = false;
         while(!found && i<listLength(l)){
-            if (ELMT(l,i) == val){
+            if (ELMTDIN(l,i) == val){
                 found = true;
             }
             else{
@@ -210,17 +210,17 @@ IdxType indexOf(ListDin l, ElType val){
 /* Skema Searching yang digunakan bebas */
 
 /* ********** NILAI EKSTREM ********** */
-void extremeValues(ListDin l, ElType *max, ElType *min){
+void extremeValues(ListDin l, ElTypeDIN *max, ElTypeDIN *min){
     IdxType i;
-    *max = ELMT(l,0);
-    *min = ELMT(l,0);
+    *max = ELMTDIN(l,0);
+    *min = ELMTDIN(l,0);
 
     for(i=0; i<listLength(l); i++){
-        if(ELMT(l,i) > *max){
-            *max = ELMT(l,i);
+        if(ELMTDIN(l,i) > *max){
+            *max = ELMTDIN(l,i);
         }
-        if(ELMT(l,i) < *min){
-            *min = ELMT(l,i);
+        if(ELMTDIN(l,i) < *min){
+            *min = ELMTDIN(l,i);
         }
     }
 }
@@ -235,7 +235,7 @@ void copyList(ListDin lIn, ListDin *lOut){
     CreateListDin(lOut, CAPACITY(lIn));
 
     for(i=0; i<listLength(lIn); i++){
-        ELMT(*lOut, i) = ELMT(lIn, i);
+        ELMTDIN(*lOut, i) = ELMTDIN(lIn, i);
     }
 
     NEFF(*lOut) = NEFF(lIn);
@@ -244,23 +244,23 @@ void copyList(ListDin lIn, ListDin *lOut){
 /* F.S. lOut berisi salinan dari lIn (identik, nEff dan capacity sama) */
 /* Proses : Menyalin isi lIn ke lOut */ 
 
-ElType sumList(ListDin l){
-    ElType sum = 0;
+ElTypeDIN sumList(ListDin l){
+    ElTypeDIN sum = 0;
     IdxType i;
     for(i=0; i<listLength(l); i++){
-        sum += ELMT(l,i);
+        sum += ELMTDIN(l,i);
     }
     return sum;
 }
 /* Menghasilkan hasil penjumlahan semua elemen l */
 /* Jika l kosong menghasilkan 0 */
 
-int countVal(ListDin l, ElType val){
+int countVal(ListDin l, ElTypeDIN val){
     IdxType i;
     int count=0;
 
     for(i=0; i<listLength(l); i++){
-        if(ELMT(l,i) == val){
+        if(ELMTDIN(l,i) == val){
             count ++;
         }
     }
@@ -272,14 +272,14 @@ int countVal(ListDin l, ElType val){
 /* ********** SORTING ********** */
 void sort(ListDin *l, boolean asc){
     IdxType i, j;
-    ElType temp;
+    ElTypeDIN temp;
     if(asc){
         for(i=0; i<listLength(*l)-1; i++){
             for(j=i+1; j<listLength(*l); j++){
-                if(ELMT(*l,i)>ELMT(*l,j)){
-                    temp = ELMT(*l,i);
-                    ELMT(*l,i) = ELMT(*l,j);
-                    ELMT(*l,j) = temp;
+                if(ELMTDIN(*l,i)>ELMTDIN(*l,j)){
+                    temp = ELMTDIN(*l,i);
+                    ELMTDIN(*l,i) = ELMTDIN(*l,j);
+                    ELMTDIN(*l,j) = temp;
                 }
             }
         }
@@ -287,10 +287,10 @@ void sort(ListDin *l, boolean asc){
     else{
         for(i=0; i<listLength(*l)-1; i++){
             for(j=i+1; j<listLength(*l); j++){
-                if(ELMT(*l,i)<ELMT(*l,j)){
-                    temp = ELMT(*l,i);
-                    ELMT(*l,i) = ELMT(*l,j);
-                    ELMT(*l,j) = temp;
+                if(ELMTDIN(*l,i)<ELMTDIN(*l,j)){
+                    temp = ELMTDIN(*l,i);
+                    ELMTDIN(*l,i) = ELMTDIN(*l,j);
+                    ELMTDIN(*l,j) = temp;
                 }
             }
         }
@@ -304,11 +304,12 @@ void sort(ListDin *l, boolean asc){
 
 /* ********** MENAMBAH DAN MENGHAPUS ELEMEN DI AKHIR ********** */
 /* *** Menambahkan elemen terakhir *** */
-void insertLast(ListDin *l, ElType val){        
+void insertLast(ListDin *l, ElTypeDIN val){
+    // printf("%d\n",val);
     if (listLength(*l)+1 > 3*CAPACITY(*l)/4) {  // Di modifikasi agar capacity otomatis langsung menyesuaikan dengan jumlah elemen
         expandList(l, CAPACITY(*l));    // Capacity dikali 2
     }
-    ELMT(*l, getLastIdx(*l)+1) = val;
+    ELMTDIN(*l, getLastIdx(*l)+1) = val;
     NEFF(*l) ++;
 }
 /* Proses: Menambahkan val sebagai elemen terakhir list */
@@ -316,11 +317,11 @@ void insertLast(ListDin *l, ElType val){
 /* F.S. val adalah elemen terakhir l yang baru */
 /* ********** MENGHAPUS ELEMEN ********** */
 
-void deleteLast(ListDin *l, ElType *val){
+void deleteLast(ListDin *l, ElTypeDIN *val){
     if (listLength(*l)-1 < CAPACITY(*l)/4 && CAPACITY(*l) > 50) { // Di modifikasi agar capacity otomatis langsung menyesuaikan dengan jumlah elemen
         shrinkList(l, CAPACITY(*l)/2);
     }
-    *val = ELMT(*l,getLastIdx(*l));
+    *val = ELMTDIN(*l,getLastIdx(*l));
     NEFF(*l) --;
 }
 /* Proses : Menghapus elemen terakhir list */
@@ -343,7 +344,7 @@ void expandList(ListDin *l, int num){
     NEFF(*l) = newNEFF;
 
     for(i=0; i<listLength(new); i++){
-        ELMT(*l,i) = ELMT(new,i);
+        ELMTDIN(*l,i) = ELMTDIN(new,i);
     }
 }
 /* Proses : Menambahkan capacity l sebanyak num */
@@ -366,7 +367,7 @@ void shrinkList(ListDin *l, int num){
     }
 
     for(i=0; i<listLength(new); i++){
-        ELMT(*l,i) = ELMT(new,i);
+        ELMTDIN(*l,i) = ELMTDIN(new,i);
     }
 }
 /* Proses : Mengurangi capacity sebanyak num */

@@ -6,11 +6,11 @@
 #include "boolean.h"
 
 /* Ukuran maksimum baris dan kolom */
-#define ROW_CAP 100
-#define COL_CAP 100
+#define ROW_CAP 5
+#define COL_CAP 5
 
 typedef int IdxType; /* Index baris, kolom */
-typedef int ElType;
+typedef char ElType;
 typedef struct
 {
    ElType mem[ROW_CAP][COL_CAP];

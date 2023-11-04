@@ -13,7 +13,7 @@
 #include "listdin.h"
 
 /*  Kamus Umum */
-#define CAPACITY 20
+#define CAPACITYUSER 20
 /* Kapasitas penyimpanan */
 #define IDX_MIN 0
 /* Indeks minimum list */
@@ -51,7 +51,7 @@ typedef struct {        // Elemen dari list berupa tipe data buatan "UserData",
 
 typedef int IdxType;
 typedef struct {
-   UserData data[CAPACITY]; /* memori tempat penyimpan elemen (container) */
+   UserData data[CAPACITYUSER]; /* memori tempat penyimpan elemen (container) */
 } ListStatikUser;
 /* Indeks yang digunakan [0..CAPACITY-1] */
 /* Jika l adalah ListStatikUser, cara deklarasi dan akses: */
