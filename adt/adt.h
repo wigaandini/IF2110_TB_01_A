@@ -8,5 +8,6 @@
 #include "./liststatik/liststatik.h"
 #include "./matrix/matrix.h"
 #include "./wordmachine/wordmachine.h"
+#include "./boolean.h"
 
 #endif

@@ -6,7 +6,7 @@
 
 #include "../adt/boolean.h"
 
-#define LineMARK 10;
+#define LineMARK
 #define MARK ';'
 /* State Mesin */
 extern char currentChar;

@@ -124,7 +124,7 @@ void STARTSENTENCE(){
 }
 
 void STARTWORDFILE(char namaFile[]){
-    START_FILE(namaFile);
+    STARTFILE(namaFile);
     IgnoreBlanks();
     if (currentChar == MARK){
         EndWord = true;
