@@ -92,3 +92,180 @@ void LowerCase(){
 //       }
 //    }
 // }
+
+void IgnoreNotEnter(){
+    while (currentChar == BLANK) {
+        ADV();
+    }
+}
+
+void CopySpace(){
+    int i = 0;
+    while (currentChar != LineMARK){
+        currentWord.TabWord[i] = currentChar;
+        ADV();
+        i++;
+    }
+    if (i > NMax){
+        currentWord.Length = NMax;
+    }
+    else{
+        currentWord.Length = i;
+    }
+}
+
+void STARTSENTENCE(){
+    START();
+    if (currentChar=='\n'){
+        EndWord = true;
+    }
+    else{
+        EndWord = false;
+        CopySpace();
+    }
+}
+
+void STARTWORDFILE(char namaFile[]){
+    STARTFILE(namaFile);
+    IgnoreBlanks();
+    if (currentChar == MARK){
+        EndWord = true;
+    }
+    else{
+        EndWord = false;
+        ADVWORD();
+    }
+}
+
+void ADVNEWLINE(){
+    Word kosong = {"", 0};
+    currentWord = kosong;
+    if(currentChar == MARK){
+        EndWord = false;
+        ADV();
+        CopyWord();
+    }
+}
+
+char* WordToString(Word word){
+    char* str = (char*) malloc (word.Length+1);
+    int i;
+    for (i = 0; i<word.Length;i++){
+        str[i] = word.TabWord[i];
+    }
+    str[word.Length] = '\0';
+    return str;
+}
+
+int WordToInt(Word str){
+    int result = 0;
+    int i;
+    for (i=0; i<str.Length; i++){
+        result = result * 10 + (str.TabWord[i] - 48);
+    }
+    if (result < 0){
+        int digit = 1;
+        for (i=0; i<str.Length-1; i++){
+            digit = digit * 10;
+        }
+        result += 38 * digit;
+    }
+    return result;
+}
+
+boolean compareWord(Word str1, Word str2){
+    int idx;
+    int i;
+    if (str1.Length != str2.Length){
+        return false;
+    } 
+    else {
+        for (i = 0; i < str1.Length; i++)
+        {
+            if (str1.TabWord[i] != str2.TabWord[i])
+            {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+void displayWord(Word word){
+    int i;
+    for (i = 0;i < word.Length; i++){
+        printf("%c", word.TabWord[i]);
+    }
+}
+
+boolean WordIsInt(Word kata){
+    int i;
+    boolean cek = false;
+    for (i = 0; i < kata.Length; i++){
+        if (kata.TabWord[i] <= 57 &&kata.TabWord[i] >= 48){
+            cek = true;
+        }
+    }
+    return cek;
+}
+
+boolean CharIsInt(char c){
+    if (c <= 57 && c >= 48){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+boolean compareString(Word str1, char str2[]){
+    int i;
+    if (str1.Length != str2.Length){
+        return false;
+    }
+    for (i = 0; i < str1.Length; i++){
+        if (str1.TabWord[i] != str2[i]){
+            return false;
+        }
+    }
+    return true;
+}
+
+Word stringToWord(char str[], int len){
+    int i;
+    Word strWord;
+    strWord.Length = len;
+    for (i = 0; i < len; i++){
+        strWord.TabWord[i] = str[i];
+    }
+    return strWord;
+}
+
+Word MergeWord(Word word1, Word word2){
+    int i;
+    Word res = {"",0};
+    res = word1;
+    res.Length += word2.Length + 1;
+    res.TabWord[word1.Length] = BLANK;
+    for (i = 0; i < word2.Length; i++){
+        res.TabWord[word1.Length+1+i] = word2.TabWord[i];
+    }
+    return res;
+}
+
+int StringToInt(char *str) {
+    int result = 0;
+    int i = 0;
+
+    while (str[i] != '\0') {
+        if (str[i] >= '0' && str[i] <= '9') {
+            result = result * 10 + (str[i] - '0');
+            i++;
+        } 
+        else {
+            return 0;
+        }
+    }
+
+    return result;
+}
