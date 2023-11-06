@@ -41,9 +41,9 @@
 //        }
 // }
 
-
 char currentChar;
 boolean EOP;
+boolean EOFile;
 
 static FILE *pita;
 static int retval;

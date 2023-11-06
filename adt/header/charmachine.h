@@ -6,13 +6,11 @@
 
 #include "boolean.h"
 
+#define LineMARK 10
 #define MARK ';'
 /* State Mesin */
 extern char currentChar;
 extern boolean EOP;
-
-static FILE *pita;
-static int retval;
 
 void START();
 /* Mesin siap dioperasikan. Pita disiapkan untuk dibaca.
@@ -48,4 +46,5 @@ void ADV();
 void STARTFILE(char namaFile[]);
 
 void END();
+
 #endif
