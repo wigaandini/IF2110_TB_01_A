@@ -80,4 +80,8 @@ Word MergeWord(Word word1, Word word2);
 
 int StringToInt(char *str);
 
+Word splitCommand(Word *w, Word command, int kataKe);
+
+char* MergeString(char* str1, char* str2);
+
 #endif

@@ -2,6 +2,8 @@
 /* Definisi Mesin Word: Model Akuisisi Versi I */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "header/boolean.h"
 #include "header/charmachine.h"
 #include "header/wordmachine.h"
@@ -180,10 +182,8 @@ boolean compareWord(Word str1, Word str2){
         return false;
     } 
     else {
-        for (i = 0; i < str1.Length; i++)
-        {
-            if (str1.TabWord[i] != str2.TabWord[i])
-            {
+        for (i = 0; i < str1.Length; i++){
+            if (str1.TabWord[i] != str2.TabWord[i]){
                 return false;
             }
         }
@@ -193,7 +193,7 @@ boolean compareWord(Word str1, Word str2){
 
 void displayWord(Word word){
     int i;
-    for (i = 0;i < word.Length; i++){
+    for (i = 0; i < word.Length-1; i++){
         printf("%c", word.TabWord[i]);
     }
 }
@@ -218,13 +218,13 @@ boolean CharIsInt(char c){
     }
 }
 
-boolean compareString(Word str1, char str2[]){
+boolean compareString(Word str1, char* str2){
     int i;
-    if (str1.Length != str2.Length){
-        return false;
-    }
-    for (i = 0; i < str1.Length; i++){
+    for (i = 0; i < str1.Length-1; i++){
         if (str1.TabWord[i] != str2[i]){
+            // displayWord(str1);
+            // printf("\n");
+            // printf("%c", str2);
             return false;
         }
     }
@@ -268,4 +268,71 @@ int StringToInt(char *str) {
     }
 
     return result;
+}
+
+Word splitCommand(Word *w, Word command, int kataKe){
+    int i = 0, counter = 0, length = 0;
+    boolean stop;
+
+    while (counter != kataKe - 1 && i < command.Length  + 1){
+        stop = false;
+        if (command.TabWord[i] == ' '){
+            counter++;
+            while (i < command.Length && !stop){
+                i++;
+                if (command.TabWord[i] != ' ')
+                {
+                    stop = true;
+                }
+            }
+        }
+        else if(command.TabWord[i] == MARK){
+            stop = true;
+        }
+        else{
+            i++;
+        }
+
+        if (i == command.Length  + 1){
+            counter++;
+        }
+    }
+
+    stop = false;
+    while (!stop && i < command.Length  + 1){
+        if (command.TabWord[i] == ' '){
+            stop = true;
+        }
+        else if(command.TabWord[i] == MARK){
+            stop = true;
+        }
+        else{
+            w->TabWord[length] = command.TabWord[i];
+            i++;
+            length++;
+        }
+    }
+    w->Length = length + 1;
+    return *w;
+}
+
+char* MergeString(char* str1, char* str2) {
+    // Calculate the lengths of the input strings
+    size_t len1 = strlen(str1);
+    size_t len2 = strlen(str2);
+
+    // Allocate memory for the merged string
+    char* merged = (char*)malloc((len1 + len2 + 1) * sizeof(char));
+
+    // Check if memory allocation was successful
+    if (merged == NULL) {
+        fprintf(stderr, "Memory allocation failed");
+        return NULL;
+    }
+
+    // Copy the contents of str1 and str2 into the merged string
+    strcpy(merged, str1);
+    strcat(merged, str2);
+
+    return merged;
 }
