@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "../adt/header/configmachine.h"
 #include "../adt/header/wordmachine.h"
 #include "../adt/header/liststatikuser.h"
@@ -92,6 +93,11 @@ void KELUAR(){
     }
 }
 
+void TUTUP_PROGRAM(){
+    printf("Anda telah keluar dari program Burbir. Sampai jumpa di pertemuan berikutnya!\n");
+    exit(0);
+}
+
 int main(){
     boolean isLoggedIn = false;
     do{
@@ -108,6 +114,9 @@ int main(){
         else if(compareString(currentWord, "MASUK")){
             MASUK();
             isLoggedIn = true;
+        }
+        else if(compareString(currentWord, "TUTUP_PROGRAM")){
+            TUTUP_PROGRAM();
         }
     } while (!compareString(currentWord, "TUTUP PROGRAM"));
     // STARTSENTENCE();
