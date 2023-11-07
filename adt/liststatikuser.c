@@ -183,7 +183,7 @@ void addUser(ListStatikUser *l, Word name, Word pw)         // Ini kayanya masuk
 {
     IdxType i, idx;
     for(i=0; i<CAPACITYUSER; i++){
-        if (UserName(*l, i, 0) != '\0'){
+        if (UserName(*l, i, 0) == '\0'){
             idx = i;
             break;
         }
