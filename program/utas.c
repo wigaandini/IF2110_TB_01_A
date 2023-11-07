@@ -63,10 +63,10 @@ int main(){
     cWord = currentWord;
     kata = splitCommand(&w, cWord, 1);
     displayWord(kata);
-    if(compareWord(kata,stringToWord("UTAS",4))){
+    if(compareString(kata,"UTAS")){
         UTAS(currentWord);
     }
-    else if(compareWord(kata,stringToWord("SAMBUNG_UTAS",12))){
+    else if(compareString(kata,"SAMBUNG_UTAS")){
         SAMBUNG_UTAS(currentWord);
     }
 }
