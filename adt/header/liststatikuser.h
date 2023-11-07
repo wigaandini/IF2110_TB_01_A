@@ -42,7 +42,7 @@ typedef struct {        // Elemen dari list berupa tipe data buatan "UserData",
    int id;
    char sandi[21];
    char bio[136];
-   ListDin noHP;     // Ini harus pake malloc, listdin tapi tiap elemennya adalah char
+   char noHP[16];
    enum Weton weton;
    enum TipeAkun tipe;
    Matrix foto;
@@ -74,7 +74,7 @@ typedef struct {
 #define UserId(l, i)          (l).data[i].id
 #define UserSandi(l, i, j)    (l).data[(i)].sandi[j]
 #define UserBio(l, i, j)      (l).data[(i)].bio[j]
-#define UserNoHP(l, i, j)     (l).data[i].noHP.buffer[j]
+#define UserNoHP(l, i, j)     (l).data[i].noHP[j]
 #define UserWeton(l, i)       (l).data[i].weton
 #define UserTipe(l, i)        (l).data[i].tipe
 #define UserFoto(l, i)        (l).data[i].foto

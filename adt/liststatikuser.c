@@ -13,15 +13,14 @@ void CreateListStatikUser(ListStatikUser *l){
             if (j<21) {
                 UserName(*l, i, j) = '\0';
                 UserSandi(*l, i, j) = '\0';
+                if (j<16) {
+                    UserNoHP(*l, i, j) = '\0';
+                }
             }
             UserBio(*l, i, j) = '\0';
         }
 
         UserId(*l, i) = i+1;
-
-        ListDin noHP;       // NEFF = 0 (list kosong)
-        CreateListDin(&noHP, 50);
-        l->data[i].noHP = noHP;
 
         UserWeton(*l, i) = EMPTYWETON;
 
@@ -80,11 +79,7 @@ void printListofUser(ListStatikUser l){
             
             printf("Bio\t: %s\n", l.data[i].bio);
             
-            printf("No. HP\t: ");
-            for (int j=0; j<l.data->noHP.nEff; j++) {       // iterasi tiap nomor hp
-                printf("%d", UserNoHP(l, i, j));
-            }
-            printf("\n");
+            printf("No. HP\t: %s\n", l.data[i].noHP);
 
             printf("Weton\t: ");
             switch (UserWeton(l, i))
