@@ -27,22 +27,21 @@ void CreateListGlobalKicauan(ListKicauan *l, int capacity){
 
 /* ********** Test Indeks yang valid ********** */
 boolean isIdKicauanValid(ListKicauan l, int id){
-    /* Mengirimkan true jika id adalah indeks yang valid utk kapasitas list l */
-    /* yaitu antara indeks yang terdefinisi utk container*/
-
     return(id <= NEFFLISTKICAU(l));
 }
+/* Mengirimkan true jika id adalah indeks yang valid utk kapasitas list l */
+/* yaitu antara indeks yang terdefinisi utk container*/
 
 /* ********** TEST KOSONG/PENUH ********** */
 /* *** Test list kosong *** */
 boolean isListKicauanEmpty(ListKicauan l){
-    return(NEFFLISTKICAU(l)==0);
+    return(NEFFLISTKICAU(l) == 0);
 }
 /* Mengirimkan true jika list l kosong, mengirimkan false jika tidak */
 
 /* Mengirimkan true jika list l setengah penuh, mengirimkan false jika tidak */
 boolean isListKicauanFull(ListKicauan l){
-    return(NEFFLISTKICAU(l)==CAPACITYKICAU(l));
+    return(NEFFLISTKICAU(l) == CAPACITYKICAU(l));
 }
 
 /* Mengirimkan true jika list l penuh, mengirimkan false jika tidak */
@@ -58,7 +57,7 @@ void copyListKicau(ListKicauan lIn, ListKicauan *lOut){
     dealocateListKicauan(lOut);
     CreateListGlobalKicauan(lOut, CAPACITYKICAU(lIn));
 
-    for(i=0; i<NEFFLISTKICAU(lIn); i++){
+    for(i = 0; i < NEFFLISTKICAU(lIn); i++){
         ELMTLISTKICAU(*lOut, i) = ELMTLISTKICAU(lIn, i);
     }
 
@@ -81,20 +80,20 @@ void expandListKicau(ListKicauan *l, int num){
     CreateListGlobalKicauan(l, CAPACITYKICAU(new)+num);
     NEFFLISTKICAU(*l) = newNEFF;
 
-    for(i=0; i<newNEFF; i++){
+    for(i = 0; i < newNEFF; i++){
         ELMTLISTKICAU(*l,i) = ELMTLISTKICAU(new,i);
     }
 }
 
 IdxType getLastIdxKicau(ListKicauan l){
-    return NEFFLISTKICAU(l)-1;
+    return NEFFLISTKICAU(l) - 1;
 }
 /* Prekondisi : List l tidak kosong */
 /* Mengirimkan indeks elemen l terakhir */
 
 /* *** Menambahkan elemen terakhir *** */
 void insertLastKicauan(ListKicauan *l, Kicauan val){
-    if (NEFFLISTKICAU(*l)+1 > 3*CAPACITYKICAU(*l)/4) {  // Di modifikasi agar capacity otomatis langsung menyesuaikan dengan jumlah elemen
+    if (NEFFLISTKICAU(*l) + 1 > 3 * CAPACITYKICAU(*l) / 4) {  // Di modifikasi agar capacity otomatis langsung menyesuaikan dengan jumlah elemen
         expandListKicau(l, CAPACITYKICAU(*l));    // Capacity dikali 2
     }
     ELMTLISTKICAU(*l, getLastIdxKicau(*l)+1) = val;
@@ -141,12 +140,12 @@ void Berkicau(ListKicauan *l, Kicauan *k, int idauthor){
     Year(waktu) = 1900 + timeinfo->tm_year;
     Month(waktu) = timeinfo->tm_mon + 1;
     Day(waktu) = timeinfo->tm_mday;
-    Time(waktu)=DetikToTIME(current_time);
+    Time(waktu) = DetikToTIME(current_time);
 
     printf("Masukkan kicauan :\n");
     readString(&text);
     //bikin kondisi kalau diterima inputnya hanya spasi lalu tbtb diakhiri mark untuk tidak valid dan diulang lagi
-    while(text.length>280){
+    while(text.length > 280){
         deleteSLast(&text, &c);
     }
 
@@ -160,9 +159,9 @@ void Berkicau(ListKicauan *l, Kicauan *k, int idauthor){
 
 void DisplayKicauan(ListStatikUser l, ListKicauan k, int idUser, FriendMatrix m){
     int idAuthor;
-    for(int i= NEFFLISTKICAU(k) - 1 ; i>=0; i--){
+    for (int i = NEFFLISTKICAU(k) - 1 ; i >= 0; i--) {
             idAuthor = IDAUTHOR(ELMTLISTKICAU(k, i));
-            if(idAuthor == idUser){
+            if (idAuthor == idUser) {
                 DisplaySatuKicau(ELMTLISTKICAU(k, i));
             } // else {
             //     if(isFriend(m, idAuthor, idUser)){
@@ -173,14 +172,14 @@ void DisplayKicauan(ListStatikUser l, ListKicauan k, int idUser, FriendMatrix m)
 }
 
 void SUKA_KICAUAN(ListStatikUser l, ListKicauan *k, int idKicauan, int idUser, FriendMatrix m){
-    if(!isIdKicauanValid(*k, idKicauan)){
+    if (!isIdKicauanValid(*k, idKicauan)) {
         printf("Tidak ditemukan kicauan dengan ID = %d\n", idKicauan);
     } else {
         int idAuthor = IDAUTHOR(ELMTLISTKICAU(*k, idKicauan-1));
         // if(UserTipe(l, idAuthor-1) == PUBLIK){
         //     LIKE(ELMTLISTKICAU(*k, idKicauan))++;
         // }  else {
-            if(idAuthor == idUser){
+            if (idAuthor == idUser) {
                 LIKE(ELMTLISTKICAU(*k, idKicauan-1))++;
             } // else {
             //     if(isFriend(m, idAuthor, idUser)){
@@ -197,7 +196,7 @@ void SUKA_KICAUAN(ListStatikUser l, ListKicauan *k, int idKicauan, int idUser, F
 void UBAH_KICAUAN(ListStatikUser l, ListKicauan *k, int idKicauan, int idUser){
     String newText;
 
-    if(isIdKicauanValid(*k, idKicauan)){
+    if (isIdKicauanValid(*k, idKicauan)) {
         int idAuthor = IDAUTHOR(ELMTLISTKICAU(*k, idKicauan-1));
         if (idAuthor == idUser) {
             printf("Masukkan kicauan baru : \n");
