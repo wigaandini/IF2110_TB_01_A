@@ -97,7 +97,7 @@ void insertLastKicauan(ListKicauan *l, Kicauan val){
         expandListKicau(l, CAPACITYKICAU(*l));    // Capacity dikali 2
     }
     ELMTLISTKICAU(*l, getLastIdxKicau(*l)+1) = val;
-    NEFFLISTKICAU(*l) ++;
+    NEFFLISTKICAU(*l)++;
 }
 
 void CreateKicauan(Kicauan *k, int id, String text, int idauthor, DATETIME waktu){
@@ -144,17 +144,20 @@ void Berkicau(ListKicauan *l, Kicauan *k, int idauthor){
 
     printf("Masukkan kicauan :\n");
     readString(&text);
-    //bikin kondisi kalau diterima inputnya hanya spasi lalu tbtb diakhiri mark untuk tidak valid dan diulang lagi
-    while(text.length > 280){
-        deleteSLast(&text, &c);
+    if(isStringEmpty(text)){
+        printf("Kicauan tidak boleh hanya berisi spasi!\n");
+    } else {
+        while(text.length > 280){
+            deleteSLast(&text, &c);
+        }
+
+        CreateKicauan(k, id, text, idauthor, waktu);
+        //bikin getAuthorNamefromID buat ngedisplay nama author dari data id
+
+        printf("Selamat! kicauan telah diterbitkan!\nDetil kicauan:\n");
+        DisplaySatuKicau(*k);
+        insertLastKicauan(l, *k);
     }
-
-    CreateKicauan(k, id, text, idauthor, waktu);
-    //bikin getAuthorNamefromID buat ngedisplay nama author dari data id
-
-    printf("Selamat! kicauan telah diterbitkan!\nDetil kicauan:\n");
-    DisplaySatuKicau(*k);
-    insertLastKicauan(l, *k);
 }
 
 void DisplayKicauan(ListStatikUser l, ListKicauan k, int idUser, FriendMatrix m){
@@ -189,8 +192,8 @@ void SUKA_KICAUAN(ListStatikUser l, ListKicauan *k, int idKicauan, int idUser, F
             //     }
             // }
         // }
+        DisplaySatuKicau(ELMTLISTKICAU(*k,idKicauan-1));
     }
-    DisplaySatuKicau(ELMTLISTKICAU(*k,idKicauan-1));
 }
 
 void UBAH_KICAUAN(ListStatikUser l, ListKicauan *k, int idKicauan, int idUser){

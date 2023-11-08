@@ -25,7 +25,21 @@ void CreateString(String *s)
 /* Mengirim true jika s kosong */
 boolean isStringEmpty(String s)
 {
-    return LENGTH(s) == 0;
+    boolean empty = true;
+    int i = 0;
+    if(LENGTH(s) == 0) {
+        empty = true;
+    } else {
+        while (i < s.length && empty){
+            if(s.buffer[i] == ' '){
+                i++;
+            } else {
+                empty = false;
+            }
+        }
+    }
+    
+    return (empty);
 }
 
 /* Mengirim true jika tabel penampung elemen s sudah penuh */
@@ -64,7 +78,7 @@ void displayString(String s)
     // KAMUS LOKAL
     int i;
     // ALGORITMA
-    if (LENGTH(s) == 0)
+    if (isStringEmpty(s))
     {
         printf("String kosong\n");
     }
