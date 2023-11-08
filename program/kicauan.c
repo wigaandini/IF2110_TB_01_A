@@ -10,8 +10,10 @@
 #include "../adt/header/string.h"
 #include "../adt/header/friendmatrix.h"
 
+// gcc -o main program/kicauan.c adt/string.c adt/wordmachine.c adt/charmachine.c adt/datetime.c adt/listdinkicauan.c adt/time.c adt/friendmatrix.c 
+
 int main() {
-    Word w, kata, cWord, kata2;
+    Word w, command, kata, kata2;
     ListKicauan k;
     ListStatikUser l;
     Kicauan tweet;
@@ -20,15 +22,15 @@ int main() {
 
     CreateListGlobalKicauan(&k, CAPACITYMAXLISTKICAUAN);
 
-    // sementara
-    idUser = 1;
+    idUser = 1; // sementara, nantinya nyesuaiin sama user yg lagi login
+    
     printf(">> ");
     STARTSENTENCE();
-    cWord = currentWord;
-    kata = splitCommand(&w, cWord, 1);
-    
-    if (cWord.Length>kata.Length) {
-        kata2 = splitCommand(&w, cWord, 2);
+    command = currentWord;
+    kata = splitCommand(&w, command, 1);
+
+    if (command.Length>kata.Length) {
+        kata2 = splitCommand(&w, command, 2);
         idKicauan = WordToInt(kata2);
     }
 
