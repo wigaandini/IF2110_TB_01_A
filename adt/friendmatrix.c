@@ -30,6 +30,19 @@ IdxType getLastIdxColFriend(FriendMatrix m){
     return COL_EFFFRIEND(m) - 1;
 }
 
+IdxType howMuchFriend(FriendMatrix m, IdxType i){
+// Mengeluarkan jumlah teman yang dia dimilki
+// Prekondisi: i adalah id user yang terdefinisi (efektif)
+    int j;
+    int sum = 0;
+    for(j = 0; j<=getLastIdxColFriend(m); j++){
+        if(i!=j){
+            sum += ELMTFRIEND(m,i,j);
+        }
+    }
+    return sum;
+}
+
 boolean isIdxEffFriend(FriendMatrix m, IdxType i, IdxType j){
 // Mengirimkan true jika i, j adalah Index efektif bagi m
 // Index efektif berarti id user tersebut sudah terdaftar */
@@ -64,3 +77,4 @@ void deleteFriend(FriendMatrix *m, IdxType i, IdxType j){
     ELMTFRIEND(*m,i,j) = 0;
     ELMTFRIEND(*m,j,i) = 0;  
 }
+
