@@ -7,7 +7,8 @@
 #define prioreqfol_H
 
 #include "boolean.h"
-//id yg req, id yg mau difollow, jumlah temen saat itu
+#include "friendmatrix.h"
+
 #define Nil -1
 /* Konstanta untuk mendefinisikan address tak terdefinisi */
 
@@ -45,23 +46,20 @@ typedef struct {
 #define MaxEl(Q)            (Q).MaxEl
 #define Elmt(Q,i)           (Q).T[(i)]
 
-//PENTING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//Perlu fungsi yang nyari total jumlah temen
-//Perlu fungsi update prioque dan delete prioque
 
 /* ********* Prototype ********* */
-boolean IsEmpty (Prioreqfol Q);
+boolean IsEmptyReqFol (Prioreqfol Q);
 /* Mengirim true jika Q kosong: lihat definisi di atas */
 
-boolean IsFull (Prioreqfol Q);
+boolean IsFullReqFol (Prioreqfol Q);
 /* Mengirim true jika tabel penampung elemen Q sudah penuh */
 /* yaitu mengandung elemen sebanyak MaxEl */
 
-int NBElmt (Prioreqfol Q);
+int NBElmtReqFol (Prioreqfol Q);
 /* Mengirimkan banyaknya elemen queue. Mengirimkan 0 jika Q kosong. */
 
 /* *** Kreator *** */
-void MakeEmpty (Prioreqfol * Q, int Max);
+void MakeEmptyReqFol (Prioreqfol * Q, int Max);
 /* I.S. sembarang */
 /* F.S. Sebuah Q kosong terbentuk dan salah satu kondisi sbb: */
 /* Jika alokasi berhasil, Tabel memori dialokasi berukuran Max+1 */
@@ -69,25 +67,26 @@ void MakeEmpty (Prioreqfol * Q, int Max);
 /* Proses : Melakukan alokasi, membuat sebuah Q kosong */
 
 /* *** Destruktor *** */
-void DeAlokasi(Prioreqfol * Q);
+void DeAlokasiReqFol(Prioreqfol * Q);
 /* Proses: Mengembalikan memori Q */
 /* I.S. Q pernah dialokasi */
 /* F.S. Q menjadi tidak terdefinisi lagi, MaxEl(Q) diset 0 */
 
 /* *** Primitif Add/Delete *** */
-void Enqueue (Prioreqfol * Q, inforeq X);
+void EnqueueReqFol (Prioreqfol * Q, inforeq X);
 /* Proses: Menambahkan X pada Q dengan aturan priority queue, terurut membesar berdasarkan time */
 /* I.S. Q mungkin kosong, tabel penampung elemen Q TIDAK penuh */
 /* F.S. X disisipkan pada posisi yang tepat sesuai dengan prioritas,
         TAIL "maju" dengan mekanisme circular buffer; */
-void Dequeue (Prioreqfol * Q, inforeq * X);
+
+void DequeueReqFol (Prioreqfol * Q, inforeq * X);
 /* Proses: Menghapus X pada Q dengan aturan FIFO */
 /* I.S. Q tidak mungkin kosong */
 /* F.S. X = nilai elemen HEAD pd I.S., HEAD "maju" dengan mekanisme circular buffer;
         Q mungkin kosong */
 
 /* Operasi Tambahan */
-void PrintPrioQueueTime (Prioreqfol Q);
+void PrintReqFol (Prioreqfol Q);
 /* Mencetak isi queue Q ke layar */
 /* I.S. Q terdefinisi, mungkin kosong */
 /* F.S. Q tercetak ke layar dengan format:
