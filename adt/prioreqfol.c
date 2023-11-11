@@ -18,6 +18,12 @@
 #define Elmt(Q,i)           (Q).T[(i)]
 */
 
+//PENTING!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// Fungsi tambah teman (di dalamnya ada deque dan tambah teman matriks)
+// Fungs display integrasikan dengan adt kicauan
+// Dinamis atau ada batasan?
+
+
 /* ********* Prototype ********* */
 boolean IsEmptyReqFol (Prioreqfol Q){
 /* Mengirim true jika Q kosong: lihat definisi di atas */
@@ -96,7 +102,7 @@ void EnqueueReqFol (Prioreqfol * Q, inforeq X){
         InfoTail(*Q) = X;
         i = Tail(*Q);
         j = i == 0 ? MaxEl(*Q) - 1 : i - 1;
-        while (i != Head(*Q) && Time(Elmt(*Q, i)) < (Time(Elmt(*Q, j)))) {
+        while (i != Head(*Q) && NFRIENDFOLLOW(Elmt(*Q, i)) < (NFRIENDFOLLOW(Elmt(*Q, j)))) {
             temp = Elmt(*Q, i);
             Elmt(*Q, i) = Elmt(*Q, j);
             Elmt(*Q, j) = temp;
@@ -106,12 +112,24 @@ void EnqueueReqFol (Prioreqfol * Q, inforeq X){
     }
 }
 
-void DequeueReqFol (Prioreqfol * Q, inforeq * X);
+
+
+void DequeueReqFol (Prioreqfol * Q, inforeq * X){
 /* Proses: Menghapus X pada Q dengan aturan FIFO */
 /* I.S. Q tidak mungkin kosong */
 /* F.S. X = nilai elemen HEAD pd I.S., HEAD "maju" dengan mekanisme circular buffer;
         Q mungkin kosong */
+    if (NBElmt(*Q) == 1) {
+        *X = InfoHead(*Q);
+        Head(*Q) = Nil;
+        Tail(*Q) = Nil;
+    }
+    else {
+        *X = InfoHead(*Q);
+        Head(*Q) = (Head(*Q) == MaxEl(*Q) - 1) ? 0 : Head(*Q) + 1;
+    }
 
+}
 /* Operasi Tambahan */
 void PrintReqFol (Prioreqfol Q){
 /* Mencetak isi queue Q ke layar */
@@ -128,7 +146,7 @@ void PrintReqFol (Prioreqfol Q){
     if (!IsEmpty(Q)) {
         while (!IsEmpty(temp)) {
             Dequeue(&temp, &val);
-            // printf("%d %c\n", Time(val), Info(val));
+            printf("%d %c\n", Time(val), Info(val));
         }
     }
     printf("#\n");
