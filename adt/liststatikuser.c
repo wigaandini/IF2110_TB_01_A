@@ -78,6 +78,12 @@ void printListofUser(ListStatikUser l){
             printf("Pass\t: %s\n", l.data[i].sandi);
             
             printf("Bio\t: %s\n", l.data[i].bio);
+
+            printf("No. HP\t: ");
+            for (int j=0; j<UserNoHPLength(l, i); j++) {
+                printf("%d", UserNoHP(l, i, j));
+            }
+            printf("\n");
             
             printf("No. HP\t: %s\n", l.data[i].noHP);
 
@@ -125,8 +131,7 @@ void printListofUser(ListStatikUser l){
             printf("Warna foto:\n");
             displayMatrix(UserWarnaFoto(l, i));
 
-            printf("------------------------\n");
-            
+            printf("--------------------\n");            
         }
     }
 }
