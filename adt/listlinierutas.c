@@ -556,6 +556,14 @@ int getLastIdxUtasPers(ListLinierUtas l, int lastIdx){
 
 isIdxUtasPersValid(ListLinierUtas l, int idx){
     Address p = FIRST(l);
-    
-    return(idx <= length(l));
+    boolean found = false;
+    while(p != NULL && !found){
+        if(INDEXUTAS(INFO(p)) == idx){
+            found = true;
+        }
+        else{
+            p = NEXT(p);
+        }
+    }
+    return(found);
 }
