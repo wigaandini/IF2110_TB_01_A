@@ -1,12 +1,55 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include <time.h>
 #include "../adt/header/boolean.h"
 #include "../adt/header/wordmachine.h"
 #include "../adt/header/listlinierutas.h"
+#include "../adt/header/listdinkicauan.h"
 
 
-void UTAS(Word word){
+void UTAS(int idKicau, ListKicauan *listKicau, ListLinierUtas *listUtas, int idAuthor, UtasType *u){
+    int indexUtas;
+    Word text;
+    DATETIME waktu;
+    if(IDAUTHOR(ELMTLISTKICAU(*listKicau, idKicau-1)) == idAuthor);
+        printf("Utas berhasil dibuat!\n\n");
+        printf("Masukkan kicauan:\n");
+        STARTSENTENCE();
+        printf("\n");
+
+        text = currentWord;
+        indexUtas = length(*listUtas) + 1;
+
+        time_t current_time;
+        time(&current_time);
+        current_time+=3600*7;
+
+        struct tm* timeinfo = gmtime(&current_time);
+
+        Year(waktu) = 1900 + timeinfo->tm_year;
+        Month(waktu) = timeinfo->tm_mon + 1;
+        Day(waktu) = timeinfo->tm_mday;
+        Time(waktu) = DetikToTIME(current_time);
+
+        CreateUtas(u, idKicau, idAuthor, indexUtas, text, waktu);
+        insertLast(listUtas, u);
+        printf("Apakah Anda ingin melanjutkan utas ini? (YA/TIDAK) ");
+        STARTSENTENCE();
+        while(compareString(currentWord, "YA")){
+            printf("\nMasukkan kicauan:\n");
+            STARTSENTENCE();
+            printf("\n");
+            printf("Apakah Anda ingin melanjutkan utas ini? (YA/TIDAK) ");
+            STARTSENTENCE();
+            if(compareString(currentWord, "TIDAK")){
+                printf("Utas selesai!\n\n");
+            }
+        }
+        UTAS(ELMTLISTKICAU(*listKicau, idKicau-1)) = u;
+    }
+    else{
+        printf("Anda tidak dapat membuat utas pada kicauan orang lain!\n");
+    }
     Word w;
     Word utasWord = splitCommand(&w, word, 1);
     // displayWord(utas);

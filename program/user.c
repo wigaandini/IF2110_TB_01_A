@@ -1,20 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "../adt/header/configmachine.h"
-#include "../adt/header/wordmachine.h"
-#include "../adt/header/liststatikuser.h"
-#include "../adt/header/friendmatrix.h"
-#include "../adt/header/stack.h"
-#include "../adt/header/matrix.h"
-#include "../adt/header/listdin.h"
+#include "../adt/configmachine.c"
+#include "../adt/charmachine.c"
+#include "../adt/wordmachine.c"
+#include "../adt/liststatikuser.c"
+#include "../adt/friendmatrix.c"
+#include "../adt/stack.c"
+#include "../adt/matrix.c"
+#include "../adt/listdin.c"
 
-void DAFTAR(){
-    ListStatikUser l;
+void DAFTAR(ListStatikUser *l){
+    // ListStatikUser l;
     boolean isLoggedIn;
     Word nama, pass;
-    CreateListStatikUser(&l);
-    if(!isLoggedIn){
-        if(isUserDataEmpty(l)){
+    // CreateListStatikUser(&l);
+    // if(!isLoggedIn){
+        if(isUserDataEmpty(*l)){
             printf("Masukkan nama:\n");
             STARTSENTENCE();
             nama = currentWord;
@@ -25,8 +26,8 @@ void DAFTAR(){
             pass = currentWord;
             // displayWord(pass);
             printf("\n");
-            addUser(&l, nama, pass);
-            printListofUser(l);
+            addUser(l, nama, pass);
+            printListofUser(*l);
             printf("Pengguna telah berhasil terdaftar. Masuk untuk menikmati fitur-fitur BurBir.\n");
         }
         else{
@@ -34,23 +35,23 @@ void DAFTAR(){
             STARTSENTENCE();
             printf("\n");
             nama = currentWord;
-            while(!checkUserExist(l, nama)){
+            while(!checkUserExist(*l, nama)){
                 printf("Wah, sayang sekali nama tersebut telah diambil.\n");
                 printf("Masukkan kata sandi:\n");
                 STARTSENTENCE();
                 pass = currentWord;
                 // displayWord(pass);
                 printf("\n");
-                addUser(&l, nama, pass);
-                printListofUser(l);
+                addUser(l, nama, pass);
+                printListofUser(*l);
                 printf("Pengguna telah berhasil terdaftar. Masuk untuk menikmati fitur-fitur BurBir.\n\n");
             }
         }
     }
-    else{
-        printf("Anda sudah masuk. Keluar terlebih dahulu untuk melakukan daftar.\n");
-    }
-}
+    // else{
+    //     printf("Anda sudah masuk. Keluar terlebih dahulu untuk melakukan daftar.\n");
+    // }
+// }
 
 void MASUK(){
     boolean isLoggedIn = false;
@@ -99,13 +100,17 @@ void TUTUP_PROGRAM(){
 }
 
 int main(){
+    ListStatikUser l;
+    CreateListStatikUser(&l);
     boolean isLoggedIn = false;
     do{
         printf(">> ");
         STARTSENTENCE();
+        displayWord(currentWord);
         printf("\n");
         if(compareString(currentWord, "DAFTAR")){
-            DAFTAR();
+            DAFTAR(&l);
+            printListofUser(l);
         }
         else if(compareString(currentWord, "KELUAR")){
             KELUAR();
