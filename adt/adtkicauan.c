@@ -7,7 +7,7 @@
 #include "header/wordmachine.h"
 #include "header/time.h"
 #include "header/datetime.h"
-#include "adtkicauan.h"
+#include "header/adtkicauan.h"
 
 void CreateKicauan(Kicauan *k, int id, String text, int like, int idauthor, DATETIME waktu){
     ID(*k) = id;
