@@ -7,7 +7,6 @@
 #include "../adt/header/time.h"
 #include "../adt/header/datetime.h"
 #include "../adt/header/listdinkicauan.h"
-#include "../adt/header/string.h"
 #include "../adt/header/friendmatrix.h"
 
 // gcc -o main program/kicauan.c adt/string.c adt/wordmachine.c adt/charmachine.c adt/datetime.c adt/listdinkicauan.c adt/time.c adt/friendmatrix.c 
@@ -23,27 +22,30 @@ int main() {
     CreateListGlobalKicauan(&k, CAPACITYMAXLISTKICAUAN);
 
     idUser = 1; // sementara, nantinya nyesuaiin sama user yg lagi login
+    do {      
+        printf(">> ");
+        STARTSENTENCE();
+        command = currentWord;
+        kata = splitCommand(&w, command, 1);
+
+        if (command.Length>kata.Length) {
+            kata2 = splitCommand(&w, command, 2);
+            idKicauan = WordToInt(kata2);
+        } 
+        
+        if(compareString(kata,"KICAU")){
+            Berkicau(l, &k, &tweet, idUser);
+        }
+        else if(compareString(kata,"KICAUAN")){
+            DisplayKicauan(l, k, idUser, m);
+        }
+        else if(compareString(kata,"SUKA_KICAUAN")){
+            SUKA_KICAUAN(l, &k, idKicauan, idUser, m);
+        }
+        else if(compareString(kata,"UBAH_KICAUAN")){
+            UBAH_KICAUAN(l, &k, idKicauan, idUser);
+        }
+        
+    } while (!compareString(currentWord, "EXIT"));
     
-    printf(">> ");
-    STARTSENTENCE();
-    command = currentWord;
-    kata = splitCommand(&w, command, 1);
-
-    if (command.Length>kata.Length) {
-        kata2 = splitCommand(&w, command, 2);
-        idKicauan = WordToInt(kata2);
-    }
-
-    if(compareString(kata,"KICAU")){
-        Berkicau(&k, &tweet, idUser);
-    }
-    else if(compareString(kata,"KICAUAN")){
-        DisplayKicauan(l, k, idUser, m);
-    }
-    else if(compareString(kata,"SUKA_KICAUAN")){
-        SUKA_KICAUAN(l, &k, idKicauan, idUser, m);
-    }
-    else if(compareString(kata,"UBAH_KICAUAN")){
-        UBAH_KICAUAN(l, &k, idKicauan, idUser);
-    }
 }

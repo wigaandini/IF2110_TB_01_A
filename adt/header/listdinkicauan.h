@@ -6,12 +6,9 @@
 #include "wordmachine.h"
 #include "time.h"
 #include "datetime.h"
-#include "string.h"
 #include "liststatikuser.h"
 #include "friendmatrix.h"
 
-
-#define CAPACITYTEXTKICAU 1000
 #define CAPACITYMAXLISTKICAUAN 100
 #define IDX_MIN 0
 #define IDX_UNDEF -1
@@ -21,7 +18,7 @@
 typedef struct node *Address;
 typedef struct {
     int id;         //id kicauan
-    String text;    //text kicauan
+    Word text;    //text kicauan
     int like;       //jumlah like kicauan
     int idauthor;   //id author
     DATETIME waktu; //waktu unggah kicauan
@@ -84,7 +81,7 @@ void insertLastKicauan(ListKicauan *l, Kicauan val);
 /* F.S. val adalah elemen terakhir l yang baru */
 
 /* *** Konstruktor: Membentuk sebuah Kicauan dari komponen-komponennya *** */
-void CreateKicauan(Kicauan *k, int id, String text, int idauthor, DATETIME waktu);
+void CreateKicauan(Kicauan *k, int id, Word text, int idauthor, DATETIME waktu);
 /* Membentuk sebuah Kicauan dari komponen-komponennya yang valid */
 /* Prekondisi : - id valid
                 - text berupa string hasil input kicauan
@@ -98,13 +95,13 @@ void CreateKicauan(Kicauan *k, int id, String text, int idauthor, DATETIME waktu
 /* ***************************************************************** */
 /* KELOMPOK BACA/TULIS                                               */
 /* ***************************************************************** */
-void DisplaySatuKicau(Kicauan k);
+void DisplaySatuKicau(ListStatikUser l, Kicauan k);
 /* I.S. : Kicauan terdefinisi*/
 /* F.S. : Menampilkan seluruh komponen kicauan ke layar*/
 /* Proses : Membaca komponen id, text, like, idauthor,
     dan waktu kemudian menampilkannnya ke layar*/
 
-void Berkicau(ListKicauan *l, Kicauan *k, int idauthor);
+void Berkicau(ListStatikUser U, ListKicauan *l, Kicauan *k, int idauthor);
 /* I.S. : Kicauan tidak terdefinisi */
 /* F.S. : Kicauan terdefinisi dan merupakan kicauan yang valid */
 /* Proses : Membaca komponen id, text, idauthor, dan waktu sehingga membentuk Kicauan

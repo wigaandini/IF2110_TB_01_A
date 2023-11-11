@@ -7,7 +7,6 @@
 #include "header/time.h"
 #include "header/datetime.h"
 #include "header/listdinkicauan.h"
-#include "header/string.h"
 #include "header/friendmatrix.h"
 
 /* ***************************************************************** */
@@ -20,7 +19,7 @@ void CreateListGlobalKicauan(ListKicauan *l, int capacity){
     /* Menyimpan seluruh kicauan yang telah dibuat */
     /* Prekondisi : list kosong */
 
-    BUFFERLISTKICAU(*l) = (Kicauan*) malloc(capacity*sizeof(Kicauan));
+    BUFFERLISTKICAU(*l) = (Kicauan*)malloc(capacity*sizeof(Kicauan));
     CAPACITYKICAU(*l) = CAPACITYMAXLISTKICAUAN;
     NEFFLISTKICAU(*l) = 0;
 }
@@ -100,34 +99,34 @@ void insertLastKicauan(ListKicauan *l, Kicauan val){
     NEFFLISTKICAU(*l)++;
 }
 
-void CreateKicauan(Kicauan *k, int id, String text, int idauthor, DATETIME waktu){
+void CreateKicauan(Kicauan *k, int id, Word text, int idauthor, DATETIME waktu){
     ID(*k) = id;
     TEXT(*k) = text;
     LIKE(*k) = 0;
     IDAUTHOR(*k) = idauthor;
     WAKTU(*k) = waktu;
     UTAS(*k) = NULL;
-    //CreateListBalasan(l,...)
+    BALASAN(*k) = NULL;
 }
 
-void DisplaySatuKicau(Kicauan k){
+void DisplaySatuKicau(ListStatikUser l, Kicauan k){
     printf("| ID = %d\n", ID(k));
-    printf("| Nama author dengan ID %d\n", IDAUTHOR(k));
+    printf("| Nama author dengan ID %c\n", l.data[ID(k)].nama);
     printf("| ");
     TulisDATETIME(WAKTU(k));
     printf("\n");
     printf("| ");
-    displayString(TEXT(k));
+    displayWord(TEXT(k));
     printf("\n");
     printf("| Disukai: %d\n", LIKE(k));
     printf("\n");
 }
 
-void Berkicau(ListKicauan *l, Kicauan *k, int idauthor){
+void Berkicau(ListStatikUser U, ListKicauan *l, Kicauan *k, int idauthor){
     char c;
     int id;
     DATETIME waktu;
-    String text;
+    Word text;
 
     id = NEFFLISTKICAU(*l) + 1;
 
@@ -142,20 +141,17 @@ void Berkicau(ListKicauan *l, Kicauan *k, int idauthor){
     Day(waktu) = timeinfo->tm_mday;
     Time(waktu) = DetikToTIME(current_time);
 
+
     printf("Masukkan kicauan :\n");
-    readString(&text);
-    if(isStringEmpty(text)){
+    STARTSENTENCE();
+    text = currentWord;
+    if (isEmptyWord(text)) {
         printf("Kicauan tidak boleh hanya berisi spasi!\n");
     } else {
-        while(text.length > 280){
-            deleteSLast(&text, &c);
-        }
-
         CreateKicauan(k, id, text, idauthor, waktu);
-        //bikin getAuthorNamefromID buat ngedisplay nama author dari data id
 
         printf("Selamat! kicauan telah diterbitkan!\nDetil kicauan:\n");
-        DisplaySatuKicau(*k);
+        DisplaySatuKicau(U, *k);
         insertLastKicauan(l, *k);
     }
 }
@@ -163,14 +159,14 @@ void Berkicau(ListKicauan *l, Kicauan *k, int idauthor){
 void DisplayKicauan(ListStatikUser l, ListKicauan k, int idUser, FriendMatrix m){
     int idAuthor;
     for (int i = NEFFLISTKICAU(k) - 1 ; i >= 0; i--) {
-            idAuthor = IDAUTHOR(ELMTLISTKICAU(k, i));
-            if (idAuthor == idUser) {
-                DisplaySatuKicau(ELMTLISTKICAU(k, i));
-            } // else {
-            //     if(isFriend(m, idAuthor, idUser)){
-            //         DisplaySatuKicau(ELMTLISTKICAU(k, i));
-            //     }
-            // } 
+        idAuthor = IDAUTHOR(ELMTLISTKICAU(k, i));
+        if (idAuthor == idUser) {
+            DisplaySatuKicau(l, ELMTLISTKICAU(k, i));
+        } else {
+            if(isFriend(m, idAuthor, idUser)){
+                DisplaySatuKicau(l, ELMTLISTKICAU(k, i));
+            }
+        } 
     }
 }
 
@@ -179,33 +175,34 @@ void SUKA_KICAUAN(ListStatikUser l, ListKicauan *k, int idKicauan, int idUser, F
         printf("Tidak ditemukan kicauan dengan ID = %d\n", idKicauan);
     } else {
         int idAuthor = IDAUTHOR(ELMTLISTKICAU(*k, idKicauan-1));
-        // if(UserTipe(l, idAuthor-1) == PUBLIK){
-        //     LIKE(ELMTLISTKICAU(*k, idKicauan))++;
-        // }  else {
+        if(UserTipe(l, idAuthor-1) == PUBLIK){
+            LIKE(ELMTLISTKICAU(*k, idKicauan-1))++;
+        }  else {
             if (idAuthor == idUser) {
                 LIKE(ELMTLISTKICAU(*k, idKicauan-1))++;
-            } // else {
-            //     if(isFriend(m, idAuthor, idUser)){
-            //         LIKE(ELMTLISTKICAU(*k, idKicauan-1))++;
-            //     } else {
-            //         printf("Wah, kicauan tersebut dibuat oleh akun privat! Ikuti akun itu dulu ya\n");
-            //     }
-            // }
-        // }
-        DisplaySatuKicau(ELMTLISTKICAU(*k,idKicauan-1));
+            } else {
+                if(isFriend(m, idAuthor, idUser)){
+                    LIKE(ELMTLISTKICAU(*k, idKicauan-1))++;
+                } else {
+                    printf("Wah, kicauan tersebut dibuat oleh akun privat! Ikuti akun itu dulu ya\n");
+                }
+            }
+        }
+        DisplaySatuKicau(l, ELMTLISTKICAU(*k,idKicauan-1));
     }
 }
 
 void UBAH_KICAUAN(ListStatikUser l, ListKicauan *k, int idKicauan, int idUser){
-    String newText;
+    Word newText;
 
     if (isIdKicauanValid(*k, idKicauan)) {
         int idAuthor = IDAUTHOR(ELMTLISTKICAU(*k, idKicauan-1));
         if (idAuthor == idUser) {
             printf("Masukkan kicauan baru : \n");
-            readString(&newText);
+            STARTSENTENCE();
+            newText = currentWord;
             TEXT(ELMTLISTKICAU(*k,idKicauan-1)) = newText;
-            DisplaySatuKicau(ELMTLISTKICAU(*k, idKicauan-1));
+            DisplaySatuKicau(l, ELMTLISTKICAU(*k, idKicauan-1));
         } else {
             printf("Kicauan dengan ID = %d bukan milikmu!\n", idKicauan);
         }

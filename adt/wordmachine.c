@@ -3,7 +3,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include "header/boolean.h"
 #include "header/charmachine.h"
 #include "header/wordmachine.h"
@@ -314,25 +313,4 @@ Word splitCommand(Word *w, Word command, int kataKe){
     }
     w->Length = length + 1;
     return *w;
-}
-
-char* MergeString(char* str1, char* str2) {
-    // Calculate the lengths of the input strings
-    size_t len1 = strlen(str1);
-    size_t len2 = strlen(str2);
-
-    // Allocate memory for the merged string
-    char* merged = (char*)malloc((len1 + len2 + 1) * sizeof(char));
-
-    // Check if memory allocation was successful
-    if (merged == NULL) {
-        fprintf(stderr, "Memory allocation failed");
-        return NULL;
-    }
-
-    // Copy the contents of str1 and str2 into the merged string
-    strcpy(merged, str1);
-    strcat(merged, str2);
-
-    return merged;
 }
