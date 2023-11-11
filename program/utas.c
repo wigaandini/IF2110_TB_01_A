@@ -117,9 +117,12 @@ void HAPUS_UTAS(int idUtas, int indexUtas, ListLinierUtas *listUtasPers, ListUta
             if(indexUtas == 0){
                 printf("Anda tidak bisa menghapus kicauan utama!\n");
             }
-            else if (indexUtas == INDEXUTAS(INFO(P))){
+            else if (isIdxUtasPersValid(*listUtasPers, indexUtas)){
                 printf("Kicauan sambungan berhasil dihapus!\n");
                 deleteAtPers(listUtasPers, indexUtas, u);
+            }
+            else{
+                printf("Kicauan sambungan dengan index 3 tidak ditemukan pada utas!\n");
             }
         }
         else{
@@ -129,6 +132,21 @@ void HAPUS_UTAS(int idUtas, int indexUtas, ListLinierUtas *listUtasPers, ListUta
     else{
         printf("Utas tidak ditemukan!\n");
     }   
+}
+
+
+void CETAK_UTAS(ListStatikUser l, ListUtas k, ListLinierUtas u, int idUser, int idUtas){
+    if(isIdUtasGlobalValid(idUtas)){
+        if(UserTipe(l, idAuthor-1) == PUBLIK){
+            printf("Akun yang membuat utas ini adalah akun privat! Ikuti dahulu akun ini untuk melihat utasnya!\n");
+        }
+        else{
+            DisplayUtasPers(l, k, u, idUser, idUtas);
+        }
+    }
+    else{
+        printf("Utas tidak ditemukan!\n");
+    }
 }
 
 int main(){
