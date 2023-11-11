@@ -408,3 +408,24 @@ void pTranspose(Matrix *m){
 }
 /* I.S. m terdefinisi dan IsSquare(m) */
 /* F.S. m "di-transpose", yaitu setiap elemen m(i,j) ditukar nilainya dengan elemen m(j,i) */
+
+void displayMatrixFoto(Matrix foto, Matrix warnaFoto){
+    int i, j;
+    for(i = 0; i < 5; i++){
+        for(j = 0; j < 5; j++){
+            if(ELMT(warnaFoto, i, j) == 'R'){
+                print_red(ELMT(foto, i, j));
+            }
+            else if (ELMT(warnaFoto, i, j) == 'G') {
+                print_green(ELMT(foto, i, j));
+            }
+            else if (ELMT(warnaFoto, i, j) == 'B') {
+                print_blue(ELMT(foto, i, j));
+            }
+
+            if (j == getLastIdxCol(foto)) {
+                printf("\n");
+            }
+        }
+    }
+}

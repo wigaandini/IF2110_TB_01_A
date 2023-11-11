@@ -16,7 +16,7 @@
 /* Indeks tak terdefinisi*/
 
 /* Definisi elemen dan koleksi objek */
-typedef int ElTypeDIN; /* type elemen list */
+typedef char ElTypeDIN; /* type elemen list */     // Diubah jadi char untuk noHP user (ucup)
 typedef int IdxType;
 typedef struct
 {
