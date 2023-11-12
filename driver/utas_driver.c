@@ -29,7 +29,7 @@ int main(){
         
         if(compareString(command,"UTAS")){
             idKicau = WordToInt(splitCommand(&w, currentWord, 2));
-            UTAS(idKicau, &listKicau, &listUtas, &listUtasGlobal, idUser, &u);
+            BIKIN_UTAS(idKicau, &listKicau, &listUtas, &listUtasGlobal, idUser, &u);
         }
         else if(compareString(command,"SAMBUNG_UTAS")){
             idUtas = WordToInt(splitCommand(&w, currentWord, 2));
