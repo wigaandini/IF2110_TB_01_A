@@ -7,6 +7,7 @@
 #include "../adt/listdinkicauan.c"
 #include "../adt/liststatikuser.c"
 #include "../adt/charmachine.c"
+#include "../program/utas.c"
 
 
 int main(){
