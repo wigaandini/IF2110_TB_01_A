@@ -5,9 +5,10 @@
 #include "../adt/header/wordmachine.h"
 #include "../adt/header/listlinierutas.h"
 #include "../adt/header/listdinkicauan.h"
+#include "../adt/header/liststatikuser.h"
+#include "../adt/header/charmachine.h"
 
-
-void UTAS(int idKicau, ListKicauan *listKicau, ListLinierUtas *listUtasPers, ListUtas *listUtasGlobal, int idAuthor, UtasType *u){
+void BIKIN_UTAS(int idKicau, ListKicauan *listKicau, ListLinierUtas *listUtasPers, ListUtas *listUtasGlobal, int idAuthor, UtasType *u){
     int indexUtas;
     Word text;
     DATETIME waktu;
@@ -19,7 +20,7 @@ void UTAS(int idKicau, ListKicauan *listKicau, ListLinierUtas *listUtasPers, Lis
             printf("\n");
 
             text = currentWord;
-            indexUtas = length(*listUtas) + 1;
+            indexUtas = length(*listUtasPers) + 1;
 
             time_t current_time;
             time(&current_time);
@@ -32,7 +33,7 @@ void UTAS(int idKicau, ListKicauan *listKicau, ListLinierUtas *listUtasPers, Lis
             Day(waktu) = timeinfo->tm_mday;
             Time(waktu) = DetikToTIME(current_time);
 
-            CreateUtas(u, idKicau, idAuthor, indexUtas, text, waktu);
+            CreateUtas(u, idAuthor, indexUtas, text, waktu);
             insertLastGlobal(listUtasGlobal, ELMTLISTKICAU(*listKicau, idKicau-1));
             insertLastPers(listUtasPers, u);
 
@@ -43,7 +44,7 @@ void UTAS(int idKicau, ListKicauan *listKicau, ListLinierUtas *listUtasPers, Lis
                 STARTSENTENCE();
                 printf("\n");
 
-                CreateUtas(u, idKicau, idAuthor, indexUtas, text, waktu);
+                CreateUtas(u, idAuthor, indexUtas, text, waktu);
                 insertLastPers(listUtasPers, u);
 
                 printf("Apakah Anda ingin melanjutkan utas ini? (YA/TIDAK) ");
@@ -67,9 +68,8 @@ void UTAS(int idKicau, ListKicauan *listKicau, ListLinierUtas *listUtasPers, Lis
 void SAMBUNG_UTAS(int idUtas, int indexUtas, ListLinierUtas *listUtasPers, ListUtas *listUtasGlobal, int idAuthor, UtasType *u){
     Word text;
     DATETIME waktu;
-    int indexUtas;
-    if(isIdUtasGlobalValid(idUtas)){
-        if(IDAUTHOR(ELMTLISTKICAU(*listKicau, idKicau-1)) == idAuthor){
+    if(isIdUtasGlobalValid(*listUtasGlobal, idUtas)){
+        if(IDAUTHOR(ELMTLISTUTAS(*listUtasGlobal, idUtas-1)) == idAuthor){
             if(indexUtas == getLastIdxUtasPers(*listUtasPers)){
                 printf("Masukkan kicauan:\n");
                 STARTSENTENCE();
@@ -87,7 +87,7 @@ void SAMBUNG_UTAS(int idUtas, int indexUtas, ListLinierUtas *listUtasPers, ListU
                 Day(waktu) = timeinfo->tm_mday;
                 Time(waktu) = DetikToTIME(current_time);
 
-                CreateUtas(u, idKicau, idAuthor, indexUtas, text, waktu);
+                CreateUtas(u, idAuthor, indexUtas, text, waktu);
                 insertLastPers(listUtasPers, u);
             }
             else if(indexUtas > getLastIdxUtasPers(*listUtasPers)){
@@ -110,10 +110,9 @@ void SAMBUNG_UTAS(int idUtas, int indexUtas, ListLinierUtas *listUtasPers, ListU
 void HAPUS_UTAS(int idUtas, int indexUtas, ListLinierUtas *listUtasPers, ListUtas *listUtasGlobal, int idAuthor, UtasType *u){
     Word text;
     DATETIME waktu;
-    int indexUtas;
     Address p = FIRST(*listUtasPers);
-    if(isIdUtasGlobalValid(idUtas)){
-        if(IDAUTHOR(ELMTLISTKICAU(*listKicau, idKicau-1)) == idAuthor){
+    if(isIdUtasGlobalValid(*listUtasGlobal, idUtas)){
+        if(IDAUTHOR(ELMTLISTUTAS(*listUtasGlobal, idUtas-1)) == idAuthor){
             if(indexUtas == 0){
                 printf("Anda tidak bisa menghapus kicauan utama!\n");
             }
@@ -135,13 +134,13 @@ void HAPUS_UTAS(int idUtas, int indexUtas, ListLinierUtas *listUtasPers, ListUta
 }
 
 
-void CETAK_UTAS(ListStatikUser l, ListUtas k, ListLinierUtas u, int idUser, int idUtas){
-    if(isIdUtasGlobalValid(idUtas)){
-        if(UserTipe(l, idAuthor-1) == PUBLIK){
+void CETAK_UTAS(ListStatikUser l, ListUtas listUtasGlobal, ListLinierUtas listUtasPers, int idUser, int idUtas){
+    if(isIdUtasGlobalValid(listUtasGlobal, idUtas)){
+        if(UserTipe(l, idUser - 1) == PUBLIK){
             printf("Akun yang membuat utas ini adalah akun privat! Ikuti dahulu akun ini untuk melihat utasnya!\n");
         }
         else{
-            DisplayUtasPers(l, k, u, idUser, idUtas);
+            DisplayUtasPers(l, listUtasGlobal, listUtasPers, idUser, idUtas);
         }
     }
     else{
@@ -151,44 +150,6 @@ void CETAK_UTAS(ListStatikUser l, ListUtas k, ListLinierUtas u, int idUser, int 
 
 
 
-int main(){
-    Word w, command;
-    ListLinierUtas listUtas;
-    ListUtas listUtasGlobal;
-    ListKicauan listKicau;
-    ListStatikUser listUser;
-    UtasType u;
-    int idUser, idKicau, idUtas, index;
-
-    CreateListUtasGLobal(&listUtasGlobal, CAPACITYMAXLISTKICAUAN);
-
-    idUser = 1; // sementara, nantinya nyesuaiin sama user yg lagi login
-    do {      
-        printf(">> ");
-        STARTSENTENCE();
-        command = splitCommand(&w, currentWord, 1);
-        
-        if(compareString(command,"UTAS")){
-            idKicau = WordToInt(splitCommand(&w, currentWord, 2));
-            UTAS(idKicau, &listKicau, &listUtas, &listUtasGlobal, idUser, &u);
-        }
-        else if(compareString(command,"SAMBUNG_UTAS")){
-            idUtas = WordToInt(splitCommand(&w, currentWord, 2));
-            index = WordToInt(splitCommand(&w, currentWord, 3));
-            SAMBUNG_UTAS(idUtas, index, &listUtas, &listUtasGlobal, idUser, &u);
-        }
-        else if(compareString(command,"HAPUS_UTAS")){
-            idUtas = WordToInt(splitCommand(&w, currentWord, 2));
-            index = WordToInt(splitCommand(&w, currentWord, 3));
-            HAPUS_UTAS(idUtas, index, &listUtas, &listUtasGlobal, idUser, &u);
-        }
-        else if(compareString(command,"CETAK_UTAS")){
-            idUtas = WordToInt(splitCommand(&w, currentWord, 2));
-            CETAK_UTAS(listUser, listUtasGlobal, listUtas, idUser, idUtas);
-        }
-        
-    } while (!compareString(currentWord, "EXIT"));
-}
 
 // int main(){
 //     Word w;
