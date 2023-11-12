@@ -1,46 +1,49 @@
-#include "../adt/liststatikuser.c"
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include "../adt/header/boolean.h"
 #include "../adt/wordmachine.c"
-#include "../adt/charmachine.c"
-#include "../adt/matrix.c"
 #include "../adt/listlinierutas.c"
-#include "../adt/pcolor.c"
-#include "../adt/listdin.c"
-#include "../program/utas.c"
 #include "../adt/listdinkicauan.c"
+#include "../adt/liststatikuser.c"
+#include "../adt/charmachine.c"
 
-int main() {
-    Word w, command, kata, kata2;
-    ListKicauan k;
-    ListStatikUser l;
-    Kicauan tweet;
-    int idUser, idKicauan;
-    FriendMatrix m;
 
-    CreateListGlobalKicauan(&k, CAPACITYMAXLISTKICAUAN);
+int main(){
+    Word w, command;
+    ListLinierUtas listUtas;
+    ListUtas listUtasGlobal;
+    ListKicauan listKicau;
+    ListStatikUser listUser;
+    UtasType u;
+    int idUser, idKicau, idUtas, index;
+
+    CreateListUtasGLobal(&listUtasGlobal, CAPACITYMAXLISTKICAUAN);
 
     idUser = 1; // sementara, nantinya nyesuaiin sama user yg lagi login
     do {      
         printf(">> ");
         STARTSENTENCE();
-        command = currentWord;
-        kata = splitCommand(&w, command, 1);
-
-        if (command.Length>kata.Length) {
-            kata2 = splitCommand(&w, command, 2);
-            idKicauan = WordToInt(kata2);
-        } 
+        command = splitCommand(&w, currentWord, 1);
         
-        if(compareString(kata,"KICAU")){
-            Berkicau(l, &k, &tweet, idUser);
+        if(compareString(command,"UTAS")){
+            idKicau = WordToInt(splitCommand(&w, currentWord, 2));
+            UTAS(idKicau, &listKicau, &listUtas, &listUtasGlobal, idUser, &u);
         }
-        else if(compareString(kata,"KICAUAN")){
-            DisplayKicauan(l, k, idUser, m);
+        else if(compareString(command,"SAMBUNG_UTAS")){
+            idUtas = WordToInt(splitCommand(&w, currentWord, 2));
+            index = WordToInt(splitCommand(&w, currentWord, 3));
+            SAMBUNG_UTAS(idUtas, index, &listUtas, &listUtasGlobal, idUser, &u);
         }
-        else if(compareString(kata,"SUKA_KICAUAN")){
-            SUKA_KICAUAN(l, &k, idKicauan, idUser, m);
+        else if(compareString(command,"HAPUS_UTAS")){
+            idUtas = WordToInt(splitCommand(&w, currentWord, 2));
+            index = WordToInt(splitCommand(&w, currentWord, 3));
+            HAPUS_UTAS(idUtas, index, &listUtas, &listUtasGlobal, idUser, &u);
         }
-        else if(compareString(kata,"UBAH_KICAUAN")){
-            UBAH_KICAUAN(l, &k, idKicauan, idUser);
+        else if(compareString(command,"CETAK_UTAS")){
+            idUtas = WordToInt(splitCommand(&w, currentWord, 2));
+            CETAK_UTAS(listUser, listUtasGlobal, listUtas, idUser, idUtas);
         }
         
     } while (!compareString(currentWord, "EXIT"));
+}
