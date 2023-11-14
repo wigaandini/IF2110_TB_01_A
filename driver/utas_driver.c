@@ -14,6 +14,7 @@
 #include "../adt/matrix.c"
 #include "../adt/listdin.c"
 #include "../adt/pcolor.c"
+#include "../program/user.c"
 
 int main(){
     Word w, command, kata;
@@ -54,6 +55,8 @@ int main(){
             idUtas = WordToInt(splitCommand(&w, currentWord, 2));
             CETAK_UTAS(listUser, listUtasGlobal, listUtas, idUser, idUtas);
         }
-        
-    } while (!compareString(currentWord, "EXIT"));
+        else if(compareString(kata, "TUTUP_PROGRAM")){
+            TUTUP_PROGRAM();
+        }
+    } while (!compareString(kata, "TUTUP_PROGRAM"));
 }
