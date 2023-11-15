@@ -97,12 +97,12 @@ void ganti_profil(ListStatikUser UserData, int id_login) {
     // Meminta masukkan Weton
     printf("Masukkan Weton: \n");
     STARTSENTENCE();
-    // LowerCase();        // Ini fungsinya blm jadi
+    LowerCase();        // Ini fungsinya udah bisa dipake belom???
     while (!compareString(currentWord, "pahing") && !compareString(currentWord, "kliwon") && !compareString(currentWord, "wage") && !compareString(currentWord, "pon") && !compareString(currentWord, "legi") && !compareString(currentWord, "")) {
         printf("\nWeton yang dimasukkan tidak valid!\n\n");
         printf("Masukkan Weton: \n");
         STARTSENTENCE();
-        // LowerCase();
+        LowerCase();
     }
     printf("\n");
     // Perbarui Weton
@@ -116,7 +116,7 @@ void ganti_profil(ListStatikUser UserData, int id_login) {
         UserWeton(UserData, id_login-1) = PON;
     } else if (compareString(currentWord, "legi")) {
         UserWeton(UserData, id_login-1) = LEGI;
-    } else if (compareString(currentWord, "")) {        // Pastiin kalo fungsi compareString udah nge handle kasus string kosong
+    } else if (compareString(currentWord, "")) { 
         UserWeton(UserData, id_login-1) = EMPTYWETON;
     }
 
