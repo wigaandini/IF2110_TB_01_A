@@ -4,6 +4,7 @@
 #define MATRIX_H
 
 #include "boolean.h"
+#include "pcolor.h"
 
 /* Ukuran maksimum baris dan kolom */
 #define ROW_CAP 5
@@ -133,5 +134,8 @@ Matrix transpose(Matrix m);
 void pTranspose(Matrix *m);
 /* I.S. m terdefinisi dan IsSquare(m) */
 /* F.S. m "di-transpose", yaitu setiap elemen m(i,j) ditukar nilainya dengan elemen m(j,i) */
+
+void displayMatrixFoto(Matrix foto, Matrix warnaFoto);
+// Melakukan display foto profil pengguna dengan warna fotonya
 
 #endif

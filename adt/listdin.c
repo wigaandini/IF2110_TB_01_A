@@ -12,7 +12,7 @@
 /* ********** KONSTRUKTOR ********** */
 /* Konstruktor : create list kosong  */
 void CreateListDin(ListDin *l, int capacity){
-    BUFFER(*l) = (int*) malloc(capacity*sizeof(int));
+    BUFFER(*l) = (char*) malloc(capacity*sizeof(char));     // Diubah jadi char untuk NoHP user (ucup)
     CAPACITY(*l) = capacity;
     NEFF(*l) = 0;
 }

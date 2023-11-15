@@ -28,7 +28,7 @@ void CreateListUtasPers(ListLinierUtas *l){
 /* I.S. sembarang             */
 /* F.S. Terbentuk list kosong */
 
-void CreateListUtasGLobal(ListUtas *l, int capacity){
+void CreateListUtasGlobal(ListUtas *l, int capacity){
     BUFFERLISTUTAS(*l) = (UtasType*) malloc(capacity*sizeof(UtasType));
     CAPACITYUTAS(*l) = CAPACITYMAXLISTUTAS;
     NEFFLISTUTAS(*l) = 0;
@@ -36,13 +36,13 @@ void CreateListUtasGLobal(ListUtas *l, int capacity){
 /* Menyimpan seluruh utas yang telah dibuat */
 /* Prekondisi : list kosong */
 
-void CreateUtas(UtasType *u, int idKicau, int idAuthor, int indexUtas, Word text, DATETIME waktu){
-    IDKICAU(*u) = idKicau;
-    IDAUTHOR(*u) = idAuthor;
-    INDEXUTAS(*u) = indexUtas;
-    TEXT(*u) = text;
-    WAKTU(*u) = waktu;
-    NEXT(*u) = NULL;
+void CreateUtas(UtasType *u, int idAuthor, int indexUtas, Word text, DATETIME waktu){
+    Address p = newNode(*u);
+    idAuthor(*u) = idAuthor;
+    idxUtas(*u) = indexUtas;
+    Text(*u) = text;
+    Waktu(*u) = waktu;
+    NEXT(p) = NULL;
 }
 /* I.S. sembarang             */
 /* F.S. Terbentuk utas dengan elemen yang diinput */
@@ -72,8 +72,8 @@ void dealocateListUtasGlobal(ListUtas *l){
 /* ********** OPERASI LAIN ********** */
 void copyListUtas(ListUtas lIn, ListUtas *lOut){
     IdxType i;
-    dealocateListUtas(lOut);
-    CreateListGlobalUtas(lOut, CAPACITYUTAS(lIn));
+    dealocateListUtasGlobal(lOut);
+    CreateListUtasGlobal(lOut, CAPACITYUTAS(lIn));
 
     for(i = 0; i < NEFFLISTUTAS(lIn); i++){
         ELMTLISTUTAS(*lOut, i) = ELMTLISTUTAS(lIn, i);
@@ -91,11 +91,11 @@ void expandListUtas(ListUtas *l, int num){
     int newNEFF;
     IdxType i;
 
-    CreateListGlobalUtas(&new, CAPACITYUTAS(*l));
+    CreateListUtasGlobal(&new, CAPACITYUTAS(*l));
     copyListUtas(*l,&new);
     newNEFF = NEFFLISTUTAS(*l);
-    dealocateListUtas(l);
-    CreateListGlobalUtas(l, CAPACITYUTAS(new)+num);
+    dealocateListUtasGlobal(l);
+    CreateListUtasGlobal(l, CAPACITYUTAS(new)+num);
     NEFFLISTUTAS(*l) = newNEFF;
 
     for(i = 0; i < newNEFF; i++){
@@ -114,7 +114,7 @@ void insertLastGlobal(ListUtas *l, Kicauan val){
     if (NEFFLISTUTAS(*l) + 1 > 3 * CAPACITYUTAS(*l) / 4) {  // Di modifikasi agar capacity otomatis langsung menyesuaikan dengan jumlah elemen
         expandListUtas(l, CAPACITYUTAS(*l));    // Capacity dikali 2
     }
-    ELMTLISTUTAS(*l, getLastIdxUtas(*l)+1) = val;
+    ELMTLISTUTAS(*l, getLastIdxUtasGlobal(*l)+1) = val;
     NEFFLISTUTAS(*l)++;
 }
 
@@ -151,7 +151,7 @@ int indexOfPers(ListLinierUtas l, UtasType val){
     int i = 0;
     p = FIRST(l);
     while (p != NULL && !found){
-        if(INFO(p).id == val.id && INFO(p).text == val.text && INFO(p).waktu.DD == val.waktu.DD && INFO(p).waktu.MM == val.waktu.MM && INFO(p).waktu.YYYY == val.waktu.YYYY && INFO(p).waktu.T.HH == val.waktu.T.HH && INFO(p).waktu.T.MM == val.waktu.T.MM && INFO(p).waktu.T.SS == val.waktu.T.SS){
+        if(INFO(p).idAuthor == val.idAuthor && INFO(p).indexUtas == val.indexUtas && INFO(p).text == val.text && INFO(p).waktu.DD == val.waktu.DD && INFO(p).waktu.MM == val.waktu.MM && INFO(p).waktu.YYYY == val.waktu.YYYY && INFO(p).waktu.T.HH == val.waktu.T.HH && INFO(p).waktu.T.MM == val.waktu.T.MM && INFO(p).waktu.T.SS == val.waktu.T.SS){
             found = true;
         }
         else{
@@ -163,13 +163,13 @@ int indexOfPers(ListLinierUtas l, UtasType val){
         return i;
     }
     else{
-        return IDX_UNDEF;
+        return IDXUNDEF;
     }
 }
 /* I.S. l, val terdefinisi */
 /* F.S. Mencari apakah ada elemen list l yang bernilai val */
 /* Jika ada, mengembalikan indeks elemen pertama l yang bernilai val */
-/* Mengembalikan IDX_UNDEF jika tidak ditemukan */
+/* Mengembalikan IDXUNDEF jika tidak ditemukan */
 
 /* ********** Test Indeks yang valid ********** */
 boolean isIdUtasGlobalValid(ListUtas l, int id){
@@ -195,7 +195,7 @@ void insertFirstPers(ListLinierUtas *l, UtasType val){
 void insertLastPers(ListLinierUtas *l, UtasType val){
     Address p, last;
     if (isListUtasPersEmpty(*l)){
-        insertFirst(l, val);
+        insertFirstPers(l, val);
     }
     else{
         p = newNode(val);
@@ -217,7 +217,7 @@ void insertAtPers(ListLinierUtas *l, UtasType val, int idx){
     int i = 0;
     Address p, loc;
     if (idx == 0){
-        insertFirst(l, val);
+        insertFirstPers(l, val);
     }
     else{
         p = newNode(val);
@@ -272,7 +272,7 @@ void deleteAtPers(ListLinierUtas *l, int idx, UtasType *val){
     int i = 0;
     Address p, loc;
     if (idx == 0){
-        deleteFirst(l, val);
+        deleteFirstPers(l, val);
     }
     else{
         loc = FIRST(*l);
@@ -292,30 +292,6 @@ void deleteAtPers(ListLinierUtas *l, int idx, UtasType *val){
 
 
 /****************** PROSES SEMUA ELEMEN LIST ******************/
-void displayListPers(ListLinierUtas l){
-    if(isListUtasPersEmpty(l)){
-        printf("[]");
-    }
-    else{
-        printf("[");
-        Address p = FIRST(l);
-        while (p != NULL){
-            printf("%d", INFO(p));
-            p = NEXT(p);
-            if (p != NULL){
-                printf(",");
-            }
-        }
-        printf("]");
-    }
-}
-// void printInfo(ListLinierUtas l);
-/* I.S. List mungkin kosong */
-/* F.S. Jika list tidak kosong, isi list dicetak ke kanan: [e1,e2,...,en] */
-/* Contoh : jika ada tiga elemen bernilai 1, 20, 30 akan dicetak: [1,20,30] */
-/* Jika list kosong : menulis [] */
-/* Tidak ada tambahan karakter apa pun di awal, akhir, atau di tengah */
-
 int length(ListLinierUtas l){
     int count = 0;
     Address p = FIRST(l);
@@ -327,58 +303,19 @@ int length(ListLinierUtas l){
 }
 /* Mengirimkan banyaknya elemen list; mengirimkan 0 jika list kosong */
 
-/****************** PROSES TERHADAP LIST ******************/
-ListLinierUtas concat(ListLinierUtas l1, ListLinierUtas l2){
-    Address p;
-    List lnew;
-    CreateList(&lnew);
-    p = FIRST(l1);
-    // p = l1;
-    while (p != NULL){
-        insertLast(&lnew, INFO(p));
-        p = NEXT(p);
-    }
-    p = FIRST(l2) ;
-    while (p != NULL){
-        insertLast(&lnew, INFO(p));
-        p = NEXT(p);
-    }
-    return lnew;
-}
-/* I.S. l1 dan l2 sembarang */
-/* F.S. l1 dan l2 kosong, l3 adalah hasil konkatenasi l1 & l2 */
-/* Konkatenasi dua buah list : l1 dan l2    */
-/* menghasilkan l3 yang baru (dengan elemen list l1 dan l2 secara beurutan). */
-/* Tidak ada alokasi/dealokasi pada prosedur ini */
-
-/****************** PENCARIAN SEBUAH ELEMEN LIST ******************/
-boolean fSearch(ListLinierUtas L, Address P){
-    boolean found = false;
-    Address src = FIRST(L);
-    while (src != NULL && !found){
-        if (src == P){
-            found = true;
-        }
-        else{
-            src = NEXT(src);
-        }
-    }
-    return found;
-}
-
 /***************** FUNGSI dan PROSEDUR TAMBAHAN **************/
 void deleteAll(ListLinierUtas *l){
     Address p = FIRST(*l);
     UtasType val;
     while(p != NULL){
-        deleteFirst(l, &val);
+        deleteFirstPers(l, &val);
         p = NEXT(p);
     }
     *l = NULL;
 }
 /* Delete semua elemen list dan alamat elemen di-dealokasi */
 
-void copyList(ListLinierUtas *l1, ListLinierUtas *l2){
+void copyListUtasPers(ListLinierUtas *l1, ListLinierUtas *l2){
     *l2 = *l1;
     // CreateList(l2);
     // FIRST(*l2) = FIRST(*l1);
@@ -387,139 +324,15 @@ void copyList(ListLinierUtas *l1, ListLinierUtas *l2){
 /* L1 dan L2 "menunjuk" kepada list yang sama.*/
 /* Tidak ada alokasi/dealokasi elemen */
 
-void inverseList(ListLinierUtas *l){
-    if(!isListUtasPersEmpty(*l)){
-        int n = length(*l);
-        int i;
-        Address p = *l;
-        Address prev;
-        Address last;
-        while(NEXT(p)!= NULL){
-            p = NEXT(p);
-        }
-        last = p;
-        while (p != *l){
-            prev = *l;
-            while(NEXT(prev) != p){
-                prev = NEXT(prev);
-            }
-            NEXT(p) = prev;
-            p = prev;
-        }
-        NEXT(p) = NULL;
-        *l = last;
-    }
-}
-/* I.S. sembarang. */
-/* F.S. elemen list dibalik : */
-/* Elemen terakhir menjadi elemen pertama, dan seterusnya. */
-/* Membalik elemen list, tanpa melakukan alokasi/dealokasi. */
-
-void splitList(ListLinierUtas *l1, ListLinierUtas *l2, ListLinierUtas l){
-    CreateList(l1);
-    CreateList(l2);
-    int half = length(l) / 2;
-    int cnt = 0;
-    Address p = l;
-    while(p != NULL){
-        if(cnt < half){
-            insertLast(l1, INFO(p));
-        }
-        else{
-            insertLast(l2, INFO(p));
-        }
-        cnt++;
-        p = NEXT(p);
-    }
-}
-/* I.S. l mungkin kosong */
-/* F.S. Berdasarkan L, dibentuk dua buah list l1 dan l2 */
-/* L tidak berubah: untuk membentuk l1 dan l2 harus alokasi */
-/* l1 berisi separuh elemen L dan l2 berisi sisa elemen L */
-/* Jika elemen L ganjil, maka separuh adalah length(L) div 2 */
-
-// float average(ListLinierUtas l){
-//     int count = 0;
-//     UtasType sum = 0;
-//     Address p = FIRST(l);
-//     while(p != NULL){
-//         sum += INFO(p);
-//         count ++;
-//     }
-//     return ((float)sum/count);
-// }
-// /* Mengirimkan nilai rata-rata info(P) */
-
-ListLinierUtas fInverseList(ListLinierUtas l){
-    ListLinierUtas lnew;
-    CreateList(&lnew);
-    cpAllocList(l, &lnew);
-    inverseList(&lnew);
-    return lnew;
-}
-/* Mengirimkan list baru, hasil invers dari L */
-/* dengan menyalin semua elemn list. Alokasi mungkin gagal. */
-/* Jika alokasi gagal, hasilnya list kosong */
-/* dan semua elemen yang terlanjur di-alokasi, harus didealokasi */
-
-ListLinierUtas fCopyList(ListLinierUtas l){
-    List lnew;
-    Address p, prec, pnew;
-    boolean berhasil;
-
-    /* ALGORITMA */
-    lnew = (Address) malloc(sizeof(Node));
-    
-    if (lnew != NULL) {
-        CreateList(&lnew);
-
-        berhasil = true;
-
-        p = FIRST(l);
-        prec = NULL;
-        while (p != NULL && berhasil) {
-            pnew = newNode(INFO(p));
-            if (pnew != NULL) {
-                if (prec == NULL) {
-                    FIRST(lnew) = pnew;
-                } else {
-                    NEXT(prec) = pnew;
-                }
-                p = NEXT(p);
-            } else {
-                deleteAll(&lnew);
-                berhasil = false;
-            }
-            prec = pnew;
-        }
-    }
-
-    return lnew;
-}
-/* Mengirimkan list yang merupakan salinan L */
-/* dengan melakukan alokasi. */
-/* Jika ada alokasi gagal, hasilnya list kosong dan */
-/* semua elemen yang terlanjur di-alokasi, harus didealokasi */
-
-void cpAllocList(ListLinierUtas lIn, ListLinierUtas *lOut){
-    CreateList(lOut);
-    *lOut = fCopyList(lIn);
-}
-/* I.S. lIn sembarang. */
-/* F.S. Jika semua alokasi berhasil,maka lOut berisi hasil copy lIn */
-/* Jika ada alokasi yang gagal, maka lOut=Nil dan semua elemen yang terlanjur dialokasi, didealokasi */
-/* dengan melakukan alokasi elemen. */
-/* lOut adalah list kosong jika ada alokasi elemen yang gagal */
-
 void DisplaySatuUtas(UtasType u, ListStatikUser l){
-    printf("    | INDEX = %d\n", INDEXUTAS(u));
+    printf("    | INDEX = %d\n", idxUtas(u));
     printf("    | ");
-    displayString(l.data[IDAUTHOR(u)-1].nama);
+    displayString(l.data[idAuthor(u)-1].nama);
     printf("\n    | ");
-    TulisDATETIME(WAKTU(u));
+    TulisDATETIME(Waktu(u));
     printf("\n");
     printf("    | ");
-    displayWord(TEXT(u));
+    displayWord(Text(u));
     printf("\n\n");
 }
 
@@ -527,35 +340,43 @@ void DisplayUtasPers(ListStatikUser l, ListUtas k, ListLinierUtas u, int idUser,
     int idAuthor;
     Address p = FIRST(u);
     idAuthor = IDAUTHOR(ELMTLISTUTAS(k, idUtas));
-    DisplaySatuKicau(ELMTLISTUTAS(k, idUtas))
+    DisplaySatuKicau(l, ELMTLISTUTAS(k, idUtas));
     for (int i = NEFFLISTUTAS(k) - 1 ; i >= 0; i--) {
         if (idAuthor == idUser) {
-            DisplaySatuUtasS(INFO(p), l);
+            DisplaySatuUtas(INFO(p), l);
             p = NEXT(p);
         } else {
             if(UserTipe(l, idAuthor-1) == PUBLIK){
-                DisplaySatuUtasS(INFO(p), l);
+                DisplaySatuUtas(INFO(p), l);
                 p = NEXT(p);
             }
         } 
     }
 }
 
-int getLastIdxUtasPers(ListLinierUtas l, int lastIdx){
+int getLastIdxUtasPers(ListLinierUtas l){
     int i = 0;
     Address p;
     p = FIRST(l);
-    while (i < idx){
+    while (NEXT(p) != NULL){
         i ++;
         p = NEXT(p);
     }
-    return INDEXUTAS(INFO(p));
+    return idxUtas(INFO(p));
 }
 /* I.S. l terdefinisi, idx indeks yang valid dalam l, yaitu 0..length(l) */
 /* F.S. Mengembalikan nilai elemen l pada indeks idx */
 
-isIdxUtasPersValid(ListLinierUtas l, int idx){
+boolean isIdxUtasPersValid(ListLinierUtas l, int idx){
     Address p = FIRST(l);
-    
-    return(idx <= length(l));
+    boolean found = false;
+    while(p != NULL && !found){
+        if(idxUtas(INFO(p)) == idx){
+            found = true;
+        }
+        else{
+            p = NEXT(p);
+        }
+    }
+    return(found);
 }
