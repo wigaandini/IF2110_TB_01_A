@@ -180,7 +180,7 @@ void atur_jenis_akun(ListStatikUser DataUser, int id_login) {
 
     // Print jenis akun saat ini
     if (UserTipe(DataUser, id_login-1) == PUBLIK) {
-        printf("Saat ini, akun Anda adalah akun Publik.\nIngin mengubah ke akun Privat?\n(YA/TIDAK)");
+        printf("Saat ini, akun Anda adalah akun Publik.\nIngin mengubah ke akun Privat?\n(YA/TIDAK) ");
     } else {
         printf("Saat ini, akun Anda adalah akun Privat.\nIngin mengubah ke akun Publik?\n(YA/TIDAK) ");
     }
