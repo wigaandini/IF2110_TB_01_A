@@ -75,7 +75,7 @@ typedef struct {
 #define UserSandi(l, i, j)    (l).data[(i)].sandi[j]
 #define UserBio(l, i, j)      (l).data[(i)].bio[j]
 #define UserNoHP(l, i, j)     (l).data[i].noHP.buffer[j]
-#define UserNoHPLength(l, i)  (l).data[i].noHP.nEff
+#define UserNoHPNeff(l, i)  (l).data[i].noHP.nEff
 #define UserWeton(l, i)       (l).data[i].weton
 #define UserTipe(l, i)        (l).data[i].tipe
 #define UserFoto(l, i)        (l).data[i].foto

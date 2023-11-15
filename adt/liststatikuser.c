@@ -91,7 +91,7 @@ void printListofUser(ListStatikUser l){
             printf("Bio\t: %s\n", l.data[i].bio);
 
             printf("No. HP\t: ");
-            for (int j=0; j<UserNoHPLength(l, i); j++) {
+            for (int j=0; j<UserNoHPNeff(l, i); j++) {
                 printf("%d", UserNoHP(l, i, j));
             }
             printf("\n");
