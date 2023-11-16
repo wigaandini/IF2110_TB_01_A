@@ -18,9 +18,7 @@ void CreateListStatikUser(ListStatikUser *l){
             UserBio(*l, i, j) = '\0';
         }
 
-        ListDin noHP;
-        CreateListDin(&noHP, 16);
-        l->data->noHP = noHP;
+        CreateListDin(&(l->data[i].noHP), 16);
 
         UserId(*l, i) = i+1;
 
@@ -138,8 +136,8 @@ void printListofUser(ListStatikUser l){
             printf("Foto dengan warna:\n");
             displayMatrixFoto(UserFoto(l, i), UserWarnaFoto(l, i));
 
-            // printf("Warna foto:\n");
-            // displayMatrix(UserWarnaFoto(l, i));
+            printf("Warna foto:\n");
+            displayMatrix(UserWarnaFoto(l, i));
 
             printf("--------------------\n");            
         }
@@ -210,17 +208,17 @@ void addUser(ListStatikUser *l, Word name, Word pw)         // Ini kayanya masuk
     }
 }
 
-boolean checkUserExist(ListStatikUser l, Word name){
-    int i = 0;
-    boolean found = false;
-    while(!found && i < banyakUser(l)){
-        if(l.data[i].nama == WordToString(name)){
-            found = true;
-        }
-        i++;
-    }
-    return found;
-}
+// boolean checkUserExist(ListStatikUser l, Word name){
+//     int i = 0;
+//     boolean found = false;
+//     while(!found && i < banyakUser(l)){
+//         if(l.data[i].nama == WordToString(name)){
+//             found = true;
+//         }
+//         i++;
+//     }
+//     return found;
+// }
 
 boolean checkPass(ListStatikUser l, Word name, Word pass){
     int i = 0;

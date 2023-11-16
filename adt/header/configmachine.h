@@ -12,8 +12,7 @@
 // extern char currentChar;
 // extern boolean EOP;
 
-void STARTconfig();
-
+void STARTconfig(char *x);
 
 void ADVconfig();
 
