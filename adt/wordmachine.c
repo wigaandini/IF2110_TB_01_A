@@ -253,36 +253,29 @@ Word splitCommand(Word *w, Word command, int kataKe){
     int i = 0, counter = 0, length = 0;
     boolean stop;
 
-    while (counter != kataKe - 1 && i < command.Length  + 1){
+    while (counter != kataKe - 1 && i < command.Length){
         stop = false;
         if (command.TabWord[i] == ' '){
             counter++;
             while (i < command.Length && !stop){
                 i++;
-                if (command.TabWord[i] != ' ')
-                {
+                if (command.TabWord[i] != ' '){
                     stop = true;
                 }
             }
         }
-        else if(command.TabWord[i] == MARK){
-            stop = true;
-        }
-        else{
+        else {
             i++;
         }
 
-        if (i == command.Length  + 1){
+        if (i == command.Length){
             counter++;
         }
     }
 
     stop = false;
-    while (!stop && i < command.Length  + 1){
+    while (!stop && i < command.Length) {
         if (command.TabWord[i] == ' '){
-            stop = true;
-        }
-        else if(command.TabWord[i] == MARK){
             stop = true;
         }
         else{
@@ -291,7 +284,8 @@ Word splitCommand(Word *w, Word command, int kataKe){
             length++;
         }
     }
-    w->Length = length + 1;
+    w->TabWord[length] = '\0';
+    w->Length = length;
     return *w;
 }
 
@@ -308,3 +302,35 @@ int lengthWord(Word w){
 boolean isEmptyWord(Word w){
     return (lengthWord(w) == 0);
 }
+
+void LowerCase(){
+    int i;
+    for(i = 0; i < currentWord.Length; i++){
+        if(currentWord.TabWord[i] >= 65 && currentWord.TabWord[i] <= 90){
+            currentWord.TabWord[i] += 32;
+        }
+    }
+}
+/* I.S. currentword terdefinisi sembarang tetapi tidak kosong */
+/* F.S. currentword menjadi lowercase di setiap karakternya */
+
+
+int countWords(Word w) {
+    int count = 0;
+    int isWord = 0;  // Flag to track if the current character is part of a word
+
+    for (int i = 0; i < w.Length; i++) {
+        // If the current character is a space or tab, set the flag to 0
+        if (w.TabWord[i] == ' ' || w.TabWord[i] == '\t') {
+            isWord = 0;
+        }
+        // If the current character is not a space or tab and the flag is 0,
+        // it means we've encountered the beginning of a new word. Increment the count.
+        else if (isWord == 0) {
+            isWord = 1;
+            count++;
+        }
+    }
+    return count;
+}
+/* Menghitung jumlah kata di suatu kalimat */

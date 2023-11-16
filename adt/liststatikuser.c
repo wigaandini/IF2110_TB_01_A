@@ -233,3 +233,8 @@ boolean checkPass(ListStatikUser l, Word name, Word pass){
     }
     return found;
 }
+
+boolean isLoggedIn(ListStatikUser l, Word currentUsername) {
+    int i = indexUser(l, currentUsername);
+    return (i != IDX_UNDEF) && (UserName(l, i, 0) != '\0');
+}

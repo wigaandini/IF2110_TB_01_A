@@ -98,4 +98,10 @@ int lengthWord(Word w);
 
 boolean isEmptyWord(Word w);
 
+void LowerCase();
+/* I.S. currentword terdefinisi sembarang tetapi tidak kosong */
+/* F.S. currentword menjadi lowercase di setiap karakternya */
+
+int countWords(Word w);
+/* Menghitung jumlah kata di suatu kalimat */
 #endif
