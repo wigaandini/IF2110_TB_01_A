@@ -70,9 +70,9 @@ void ADV(){
 
        /* Algoritma */
        retval = fscanf(pita, "%c", &currentChar);
-       EOP = (currentChar == MARK);
+       // EOP = (currentChar == MARK);
        // if (EOP){
-       //        fclose(pita);
+       //        END();
        // }
 }
 

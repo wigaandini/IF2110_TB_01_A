@@ -1,13 +1,13 @@
 /* File : listlinier.h */
 /* contoh ADT list berkait dengan representasi fisik pointer  */
 /* Representasi address dengan pointer */
-/* ElType adalah integer */
+/* UtasType adalah struct int, string, datetime*/
 
 #include <stdio.h>
 #include <stdlib.h>
 #include "header/listlinierutas.h"
 
-Address newNode(ElType val){
+Address newNode(UtasType val){
     Address p = (Address) malloc(sizeof(Node));
     if(p != NULL){
         INFO(p) = val;
@@ -22,20 +22,104 @@ Address newNode(ElType val){
 
 /* PROTOTYPE */
 /****************** PEMBUATAN LIST KOSONG ******************/
-void CreateList(List *l){
+void CreateListUtasPers(ListLinierUtas *l){
     FIRST(*l) = NULL;
 }
 /* I.S. sembarang             */
 /* F.S. Terbentuk list kosong */
 
+void CreateListUtasGlobal(ListUtas *l, int capacity){
+    BUFFERLISTUTAS(*l) = (Kicauan*) malloc(capacity*sizeof(Kicauan));
+    CAPACITYUTAS(*l) = CAPACITYMAXLISTUTAS;
+    NEFFLISTUTAS(*l) = 0;
+}
+/* Menyimpan seluruh utas yang telah dibuat */
+/* Prekondisi : list kosong */
+
+void CreateUtas(UtasType *u, int idAuthor, int indexUtas, Word text, DATETIME waktu){
+    Address p = newNode(*u);
+    idAuthor(*u) = idAuthor;
+    idxUtas(*u) = indexUtas;
+    Text(*u) = text;
+    Waktu(*u) = waktu;
+    NEXT(p) = NULL;
+}
+/* I.S. sembarang             */
+/* F.S. Terbentuk utas dengan elemen yang diinput */
+
 /****************** TEST LIST KOSONG ******************/
-boolean isEmpty(List l){
+boolean isListUtasPersEmpty(ListLinierUtas l){
     return (FIRST(l) == NULL);
 }
 /* Mengirim true jika list kosong */
 
-/****************** GETTER SETTER ******************/
-ElType getElmt(List l, int idx){
+boolean isListUtasGlobalEmpty(ListUtas l){
+    return(NEFFLISTUTAS(l) == 0);
+}
+/* Mengirimkan true jika list l kosong, mengirimkan false jika tidak */
+
+boolean isListUtasGlobalFull(ListUtas l){
+    return(NEFFLISTUTAS(l) == CAPACITYUTAS(l));
+}
+
+void dealocateListUtasGlobal(ListUtas *l){
+    free(BUFFERLISTUTAS(*l));
+    CAPACITYUTAS(*l) = 0;
+    NEFFLISTUTAS(*l) = 0;
+}
+
+/********* OPERASI LAIN ***********/
+/* ********** OPERASI LAIN ********** */
+void copyListUtas(ListUtas lIn, ListUtas *lOut){
+    IdxType i;
+    dealocateListUtasGlobal(lOut);
+    CreateListUtasGlobal(lOut, CAPACITYUTAS(lIn));
+
+    for(i = 0; i < NEFFLISTUTAS(lIn); i++){
+        ELMTLISTUTAS(*lOut, i) = ELMTLISTUTAS(lIn, i);
+    }
+
+    NEFFLISTUTAS(*lOut) = NEFFLISTUTAS(lIn);
+}
+/* I.S. lIn terdefinisi tidak kosong, lOut sembarang */
+/* F.S. lOut berisi salinan dari lIn (identik, nEff dan capacity sama) */
+/* Proses : Menyalin isi lIn ke lOut */ 
+
+/* ********* MENGUBAH UKURAN ARRAY ********* */
+void expandListUtas(ListUtas *l, int num){
+    ListUtas new;
+    int newNEFF;
+    IdxType i;
+
+    CreateListUtasGlobal(&new, CAPACITYUTAS(*l));
+    copyListUtas(*l,&new);
+    newNEFF = NEFFLISTUTAS(*l);
+    dealocateListUtasGlobal(l);
+    CreateListUtasGlobal(l, CAPACITYUTAS(new)+num);
+    NEFFLISTUTAS(*l) = newNEFF;
+
+    for(i = 0; i < newNEFF; i++){
+        ELMTLISTUTAS(*l,i) = ELMTLISTUTAS(new,i);
+    }
+}
+
+IdxType getLastIdxUtasGlobal(ListUtas l){
+    return NEFFLISTUTAS(l) - 1;
+}
+/* Prekondisi : List l tidak kosong */
+/* Mengirimkan indeks elemen l terakhir */
+
+/* *** Menambahkan elemen terakhir *** */
+void insertLastGlobal(ListUtas *l, Kicauan val){
+    if (NEFFLISTUTAS(*l) + 1 > 3 * CAPACITYUTAS(*l) / 4) {  // Di modifikasi agar capacity otomatis langsung menyesuaikan dengan jumlah elemen
+        expandListUtas(l, CAPACITYUTAS(*l));    // Capacity dikali 2
+    }
+    ELMTLISTUTAS(*l, getLastIdxUtasGlobal(*l)+1) = val;
+    NEFFLISTUTAS(*l)++;
+}
+
+/****************** GETTER SETTER ********************/
+UtasType getElmtPers(ListLinierUtas l, int idx){
     int i = 0;
     Address p;
     p = FIRST(l);
@@ -48,7 +132,7 @@ ElType getElmt(List l, int idx){
 /* I.S. l terdefinisi, idx indeks yang valid dalam l, yaitu 0..length(l) */
 /* F.S. Mengembalikan nilai elemen l pada indeks idx */
 
-void setElmt(List *l, int idx, ElType val){
+void setElmtPers(ListLinierUtas *l, int idx, UtasType val){
     int i = 0;
     Address p;
     p = FIRST(*l);
@@ -61,13 +145,13 @@ void setElmt(List *l, int idx, ElType val){
 /* I.S. l terdefinisi, idx indeks yang valid dalam l, yaitu 0..length(l) */
 /* F.S. Mengubah elemen l pada indeks ke-idx menjadi val */
 
-int indexOf(List l, ElType val){
+int indexOfPers(ListLinierUtas l, UtasType val){
     Address p;
     boolean found = false;
     int i = 0;
     p = FIRST(l);
     while (p != NULL && !found){
-        if(INFO(p).id == val.id && INFO(p).text == val.text && INFO(p).waktu.DD == val.waktu.DD && INFO(p).waktu.MM == val.waktu.MM && INFO(p).waktu.YYYY == val.waktu.YYYY && INFO(p).waktu.T.HH == val.waktu.T.HH && INFO(p).waktu.T.MM == val.waktu.T.MM && INFO(p).waktu.T.SS == val.waktu.T.SS){
+        if(INFO(p).idAuthor == val.idAuthor && INFO(p).indexUtas == val.indexUtas && compareWord(INFO(p).text, val.text) && INFO(p).waktu.DD == val.waktu.DD && INFO(p).waktu.MM == val.waktu.MM && INFO(p).waktu.YYYY == val.waktu.YYYY && INFO(p).waktu.T.HH == val.waktu.T.HH && INFO(p).waktu.T.MM == val.waktu.T.MM && INFO(p).waktu.T.SS == val.waktu.T.SS){
             found = true;
         }
         else{
@@ -79,28 +163,24 @@ int indexOf(List l, ElType val){
         return i;
     }
     else{
-        return IDX_UNDEF;
+        return IDXUNDEF;
     }
-
-    // int i = 0;
-    // Address p = FIRST(l);
-    // while (p != NULL) {
-    //     if (INFO(p) == val) {
-    //         return i;
-    //     }
-    //     p = NEXT(p);
-    //     i++;
-    // }
-    // return IDX_UNDEF;
 }
 /* I.S. l, val terdefinisi */
 /* F.S. Mencari apakah ada elemen list l yang bernilai val */
 /* Jika ada, mengembalikan indeks elemen pertama l yang bernilai val */
-/* Mengembalikan IDX_UNDEF jika tidak ditemukan */
+/* Mengembalikan IDXUNDEF jika tidak ditemukan */
+
+/* ********** Test Indeks yang valid ********** */
+boolean isIdUtasGlobalValid(ListUtas l, int id){
+    return(id <= NEFFLISTUTAS(l));
+}
+/* Mengirimkan true jika id adalah indeks yang valid utk kapasitas list l */
+/* yaitu antara indeks yang terdefinisi utk container*/
 
 /****************** PRIMITIF BERDASARKAN NILAI ******************/
 /*** PENAMBAHAN ELEMEN ***/
-void insertFirst(List *l, ElType val){
+void insertFirstPers(ListLinierUtas *l, UtasType val){
     Address p = newNode(val);
     if (p != NULL){
         NEXT(p) = FIRST(*l);
@@ -112,10 +192,10 @@ void insertFirst(List *l, ElType val){
 /* menambahkan elemen pertama dengan nilai val jika alokasi berhasil. */
 /* Jika alokasi gagal: I.S.= F.S. */
 
-void insertLast(List *l, ElType val){
+void insertLastPers(ListLinierUtas *l, UtasType val){
     Address p, last;
-    if (isEmpty(*l)){
-        insertFirst(l, val);
+    if (isListUtasPersEmpty(*l)){
+        insertFirstPers(l, val);
     }
     else{
         p = newNode(val);
@@ -133,11 +213,11 @@ void insertLast(List *l, ElType val){
 /* menambahkan elemen list di akhir: elemen terakhir yang baru */
 /* bernilai val jika alokasi berhasil. Jika alokasi gagal: I.S.= F.S. */
 
-void insertAt(List *l, ElType val, int idx){
+void insertAtPers(ListLinierUtas *l, UtasType val, int idx){
     int i = 0;
     Address p, loc;
     if (idx == 0){
-        insertFirst(l, val);
+        insertFirstPers(l, val);
     }
     else{
         p = newNode(val);
@@ -158,7 +238,7 @@ void insertAt(List *l, ElType val, int idx){
 /* yang bernilai val jika alokasi berhasil. Jika alokasi gagal: I.S.= F.S. */
 
 /*** PENGHAPUSAN ELEMEN ***/
-void deleteFirst(List *l, ElType *val){
+void deleteFirstPers(ListLinierUtas *l, UtasType *val){
     Address p = FIRST(*l);
     *val = INFO(p);
     FIRST(*l) = NEXT(p);
@@ -167,7 +247,7 @@ void deleteFirst(List *l, ElType *val){
 /* I.S. List l tidak kosong  */
 /* F.S. Elemen pertama list dihapus: nilai info disimpan pada x */
 /*      dan alamat elemen pertama di-dealokasi */
-void deleteLast(List *l, ElType *val){
+void deleteLastPers(ListLinierUtas *l, UtasType *val){
     Address p, loc;
     p = FIRST(*l);
     loc = NULL;
@@ -188,11 +268,11 @@ void deleteLast(List *l, ElType *val){
 /* F.S. Elemen terakhir list dihapus: nilai info disimpan pada x */
 /*      dan alamat elemen terakhir di-dealokasi */
 
-void deleteAt(List *l, int idx, ElType *val){
+void deleteAtPers(ListLinierUtas *l, int idx, UtasType *val){
     int i = 0;
     Address p, loc;
     if (idx == 0){
-        deleteFirst(l, val);
+        deleteFirstPers(l, val);
     }
     else{
         loc = FIRST(*l);
@@ -212,31 +292,7 @@ void deleteAt(List *l, int idx, ElType *val){
 
 
 /****************** PROSES SEMUA ELEMEN LIST ******************/
-void displayList(List l){
-    if(isEmpty(l)){
-        printf("[]");
-    }
-    else{
-        printf("[");
-        Address p = FIRST(l);
-        while (p != NULL){
-            printf("%d", INFO(p));
-            p = NEXT(p);
-            if (p != NULL){
-                printf(",");
-            }
-        }
-        printf("]");
-    }
-}
-// void printInfo(List l);
-/* I.S. List mungkin kosong */
-/* F.S. Jika list tidak kosong, isi list dicetak ke kanan: [e1,e2,...,en] */
-/* Contoh : jika ada tiga elemen bernilai 1, 20, 30 akan dicetak: [1,20,30] */
-/* Jika list kosong : menulis [] */
-/* Tidak ada tambahan karakter apa pun di awal, akhir, atau di tengah */
-
-int length(List l){
+int length(ListLinierUtas l){
     int count = 0;
     Address p = FIRST(l);
     while (p != NULL){
@@ -247,148 +303,19 @@ int length(List l){
 }
 /* Mengirimkan banyaknya elemen list; mengirimkan 0 jika list kosong */
 
-/****************** PROSES TERHADAP LIST ******************/
-List concat(List l1, List l2){
-    Address p;
-    List lnew;
-    CreateList(&lnew);
-    p = FIRST(l1);
-    // p = l1;
-    while (p != NULL){
-        insertLast(&lnew, INFO(p));
-        p = NEXT(p);
-    }
-    p = FIRST(l2) ;
-    while (p != NULL){
-        insertLast(&lnew, INFO(p));
-        p = NEXT(p);
-    }
-    return lnew;
-}
-/* I.S. l1 dan l2 sembarang */
-/* F.S. l1 dan l2 kosong, l3 adalah hasil konkatenasi l1 & l2 */
-/* Konkatenasi dua buah list : l1 dan l2    */
-/* menghasilkan l3 yang baru (dengan elemen list l1 dan l2 secara beurutan). */
-/* Tidak ada alokasi/dealokasi pada prosedur ini */
-
-/****************** PENCARIAN SEBUAH ELEMEN LIST ******************/
-boolean fSearch(List L, Address P){
-    boolean found = false;
-    Address src = FIRST(L);
-    while (src != NULL && !found){
-        if (src == P){
-            found = true;
-        }
-        else{
-            src = NEXT(src);
-        }
-    }
-    return found;
-
-    // Address now;
-    // boolean flag = false;
-    // now = L;
-    // while(now->next != NULL && !flag){
-    //     if(now==P){
-    //         flag = true;
-    //     }
-    //     now = now->next;
-    // }
-    // return flag;
-}
-/* Mencari apakah ada elemen list yang beralamat P */
-/* Mengirimkan true jika ada, false jika tidak ada */
-
-// Address searchPrec(List L, ElType X){
-//     Address p = FIRST(L);
-//     // Address p = L;
-//     Address prev;
-
-//     if(isEmpty(L) || length(L) == 1){
-//         return NULL;
-//     }
-//     while (INFO(p) != X && p != NULL){
-//         prev = p;
-//         p = NEXT(p);
-//     }
-//     if (p == NULL){
-//         return NULL;
-//     }
-//     else{
-//         return prev;
-//     }
-// }
-/* Mengirimkan address elemen sebelum elemen yang nilainya=X */
-/* Mencari apakah ada elemen list dengan Info(P)=X */
-/* Jika ada, mengirimkan address Prec, dengan Next(Prec)=P dan Info(P)=X. */
-/* Jika tidak ada, mengirimkan Nil */
-/* Jika P adalah elemen pertama, maka Prec=Nil */
-/* Search dengan spesifikasi seperti ini menghindari */
-/* traversal ulang jika setelah Search akan dilakukan operasi lain */
-
-/*** Prekondisi untuk Max/Min : List tidak kosong ***/
-// ElType max(List l){
-//     ElType maks;
-//     Address p = FIRST(l);
-//     // Address p = l;
-//     maks = INFO(p);
-//     while (p != NULL){
-//         if(INFO(p) >= maks){
-//             maks = INFO(p);
-//         }
-//         p = NEXT(p);
-//     }
-//     return maks;
-// }
-// /* Mengirimkan nilai info(P) yang maksimum */
-// Address adrMax(List l){
-//     ElType maks = max(l);
-//     Address p = FIRST(l);
-//     // Address p = l;
-//     while (p != NULL && INFO(p) != maks){
-//         p = NEXT(p);
-//     }
-//     return p;
-// }
-// /* Mengirimkan address P, dengan info(P) yang bernilai maksimum */
-// ElType min(List l){
-//     ElType minm;
-//     Address p = FIRST(l);
-//     // Address p = l;
-//     minm = INFO(p);
-//     while (p != NULL){
-//         if(INFO(p) <= minm){
-//             minm = INFO(p);
-//         }
-//         p = NEXT(p);
-//     }
-//     return minm;
-// }
-// /* Mengirimkan nilai info(P) yang minimum */
-// Address adrMin(List l){
-//     ElType minm = min(l);
-//     Address p = FIRST(l);
-//     // Address p = l;
-//     while (p != NULL && INFO(p) != minm){
-//         p = NEXT(p);
-//     }
-//     return p;
-// }
-// /* Mengirimkan address P, dengan info(P) yang bernilai minimum */
-
 /***************** FUNGSI dan PROSEDUR TAMBAHAN **************/
-void deleteAll(List *l){
+void deleteAll(ListLinierUtas *l){
     Address p = FIRST(*l);
-    ElType val;
+    UtasType val;
     while(p != NULL){
-        deleteFirst(l, &val);
+        deleteFirstPers(l, &val);
         p = NEXT(p);
     }
     *l = NULL;
 }
 /* Delete semua elemen list dan alamat elemen di-dealokasi */
 
-void copyList(List *l1, List *l2){
+void copyListUtasPers(ListLinierUtas *l1, ListLinierUtas *l2){
     *l2 = *l1;
     // CreateList(l2);
     // FIRST(*l2) = FIRST(*l1);
@@ -397,126 +324,59 @@ void copyList(List *l1, List *l2){
 /* L1 dan L2 "menunjuk" kepada list yang sama.*/
 /* Tidak ada alokasi/dealokasi elemen */
 
-void inverseList(List *l){
-    if(!isEmpty(*l)){
-        int n = length(*l);
-        int i;
-        Address p = *l;
-        Address prev;
-        Address last;
-        while(NEXT(p)!= NULL){
+void DisplaySatuUtas(UtasType u, ListStatikUser l){
+    printf("    | INDEX = %d\n", idxUtas(u));
+    printf("    | ");
+    displayString(l.data[idAuthor(u)-1].nama);
+    printf("\n    | ");
+    TulisDATETIME(Waktu(u));
+    printf("\n");
+    printf("    | ");
+    displayWord(Text(u));
+    printf("\n\n");
+}
+
+void DisplayUtasPers(ListStatikUser l, ListUtas k, ListLinierUtas u, int idUser, int idUtas){
+    int idAuthor;
+    Address p = FIRST(u);
+    idAuthor = IDAUTHOR(ELMTLISTUTAS(k, idUtas));
+    DisplaySatuKicau(l, ELMTLISTUTAS(k, idUtas));
+    for (int i = NEFFLISTUTAS(k) - 1 ; i >= 0; i--) {
+        if (idAuthor == idUser) {
+            DisplaySatuUtas(INFO(p), l);
             p = NEXT(p);
-        }
-        last = p;
-        while (p != *l){
-            prev = *l;
-            while(NEXT(prev) != p){
-                prev = NEXT(prev);
+        } else {
+            if(UserTipe(l, idAuthor-1) == PUBLIK){
+                DisplaySatuUtas(INFO(p), l);
+                p = NEXT(p);
             }
-            NEXT(p) = prev;
-            p = prev;
-        }
-        NEXT(p) = NULL;
-        *l = last;
+        } 
     }
 }
-/* I.S. sembarang. */
-/* F.S. elemen list dibalik : */
-/* Elemen terakhir menjadi elemen pertama, dan seterusnya. */
-/* Membalik elemen list, tanpa melakukan alokasi/dealokasi. */
 
-void splitList(List *l1, List *l2, List l){
-    CreateList(l1);
-    CreateList(l2);
-    int half = length(l) / 2;
-    int cnt = 0;
-    Address p = l;
-    while(p != NULL){
-        if(cnt < half){
-            insertLast(l1, INFO(p));
-        }
-        else{
-            insertLast(l2, INFO(p));
-        }
-        cnt++;
+int getLastIdxUtasPers(ListLinierUtas l){
+    int i = 0;
+    Address p;
+    p = FIRST(l);
+    while (NEXT(p) != NULL){
+        i ++;
         p = NEXT(p);
     }
+    return idxUtas(INFO(p));
 }
-/* I.S. l mungkin kosong */
-/* F.S. Berdasarkan L, dibentuk dua buah list l1 dan l2 */
-/* L tidak berubah: untuk membentuk l1 dan l2 harus alokasi */
-/* l1 berisi separuh elemen L dan l2 berisi sisa elemen L */
-/* Jika elemen L ganjil, maka separuh adalah length(L) div 2 */
+/* I.S. l terdefinisi, idx indeks yang valid dalam l, yaitu 0..length(l) */
+/* F.S. Mengembalikan nilai elemen l pada indeks idx */
 
-// float average(List l){
-//     int count = 0;
-//     ElType sum = 0;
-//     Address p = FIRST(l);
-//     while(p != NULL){
-//         sum += INFO(p);
-//         count ++;
-//     }
-//     return ((float)sum/count);
-// }
-// /* Mengirimkan nilai rata-rata info(P) */
-
-List fInverseList(List l){
-    List lnew;
-    CreateList(&lnew);
-    cpAllocList(l, &lnew);
-    inverseList(&lnew);
-    return lnew;
-}
-/* Mengirimkan list baru, hasil invers dari L */
-/* dengan menyalin semua elemn list. Alokasi mungkin gagal. */
-/* Jika alokasi gagal, hasilnya list kosong */
-/* dan semua elemen yang terlanjur di-alokasi, harus didealokasi */
-
-List fCopyList(List l){
-    List lnew;
-    Address p, prec, pnew;
-    boolean berhasil;
-
-    /* ALGORITMA */
-    lnew = (Address) malloc(sizeof(Node));
-    
-    if (lnew != NULL) {
-        CreateList(&lnew);
-
-        berhasil = true;
-
-        p = FIRST(l);
-        prec = NULL;
-        while (p != NULL && berhasil) {
-            pnew = newNode(INFO(p));
-            if (pnew != NULL) {
-                if (prec == NULL) {
-                    FIRST(lnew) = pnew;
-                } else {
-                    NEXT(prec) = pnew;
-                }
-                p = NEXT(p);
-            } else {
-                deleteAll(&lnew);
-                berhasil = false;
-            }
-            prec = pnew;
+boolean isIdxUtasPersValid(ListLinierUtas l, int idx){
+    Address p = FIRST(l);
+    boolean found = false;
+    while(p != NULL && !found){
+        if(idxUtas(INFO(p)) == idx){
+            found = true;
+        }
+        else{
+            p = NEXT(p);
         }
     }
-
-    return lnew;
+    return(found);
 }
-/* Mengirimkan list yang merupakan salinan L */
-/* dengan melakukan alokasi. */
-/* Jika ada alokasi gagal, hasilnya list kosong dan */
-/* semua elemen yang terlanjur di-alokasi, harus didealokasi */
-
-void cpAllocList(List lIn, List *lOut){
-    CreateList(lOut);
-    *lOut = fCopyList(lIn);
-}
-/* I.S. lIn sembarang. */
-/* F.S. Jika semua alokasi berhasil,maka lOut berisi hasil copy lIn */
-/* Jika ada alokasi yang gagal, maka lOut=Nil dan semua elemen yang terlanjur dialokasi, didealokasi */
-/* dengan melakukan alokasi elemen. */
-/* lOut adalah list kosong jika ada alokasi elemen yang gagal */

@@ -3,8 +3,10 @@
 #include "../adt/header/wordmachine.h"
 #include "../adt/header/liststatikuser.h"
 #include "../adt/header/friendmatrix.h"
+#include "../adt/header/prioreqfollinked.h"
 
-// gcc readpengguna.c ../adt/configmachine.c ../adt/charmachine.c ../adt/liststatikuser.c ../adt/listdin.c ../adt/Matrix.c ../adt/friendmatrix.c -o tes
+// gcc main.c adt/configmachine.c adt/charmachine.c adt/liststatikuser.c adt/listdin.c 
+// adt/Matrix.c adt/friendmatrix.c adt/pcolor.c adt/prioreqfollinked.c -o tes
 
 int charToInt(char c) {
     if (c >= '0' && c <= '9') {
@@ -12,17 +14,17 @@ int charToInt(char c) {
     }
 }
 
-int main() {
-    STARTconfig("../config/pengguna.config");
+void ReadUser(ListStatikUser *l,FriendMatrix *F) {
+    STARTconfig("config/pengguna.config");
 
-    ListStatikUser l; //DATA USER
-    CreateListStatikUser(&l);
+    // ListStatikUser l; //DATA USER
+    CreateListStatikUser(l);
 
-    FriendMatrix F; //MATRIKS PERTEMANAN
-    createMatrixFriend(20,20,&F);
+    // FriendMatrix F; //MATRIKS PERTEMANAN
+    createMatrixFriend(F);
 
-    FriendMatrix R; //MATRIKS PERMINTAAN
-    createMatrixFriend(20,3,&R);
+    Prioreqfol R; //MATRIKS PERMINTAAN
+    CreateReqFol(&R);
 
     boolean first=true;
     int count=0; //patokan
@@ -46,7 +48,8 @@ int main() {
             }
             bacaan.TabWord[i] = '\0';
 
-            for (int i = 0; bacaan.TabWord[i] != '\0'; i++) {
+            // printf("%s\n", bacaan.TabWord);
+            for (i = 0; bacaan.TabWord[i] != '\0'; i++) {
                 if (i==0){
                     temp+=charToInt(bacaan.TabWord[i]);
                 }
@@ -74,17 +77,19 @@ int main() {
                     ADVconfig();
                 }
                 bacaan.TabWord[i] = '\0';
+                // printf("%s\n", bacaan.TabWord);
                 
                 for (int i = 0; bacaan.TabWord[i] != '\0'; i++) {
-                    UserName(l,user,i)=bacaan.TabWord[i];
+                    // printf("%c", bacaan.TabWord[i]);
+                    UserName(*l,user,i)=bacaan.TabWord[i];
                 }
-
-
+                // printf("\n");
                 while (currentChar == '\n') {
                     ADVconfig();
                 }
                 count++;
-                UserId(l, user+1);
+                // printf("%s\n",l.data[user].nama);
+                UserId(*l, user+1);
             }
             else if (count%11==1){ //PASSWORD
                 Word bacaan;
@@ -98,13 +103,15 @@ int main() {
                 bacaan.TabWord[i] = '\0';
                 
                 for (int i = 0; bacaan.TabWord[i] != '\0'; i++) {
-                    UserSandi(l,user,i)=bacaan.TabWord[i];
+                    // printf("%c", bacaan.TabWord[i]);
+                    UserSandi(*l,user,i)=bacaan.TabWord[i];
                 }
-
+                // printf("\n");
                 while (currentChar == '\n') {
                     ADVconfig();
                 }
                 count++;
+                // printf("%s\n",l.data[user].sandi);
             }
             else if (count%11==2) { //BIO
                 Word bacaan;
@@ -116,19 +123,30 @@ int main() {
                     ADVconfig();
                 }
                 bacaan.TabWord[i] = '\0';
-
+                
                 for (int i = 0; bacaan.TabWord[i] != '\0'; i++) {
-                    UserBio(l,user,i)=bacaan.TabWord[i];
+                    // printf("%c", bacaan.TabWord[i]);
+                    UserBio(*l,user,i)=bacaan.TabWord[i];
                 }
-
+                // printf("\n");
                 while (currentChar == '\n') {
                     ADVconfig();
                 }
                 count++;
+
+                // if (l.data[user].bio!="/0"){
+                //     printf("%s\n",l.data[user].bio);
+                // }
+                // else{
+                //     printf("\n");
+                // }
             }
             else if (count%11==3){ //NOHP
                 Word bacaan;
                 int i = 0;
+
+                // ListDin dummy;
+                // CreateListDin(&dummy,16);
 
                 while (!EOP && currentChar != '\n') {
                     bacaan.TabWord[i] = currentChar;
@@ -136,18 +154,21 @@ int main() {
                     ADVconfig();
                 }
                 bacaan.TabWord[i] = '\0';
-                
-                for (int i = 0; bacaan.TabWord[i] != '\0'; i++) {
-                    if (charToInt(bacaan.TabWord[i])<=9 && charToInt(bacaan.TabWord[i])>=0)
-                    {
-                        insertLast(&(l.data[user].noHP),charToInt(bacaan.TabWord[i]));
-                    }
+
+                for (int i = 0; bacaan.TabWord[i+1] != '\0'; i++) {
+                    // printf("%c", bacaan.TabWord[i]);
+                    insertLast(&((*l).data[user].noHP),bacaan.TabWord[i]);
                 }
+
+                // printList(l.data[user].noHP);
+                // printf("\n");
+
 
                 while (currentChar == '\n') {
                     ADVconfig();
                 }
                 count++;
+                // printList(l.data[0].noHP);
             }
             else if (count%11==4) { //WETON
                 Word bacaan;
@@ -159,23 +180,26 @@ int main() {
                     ADVconfig();
                 }
                 bacaan.TabWord[i] = '\0';
+
                 for (int i = 0; bacaan.TabWord[i] != '\0'; i++) {
                     if (i == 0 && bacaan.TabWord[i] == 'P' && bacaan.TabWord[i+1] != '\0') {
                         if (i == 0 && bacaan.TabWord[i+1] == 'a' && bacaan.TabWord[i+2] != '\0') {
-                            UserWeton(l, user) = PAHING;
+                            UserWeton(*l, user) = PAHING;
                         } else {
-                            UserWeton(l, user) = PON;
+                            UserWeton(*l, user) = PON;
                         }
                     } else if (i == 0 && bacaan.TabWord[i] == 'K' && bacaan.TabWord[i+1] != '\0') {
-                        UserWeton(l, user) = KLIWON;
+                        UserWeton(*l, user) = KLIWON;
                     } else if (i == 0 && bacaan.TabWord[i] == 'W' && bacaan.TabWord[i+1] != '\0') {
-                        UserWeton(l, user) = WAGE;
+                        UserWeton(*l, user) = WAGE;
                     } else if (i == 0 && bacaan.TabWord[i] == 'L' && bacaan.TabWord[i+1] != '\0') {
-                        UserWeton(l, user) = LEGI;
+                        UserWeton(*l, user) = LEGI;
                     } else if(i == 0 && bacaan.TabWord[i] != '\0'){
-                        UserWeton(l, user) = EMPTYWETON;
+                        UserWeton(*l, user) = EMPTYWETON;
                     }
+                    // printf("%c", bacaan.TabWord[i]);
                 }
+                // printf("\n");
 
                 while (currentChar == '\n') {
                     ADVconfig();
@@ -195,12 +219,14 @@ int main() {
                 for (int i = 0; bacaan.TabWord[i] != '\0'; i++) {
                     if (i == 0 && bacaan.TabWord[i] == 'P' && bacaan.TabWord[i+1] != '\0') {
                         if (i == 0 && bacaan.TabWord[i+1] == 'u' && bacaan.TabWord[i+2] != '\0') {
-                            UserTipe(l,user)=PUBLIK;
+                            UserTipe(*l,user)=PUBLIK;
                         } else {
-                            UserTipe(l, user) = PRIVAT;
+                            UserTipe(*l, user) = PRIVAT;
                         }
                     }
+                    // printf("%c", bacaan.TabWord[i]);
                 }
+                // printf("\n");
 
                 while (currentChar == '\n') {
                     ADVconfig();
@@ -219,16 +245,19 @@ int main() {
                 bacaan.TabWord[i] = '\0';
                 
                 int j = (count%11)%6;
+                // printf("ini j :%d",j);
                 for (int i = 0; bacaan.TabWord[i] != '\0'; i++) {
+                    // printf("%c",bacaan.TabWord[i]);
                     if (i%2==0){
                         if ((i/2)%2==0) {
-                            UserWarnaFoto(l,user).mem[j][(i/2)/2]=bacaan.TabWord[i];                   
+                            UserWarnaFoto(*l,user).mem[j][(i/2)/2]=bacaan.TabWord[i];                   
                         }
                         else if ((i/2)%2==1){
-                            UserFoto(l,user).mem[j][((i/2)-1)/2]=bacaan.TabWord[i];
+                            UserFoto(*l,user).mem[j][((i/2)-1)/2]=bacaan.TabWord[i];
                         }
                     }
                 }
+                // printf("\n");
 
                 while (currentChar == '\n') {
                     ADVconfig();
@@ -251,10 +280,12 @@ int main() {
             bacaan.TabWord[i] = '\0';
             
             for (int i = 0; bacaan.TabWord[i] != '\0'; i++) {
+                // printf("%c",bacaan.TabWord[i]);
                 if (i%2==0){
-                    ELMTFRIEND(F,friendcount,i/2)=charToInt(bacaan.TabWord[i]);
+                    ELMTFRIEND(*F,friendcount,i/2)=charToInt(bacaan.TabWord[i]);
                 }
             }
+            // printf("\n");
 
             while (currentChar == '\n') {
                 ADVconfig();
@@ -291,21 +322,38 @@ int main() {
                 bacaan.TabWord[i] = '\0';
                 
                 for (int i = 0; bacaan.TabWord[i] != '\0'; i++) {
+                    int idus;
+                    int ifol;
                     if (i%2==0){
-                        ELMTFRIEND(R,reqcount,i/2)=charToInt(bacaan.TabWord[i]);
+                        // ELMTFRIEND(R,reqcount,i/2)=charToInt(bacaan.TabWord[i]);
+                        if (i/2==0)
+                        {
+                            idus=charToInt(bacaan.TabWord[i]);
+                        }
+                        else if (i/2==1)
+                        {
+                            ifol=charToInt(bacaan.TabWord[i]);
+                        }
+                        else if (i/2==3)
+                        {
+                            // sendReqFol(&R,F,idus,ifol);
+                            // SendReqFol(&R, F, idus,ifol);
+                        }
                     }
                 }
 
                 while (currentChar == '\n') {
                     ADVconfig();
                 }
-                reqcount++;
+                // reqcount++;
                 }
         }
     }
-    printListofUser(l);
-    printf("\n");
-    displayMatrixFRIEND(F,temp,temp);
-    printf("\n");
-    displayMatrixFRIEND(R,reqcount,3);
+
+    // printListofUser(*l);
+    // printList(l.data[0].noHP);
+    // printf("\n");
+    // displayMatrixFRIEND(F,temp,temp);
+    // printf("\n");
+    // displayMatrixFRIEND(R,reqcount,3);
 }

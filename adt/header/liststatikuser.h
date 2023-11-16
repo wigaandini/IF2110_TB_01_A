@@ -42,7 +42,7 @@ typedef struct {        // Elemen dari list berupa tipe data buatan "UserData",
    int id;
    char sandi[21];
    char bio[136];
-   char noHP[16];
+   ListDin noHP;
    enum Weton weton;
    enum TipeAkun tipe;
    Matrix foto;
@@ -74,7 +74,8 @@ typedef struct {
 #define UserId(l, i)          (l).data[i].id
 #define UserSandi(l, i, j)    (l).data[(i)].sandi[j]
 #define UserBio(l, i, j)      (l).data[(i)].bio[j]
-#define UserNoHP(l, i, j)     (l).data[i].noHP[j]
+#define UserNoHP(l, i, j)     (l).data[i].noHP.buffer[j]
+#define UserNoHPLength(l, i)  (l).data[i].noHP.nEff
 #define UserWeton(l, i)       (l).data[i].weton
 #define UserTipe(l, i)        (l).data[i].tipe
 #define UserFoto(l, i)        (l).data[i].foto
@@ -132,4 +133,7 @@ void addUser(ListStatikUser *l, Word name, Word pw);
 boolean checkUserExist(ListStatikUser l, Word name);
 
 boolean checkPass(ListStatikUser l, Word name, Word pass);
+
+boolean isLoggedIn(ListStatikUser l, Word currentUsername);
+
 #endif

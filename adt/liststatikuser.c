@@ -3,6 +3,7 @@
 
 /* ********** KONSTRUKTOR ********** */
 /* Konstruktor : create List kosong  */
+#define here printf("here\n");
 void CreateListStatikUser(ListStatikUser *l){
 /* I.S. l sembarang */
 /* F.S. Terbentuk List l kosong dengan kapasitas CAPACITYUSER */
@@ -13,23 +14,31 @@ void CreateListStatikUser(ListStatikUser *l){
             if (j<21) {
                 UserName(*l, i, j) = '\0';
                 UserSandi(*l, i, j) = '\0';
-                if (j<16) {
-                    UserNoHP(*l, i, j) = '\0';
-                }
             }
             UserBio(*l, i, j) = '\0';
         }
 
+        CreateListDin(&(l->data[i].noHP), 16);
+
         UserId(*l, i) = i+1;
 
         UserWeton(*l, i) = EMPTYWETON;
-
         Matrix foto;
         createMatrix(5, 5, &foto);
+        for (int i=0; i<5; i++) {
+            for (int j=0; j<5; j++) {
+                ELMT(foto, i, j) = '*';
+            }
+        }
         UserFoto(*l, i) = foto;
 
         Matrix warnaFoto;
         createMatrix(5, 5, &warnaFoto);
+        for (int i=0; i<5; i++) {
+            for (int j=0; j<5; j++) {
+                ELMT(warnaFoto, i, j) = 'R';
+            }
+        }
         UserWarnaFoto(*l, i) = warnaFoto;
     }
 }
@@ -78,14 +87,18 @@ void printListofUser(ListStatikUser l){
             printf("Pass\t: %s\n", l.data[i].sandi);
             
             printf("Bio\t: %s\n", l.data[i].bio);
-            
-            printf("No. HP\t: %s\n", l.data[i].noHP);
+
+            printf("No. HP\t: ");
+            for (int j=0; j<UserNoHPLength(l, i); j++) {
+                printf("%d", UserNoHP(l, i, j));
+            }
+            printf("\n");
 
             printf("Weton\t: ");
             switch (UserWeton(l, i))
             {
             case EMPTYWETON:
-                printf("EmptyWeton\n");
+                printf("\n");
                 break;
             case PAHING:
                 printf("Pahing\n");
@@ -118,13 +131,15 @@ void printListofUser(ListStatikUser l){
             default:
                 break;
             }
+            printf("\n");
 
-            printf("Foto:\n");
-            displayMatrix(UserFoto(l, i));
+            printf("Foto dengan warna:\n");
+            displayMatrixFoto(UserFoto(l, i), UserWarnaFoto(l, i));
 
             printf("Warna foto:\n");
             displayMatrix(UserWarnaFoto(l, i));
-            
+
+            printf("--------------------\n");            
         }
     }
 }
@@ -193,17 +208,17 @@ void addUser(ListStatikUser *l, Word name, Word pw)         // Ini kayanya masuk
     }
 }
 
-boolean checkUserExist(ListStatikUser l, Word name){
-    int i = 0;
-    boolean found = false;
-    while(!found && i < banyakUser(l)){
-        if(l.data[i].nama == WordToString(name)){
-            found = true;
-        }
-        i++;
-    }
-    return found;
-}
+// boolean checkUserExist(ListStatikUser l, Word name){
+//     int i = 0;
+//     boolean found = false;
+//     while(!found && i < banyakUser(l)){
+//         if(l.data[i].nama == WordToString(name)){
+//             found = true;
+//         }
+//         i++;
+//     }
+//     return found;
+// }
 
 boolean checkPass(ListStatikUser l, Word name, Word pass){
     int i = 0;
@@ -215,4 +230,9 @@ boolean checkPass(ListStatikUser l, Word name, Word pass){
         i++;
     }
     return found;
+}
+
+boolean isLoggedIn(ListStatikUser l, Word currentUsername) {
+    int i = indexUser(l, currentUsername);
+    return (i != IDX_UNDEF) && (UserName(l, i, 0) != '\0');
 }

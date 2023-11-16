@@ -7,14 +7,22 @@
 #include "boolean.h"
 #include "charmachine.h"
 
-#define NMax 100
+#define NMax 280
 #define BLANK ' '
+#define ENTER '\n'
 
 typedef struct
 {
    char TabWord[NMax]; /* container penyimpan kata, indeks yang dipakai [0..NMax-1] */
    int Length;
 } Word;
+
+// typedef char ElType;
+// typedef struct
+// {
+//     ElType buffer[CAPACITY];
+//     int length;
+// } String;
 
 /* State Mesin Word */
 extern boolean EndWord;
@@ -24,6 +32,8 @@ void IgnoreBlanks();
 /* Mengabaikan satu atau beberapa BLANK
    I.S. : currentChar sembarang
    F.S. : currentChar ≠ BLANK atau currentChar = MARK */
+
+void IgnoreEnter();
 
 void STARTWORD();
 /* I.S. : currentChar sembarang
@@ -68,6 +78,8 @@ boolean compareWord(Word str1, Word str2);
 
 void displayWord(Word word);
 
+void displayString(char* str);
+
 boolean WordIsInt(Word kata);
 
 boolean CharIsInt(char c);
@@ -82,6 +94,14 @@ int StringToInt(char *str);
 
 Word splitCommand(Word *w, Word command, int kataKe);
 
-char* MergeString(char* str1, char* str2);
+int lengthWord(Word w);
 
+boolean isEmptyWord(Word w);
+
+void LowerCase();
+/* I.S. currentword terdefinisi sembarang tetapi tidak kosong */
+/* F.S. currentword menjadi lowercase di setiap karakternya */
+
+int countWords(Word w);
+/* Menghitung jumlah kata di suatu kalimat */
 #endif

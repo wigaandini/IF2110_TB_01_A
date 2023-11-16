@@ -36,12 +36,14 @@ void STARTWORD(){
           currentChar karakter pertama sesudah karakter terakhir kata */
 
 void ADVWORD(){
+    IgnoreEnter();
     IgnoreBlanks();
     if (currentChar == MARK){
         EndWord = true;
     }
     else{
         CopyWord();
+        IgnoreEnter();
         IgnoreBlanks();
     }
 }
@@ -52,15 +54,15 @@ void ADVWORD(){
    Proses : Akuisisi kata menggunakan procedure SalinWord */
 
 void CopyWord(){
-    int i;
-    i = 0;
-    while(currentChar != MARK && currentChar != BLANK){
+    int i = 0;
+    while ((currentChar != ENTER) && (currentChar != BLANK) && currentChar != MARK){
+        if (i == NMax){
+            break;
+        }
         currentWord.TabWord[i] = currentChar;
         ADV();
-        i ++;
-    currentWord.Length = i;
+        i++;
     }
-
     if (currentWord.Length > NMax){
         currentWord.Length = NMax;
     }
@@ -75,34 +77,21 @@ void CopyWord(){
           currentChar adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 
-void LowerCase(){
-    int i;
-    for(i = 0; i < currentWord.Length; i++){
-        if(currentWord.TabWord[i] >= 65 && currentWord.TabWord[i] <= 90){
-            currentWord.TabWord[i] += 32;
-        }
-    }
-}
-/* I.S. currentword terdefinisi sembarang tetapi tidak kosong */
-/* F.S. currentword menjadi lowercase di setiap karakternya */
-// {
-//    int i;
-//    for (i = 0; i < currentWord.Length; i++){
-//       if (currentWord.TabWord[i] >= 'A' && currentWord.TabWord[i] <= 'Z'){
-//          currentWord.TabWord[i] = currentWord.TabWord[i] + 'a' - 'A';
-//       }
-//    }
-// }
-
 void IgnoreNotEnter(){
     while (currentChar == BLANK) {
         ADV();
     }
 }
 
+void IgnoreEnter(){
+    while (currentChar == ENTER) {
+        ADV();
+    }
+}
+
 void CopySpace(){
     int i = 0;
-    while (currentChar != LineMARK){
+    while (currentChar != MARK){
         currentWord.TabWord[i] = currentChar;
         ADV();
         i++;
@@ -117,34 +106,12 @@ void CopySpace(){
 
 void STARTSENTENCE(){
     START();
-    if (currentChar=='\n'){
+    if(currentChar == MARK){
         EndWord = true;
     }
     else{
         EndWord = false;
         CopySpace();
-    }
-}
-
-void STARTWORDFILE(char namaFile[]){
-    STARTFILE(namaFile);
-    IgnoreBlanks();
-    if (currentChar == MARK){
-        EndWord = true;
-    }
-    else{
-        EndWord = false;
-        ADVWORD();
-    }
-}
-
-void ADVNEWLINE(){
-    Word kosong = {"", 0};
-    currentWord = kosong;
-    if(currentChar == MARK){
-        EndWord = false;
-        ADV();
-        CopyWord();
     }
 }
 
@@ -161,16 +128,24 @@ char* WordToString(Word word){
 int WordToInt(Word str){
     int result = 0;
     int i;
-    for (i=0; i<str.Length; i++){
-        result = result * 10 + (str.TabWord[i] - 48);
+
+    for (i = 0; i < str.Length; i++) {
+        if (str.TabWord[i] >= '0' && str.TabWord[i] <= '9') {
+            result = result * 10 + (str.TabWord[i] - '0');
+        } else {
+            // Handle non-numeric characters
+            return 0;
+        }
     }
-    if (result < 0){
+
+    if (result < 0) {
         int digit = 1;
-        for (i=0; i<str.Length-1; i++){
+        for (i = 0; i < str.Length - 1; i++) {
             digit = digit * 10;
         }
         result += 38 * digit;
     }
+
     return result;
 }
 
@@ -181,7 +156,7 @@ boolean compareWord(Word str1, Word str2){
         return false;
     } 
     else {
-        for (i = 0; i < str1.Length; i++){
+        for (i = 0; i < str1.Length-1; i++){
             if (str1.TabWord[i] != str2.TabWord[i]){
                 return false;
             }
@@ -190,10 +165,18 @@ boolean compareWord(Word str1, Word str2){
     return true;
 }
 
-void displayWord(Word word){
-    int i;
-    for (i = 0; i < word.Length-1; i++){
+void displayWord(Word word) {
+    int i = 0;
+    for (i = 0; i < word.Length; i++) {
         printf("%c", word.TabWord[i]);
+    }
+}
+
+void displayString(char* str){
+    int i = 0;
+    while (str[i] != '\0'){
+        printf("%c", str[i]);
+        i++;
     }
 }
 
@@ -221,9 +204,6 @@ boolean compareString(Word str1, char* str2){
     int i;
     for (i = 0; i < str1.Length-1; i++){
         if (str1.TabWord[i] != str2[i]){
-            // displayWord(str1);
-            // printf("\n");
-            // printf("%c", str2);
             return false;
         }
     }
@@ -273,36 +253,29 @@ Word splitCommand(Word *w, Word command, int kataKe){
     int i = 0, counter = 0, length = 0;
     boolean stop;
 
-    while (counter != kataKe - 1 && i < command.Length  + 1){
+    while (counter != kataKe - 1 && i < command.Length){
         stop = false;
         if (command.TabWord[i] == ' '){
             counter++;
             while (i < command.Length && !stop){
                 i++;
-                if (command.TabWord[i] != ' ')
-                {
+                if (command.TabWord[i] != ' '){
                     stop = true;
                 }
             }
         }
-        else if(command.TabWord[i] == MARK){
-            stop = true;
-        }
-        else{
+        else {
             i++;
         }
 
-        if (i == command.Length  + 1){
+        if (i == command.Length){
             counter++;
         }
     }
 
     stop = false;
-    while (!stop && i < command.Length  + 1){
+    while (!stop && i < command.Length) {
         if (command.TabWord[i] == ' '){
-            stop = true;
-        }
-        else if(command.TabWord[i] == MARK){
             stop = true;
         }
         else{
@@ -311,6 +284,53 @@ Word splitCommand(Word *w, Word command, int kataKe){
             length++;
         }
     }
-    w->Length = length + 1;
+    w->TabWord[length] = '\0';
+    w->Length = length;
     return *w;
 }
+
+int lengthWord(Word w){
+    int length = 0;
+    for(int i = 0; i<w.Length; i++){
+        if(w.TabWord[i] != ' '){
+            length++;
+        }
+    }
+    return length;
+}
+
+boolean isEmptyWord(Word w){
+    return (lengthWord(w) == 0);
+}
+
+void LowerCase(){
+    int i;
+    for(i = 0; i < currentWord.Length; i++){
+        if(currentWord.TabWord[i] >= 65 && currentWord.TabWord[i] <= 90){
+            currentWord.TabWord[i] += 32;
+        }
+    }
+}
+/* I.S. currentword terdefinisi sembarang tetapi tidak kosong */
+/* F.S. currentword menjadi lowercase di setiap karakternya */
+
+
+int countWords(Word w) {
+    int count = 0;
+    int isWord = 0;  // Flag to track if the current character is part of a word
+
+    for (int i = 0; i < w.Length; i++) {
+        // If the current character is a space or tab, set the flag to 0
+        if (w.TabWord[i] == ' ' || w.TabWord[i] == '\t') {
+            isWord = 0;
+        }
+        // If the current character is not a space or tab and the flag is 0,
+        // it means we've encountered the beginning of a new word. Increment the count.
+        else if (isWord == 0) {
+            isWord = 1;
+            count++;
+        }
+    }
+    return count;
+}
+/* Menghitung jumlah kata di suatu kalimat */
