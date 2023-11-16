@@ -18,9 +18,8 @@
 
 int main(){
     ListStatikUser l;
-    Word nama;// Initialize login status
     CreateListStatikUser(&l);
-    boolean login = isLoggedIn(l, nama);
+    boolean login = false;
 
     do {
         printf(">> ");
@@ -34,11 +33,6 @@ int main(){
         } else if (compareString(currentWord, "KELUAR")) {
             KELUAR(&login);  // Pass login by reference
         } else if (compareString(currentWord, "MASUK")) {
-            // Prompt for username
-            printf("Masukkan nama: ");
-            STARTSENTENCE();
-            nama = currentWord;
-
             MASUK(&l, &login);  // Pass login and username by reference
         } else if (compareString(currentWord, "TUTUP_PROGRAM")) {
             TUTUP_PROGRAM();
