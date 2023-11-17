@@ -233,3 +233,16 @@ boolean checkPass(ListStatikUser l, Word name, Word pass){
     }
     return found;
 }
+
+// Mengembalikan Id dari user dengan username bernilai name. Mengembalikan 0 jika tidak ada
+int getIdOfName(ListStatikUser l, Word name){
+    int i = 0;
+    boolean found = false;
+    while(!found && i < banyakUser(l)){
+        if(compareString(name, l.data[i].nama)){
+            found = true;
+        }
+        i++;
+    }
+    return i;
+}

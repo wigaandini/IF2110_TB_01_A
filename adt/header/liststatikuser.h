@@ -127,10 +127,13 @@ void addUser(ListStatikUser *l, Word name, Word pw);
    F.S. l bertambah satu user
    Proses: Pada user data yang masih kosong, UserName dan UserSandi diubah sesuai dengan masukkan terminal*/
 
-/* ********** MENGUBAH DATA USER ********** */
-// void editUserData(ListStatikUser *l, )
-
+// Mengecek apakah user dengan username bernilai name sudah ada di list. Mengembalikan true jika ada, false jika tidak
 boolean checkUserExist(ListStatikUser l, Word name);
 
+// Mengecek apakah password bernilai pass sesuai dengan password user dengan username bernilai name. 
+// Mengembalikan true jika sesuai, false jika tidak
 boolean checkPass(ListStatikUser l, Word name, Word pass);
+
+// Mengembalikan Id dari user dengan username bernilai name
+int getIdOfName(ListStatikUser l, Word name);
 #endif
