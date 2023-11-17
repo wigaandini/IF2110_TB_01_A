@@ -40,9 +40,9 @@ void print_profil(ListStatikUser UserData, int id_login) {
 }
 
 // Perintah GANTI_PROFIL
-void ganti_profil(ListStatikUser UserData, int id_login) {
+void ganti_profil(ListStatikUser *UserData, int id_login) {
     // Print nama, bio, noHP, dan weton
-    print_profil(UserData, id_login);
+    print_profil(*UserData, id_login);
 
     // Meminta masukkan Bio Akun
     printf("Masukkan Bio Akun: \n");
@@ -57,9 +57,9 @@ void ganti_profil(ListStatikUser UserData, int id_login) {
     // Perbarui Bio Akun
     for (int i = 0; i < 135; i++) {
         if (i < currentWord.Length) {
-            UserBio(UserData, id_login-1, i) = currentWord.TabWord[i];
-        } else { // Jika currentWord.Length < 135
-            UserBio(UserData, id_login-1, i) = '\0';
+            UserBio(*UserData, id_login-1, i) = currentWord.TabWord[i];
+        } else { // Jika currentWord.Length < 135, maka sisanya diisi dengan '\0'
+            UserBio(*UserData, id_login-1, i) = '\0';
         }
     }
 
@@ -84,15 +84,16 @@ void ganti_profil(ListStatikUser UserData, int id_login) {
         }
     }
     printf("\n");
-    // Perbarui No HP
-    for (int i = 0; i < 20; i++) {
-        if (i < currentWord.Length) {
-            UserNoHP(UserData, id_login-1, i) = currentWord.TabWord[i];
-        } else { // Jika currentWord.Length < 20
-            UserNoHP(UserData, id_login-1, i) = '\0';
-        }
+    // Mengosongkan data noHP sebelumnya
+    int buang;
+    while (!isEmpty(UserData->data->noHP)) {
+        deleteLast(&UserData->data->noHP, &buang);
     }
-    UserNoHPNeff(UserData, id_login-1) = currentWord.Length;
+
+    // Perbarui No HP
+    for (int i = 0; i < currentWord.Length; i++) {
+        insertLast(&UserData->data->noHP, currentWord.TabWord[i]);
+    }
 
     // Meminta masukkan Weton
     printf("Masukkan Weton: \n");
@@ -107,17 +108,17 @@ void ganti_profil(ListStatikUser UserData, int id_login) {
     printf("\n");
     // Perbarui Weton
     if (compareString(currentWord, "pahing")) {
-        UserWeton(UserData, id_login-1) = PAHING;
+        UserWeton(*UserData, id_login-1) = PAHING;
     } else if (compareString(currentWord, "kliwon")) {
-        UserWeton(UserData, id_login-1) = KLIWON;
+        UserWeton(*UserData, id_login-1) = KLIWON;
     } else if (compareString(currentWord, "wage")) {
-        UserWeton(UserData, id_login-1) = WAGE;
+        UserWeton(*UserData, id_login-1) = WAGE;
     } else if (compareString(currentWord, "pon")) {
-        UserWeton(UserData, id_login-1) = PON;
+        UserWeton(*UserData, id_login-1) = PON;
     } else if (compareString(currentWord, "legi")) {
-        UserWeton(UserData, id_login-1) = LEGI;
+        UserWeton(*UserData, id_login-1) = LEGI;
     } else if (compareString(currentWord, "")) { 
-        UserWeton(UserData, id_login-1) = EMPTYWETON;
+        UserWeton(*UserData, id_login-1) = EMPTYWETON;
     }
 
     // Akhirnya selese
