@@ -15,34 +15,34 @@ void DAFTAR(ListStatikUser *l, boolean isLoggedIn){
         if(isUserDataEmpty(*l)){
             printf("Masukkan nama:\n");
             STARTSENTENCE();
-            nama = currentWord;
-            // displayWord(nama);
-            printf("\n");
-            printf("Masukkan kata sandi:\n");
-            STARTSENTENCE();
-            pass = currentWord;
-            // displayWord(pass);
-            printf("\n");
-            addUser(l, nama, pass);
-            printListofUser(*l);
-            printf("Pengguna telah berhasil terdaftar. Masuk untuk menikmati fitur-fitur BurBir.\n");
-        }
-        else{
-            printf("Masukkan nama:\n");
-            STARTSENTENCE();
-            printf("\n");
-            nama = currentWord;
-            while(!checkUserExist(*l, nama)){
-                printf("Wah, sayang sekali nama tersebut telah diambil.\n");
-                printf("Masukkan kata sandi:\n");
+            while (currentWord.Length > 20 || checkUserExist(*l, currentWord)) {        // error handling
+                if (currentWord.Length > 20) {
+                    printf("\nNama yang Anda masukkan terlalu panjang. Silakan masukkan nama lain!\n");
+                }
+                else {
+                    printf("\nWah, sayang sekali nama tersebut telah diambil.\n");
+                }
+                printf("\nMasukkan nama:\n");
                 STARTSENTENCE();
-                pass = currentWord;
-                // displayWord(pass);
-                printf("\n");
-                addUser(l, nama, pass);
-                printListofUser(*l);
-                printf("Pengguna telah berhasil terdaftar. Masuk untuk menikmati fitur-fitur BurBir.\n\n");
             }
+            nama = currentWord;
+
+            // Kata Sandi
+            printf("\nMasukkan kata sandi:\n");
+            STARTSENTENCE();
+            while (currentWord.Length > 20) {           // error handling
+                printf("\nKata sandi yang Anda masukkan terlalu panjang. Silakan masukkan kata sandi lain!\n");
+                printf("\nMasukkan kata sandi:\n");
+                STARTSENTENCE();
+            }
+            pass = currentWord;
+
+            // Menambahkan user baru ke dalam list
+            addUser(l, nama, pass);
+            printf("\nPengguna telah berhasil terdaftar. Masuk untuk menikmati fitur-fitur BurBir.\n\n");
+        }
+        else {      // Kondisi User Data telah full oleh 20 user
+            printf("\nJumlah pengguna telah mencapai batas maksimal. Silakan coba lagi nanti.\n\n");
         }
     }
     else{
@@ -95,6 +95,6 @@ void KELUAR(boolean *isLoggedIn){
 }
 
 void TUTUP_PROGRAM(){
-    printf("Anda telah keluar dari program Burbir. Sampai jumpa di pertemuan berikutnya!\n");
+    printf("\nAnda telah keluar dari program Burbir. Sampai jumpa di pertemuan berikutnya!\n");
     exit(0);
 }
