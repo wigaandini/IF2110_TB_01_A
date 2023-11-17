@@ -121,3 +121,9 @@ void DisplaySatuKicau(ListStatikUser l, Kicauan k){
     printf("| Disukai: %d\n", LIKE(k));
     printf("\n");
 }
+
+void DisplayAllKicauan(ListStatikUser l, ListKicauan k){
+    for (int i = NEFFLISTKICAU(k) - 1 ; i >= 0; i--) {
+        DisplaySatuKicau(l, ELMTLISTKICAU(k, i));
+    }
+}

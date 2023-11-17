@@ -101,4 +101,7 @@ void DisplaySatuKicau(ListStatikUser l, Kicauan k);
 /* Proses : Membaca komponen id, text, like, idauthor,
     dan waktu kemudian menampilkannnya ke layar*/
 
+void DisplayAllKicauan(ListStatikUser l, ListKicauan k);
+/* Untuk konfigurasi, jadi bisa liat semua isi list din kicauan*/
+
 #endif
