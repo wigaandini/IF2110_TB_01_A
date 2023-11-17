@@ -87,7 +87,7 @@ void readList(ListDin *l){
     NEFF(*l) = n;
     if (n!=0){
         for(i=0; i<NEFF(*l); i++){
-            scanf("%d", &ELMTDIN(*l, i));
+            scanf("%c", &ELMTDIN(*l, i));
         }
     }
 }
@@ -110,10 +110,10 @@ void printList(ListDin l){
         printf("[");
         for(i=0; i<listLength(l); i++){
             if (i!=getLastIdx(l)){
-                printf("%d,", ELMTDIN(l,i));
+                printf("%c,", ELMTDIN(l,i));
             }
             else{
-                printf("%d", ELMTDIN(l,i));
+                printf("%c", ELMTDIN(l,i));
             }
         }
         printf("]");

@@ -75,7 +75,7 @@ void CreateListUtasPers(ListLinierUtas *l);
 /* I.S. sembarang             */
 /* F.S. Terbentuk list kosong */
 
-void CreateListUtasGLobal(ListUtas *l, int capacity);
+void CreateListUtasGlobal(ListUtas *l, int capacity);
 /* Menyimpan seluruh utas yang telah dibuat */
 /* Prekondisi : list kosong */
 

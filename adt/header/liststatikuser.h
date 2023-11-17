@@ -133,4 +133,7 @@ void addUser(ListStatikUser *l, Word name, Word pw);
 boolean checkUserExist(ListStatikUser l, Word name);
 
 boolean checkPass(ListStatikUser l, Word name, Word pass);
+
+boolean isLoggedIn(ListStatikUser l, Word currentUsername);
+
 #endif

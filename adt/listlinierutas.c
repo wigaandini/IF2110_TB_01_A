@@ -29,7 +29,7 @@ void CreateListUtasPers(ListLinierUtas *l){
 /* F.S. Terbentuk list kosong */
 
 void CreateListUtasGlobal(ListUtas *l, int capacity){
-    BUFFERLISTUTAS(*l) = (UtasType*) malloc(capacity*sizeof(UtasType));
+    BUFFERLISTUTAS(*l) = (Kicauan*) malloc(capacity*sizeof(Kicauan));
     CAPACITYUTAS(*l) = CAPACITYMAXLISTUTAS;
     NEFFLISTUTAS(*l) = 0;
 }
@@ -151,7 +151,7 @@ int indexOfPers(ListLinierUtas l, UtasType val){
     int i = 0;
     p = FIRST(l);
     while (p != NULL && !found){
-        if(INFO(p).idAuthor == val.idAuthor && INFO(p).indexUtas == val.indexUtas && INFO(p).text == val.text && INFO(p).waktu.DD == val.waktu.DD && INFO(p).waktu.MM == val.waktu.MM && INFO(p).waktu.YYYY == val.waktu.YYYY && INFO(p).waktu.T.HH == val.waktu.T.HH && INFO(p).waktu.T.MM == val.waktu.T.MM && INFO(p).waktu.T.SS == val.waktu.T.SS){
+        if(INFO(p).idAuthor == val.idAuthor && INFO(p).indexUtas == val.indexUtas && compareWord(INFO(p).text, val.text) && INFO(p).waktu.DD == val.waktu.DD && INFO(p).waktu.MM == val.waktu.MM && INFO(p).waktu.YYYY == val.waktu.YYYY && INFO(p).waktu.T.HH == val.waktu.T.HH && INFO(p).waktu.T.MM == val.waktu.T.MM && INFO(p).waktu.T.SS == val.waktu.T.SS){
             found = true;
         }
         else{

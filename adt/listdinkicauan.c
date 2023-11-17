@@ -111,7 +111,7 @@ void CreateKicauan(Kicauan *k, int id, Word text, int idauthor, DATETIME waktu){
 
 void DisplaySatuKicau(ListStatikUser l, Kicauan k){
     printf("| ID = %d\n", ID(k));
-    printf("| Nama author dengan ID %c\n", l.data[ID(k)].nama);
+    printf("| Nama author dengan ID %s\n", l.data[ID(k)].nama);
     printf("| ");
     TulisDATETIME(WAKTU(k));
     printf("\n");
