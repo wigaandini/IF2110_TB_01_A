@@ -91,7 +91,7 @@ void IgnoreEnter(){
 
 void CopySpace(){
     int i = 0;
-    while (currentChar != MARK){
+    while (currentChar != LineMARK){
         currentWord.TabWord[i] = currentChar;
         ADV();
         i++;
@@ -168,7 +168,9 @@ boolean compareWord(Word str1, Word str2){
 void displayWord(Word word) {
     int i = 0;
     for (i = 0; i < word.Length; i++) {
-        printf("%c", word.TabWord[i]);
+        if(word.TabWord[i] != MARK){
+            printf("%c", word.TabWord[i]);
+        }
     }
 }
 
@@ -284,7 +286,6 @@ Word splitCommand(Word *w, Word command, int kataKe){
             length++;
         }
     }
-    w->TabWord[length] = '\0';
     w->Length = length;
     return *w;
 }

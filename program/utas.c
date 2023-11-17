@@ -56,7 +56,7 @@ void BIKIN_UTAS(int idKicau, ListKicauan *listKicau, ListLinierUtas *listUtasPer
                     printf("Utas selesai!\n\n");
                 }
             }
-            // UTAS(ELMTLISTKICAU(*listKicau, idKicau-1)) = u;
+            UTAS(ELMTLISTKICAU(*listKicau, idKicau-1)) = *listUtasPers;
         }
         else{
             printf("Utas ini bukan milik anda!\n");

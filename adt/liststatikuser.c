@@ -89,7 +89,7 @@ void printListofUser(ListStatikUser l){
             printf("Bio\t: %s\n", l.data[i].bio);
 
             printf("No. HP\t: ");
-            for (int j=0; j<UserNoHPLength(l, i); j++) {
+            for (int j=0; j<UserNoHPNeff(l, i); j++) {
                 printf("%d", UserNoHP(l, i, j));
             }
             printf("\n");
@@ -208,17 +208,17 @@ void addUser(ListStatikUser *l, Word name, Word pw)         // Ini kayanya masuk
     }
 }
 
-// boolean checkUserExist(ListStatikUser l, Word name){
-//     int i = 0;
-//     boolean found = false;
-//     while(!found && i < banyakUser(l)){
-//         if(l.data[i].nama == WordToString(name)){
-//             found = true;
-//         }
-//         i++;
-//     }
-//     return found;
-// }
+boolean checkUserExist(ListStatikUser l, Word name){
+    int i = 0;
+    boolean found = false;
+    while(!found && i < banyakUser(l)){
+        if(l.data[i].nama == WordToString(name)){
+            found = true;
+        }
+        i++;
+    }
+    return found;
+}
 
 boolean checkPass(ListStatikUser l, Word name, Word pass){
     int i = 0;
@@ -232,7 +232,16 @@ boolean checkPass(ListStatikUser l, Word name, Word pass){
     return found;
 }
 
-boolean isLoggedIn(ListStatikUser l, Word currentUsername) {
-    int i = indexUser(l, currentUsername);
-    return (i != IDX_UNDEF) && (UserName(l, i, 0) != '\0');
+
+// Mengembalikan Id dari user dengan username bernilai name. Mengembalikan 0 jika tidak ada
+int getIdOfName(ListStatikUser l, Word name){
+    int i = 0;
+    boolean found = false;
+    while(!found && i < banyakUser(l)){
+        if(compareString(name, l.data[i].nama)){
+            found = true;
+        }
+        i++;
+    }
+    return i;
 }
