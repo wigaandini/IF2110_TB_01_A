@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include <time.h>
 #include "../adt/header/boolean.h"
-#include "../adt/header/charmachine.h"
-#include "../adt/header/wordmachine.h"
-#include "../adt/header/time.h"
-#include "../adt/header/datetime.h"
-#include "../adt/header/listdinkicauan.h"
-#include "../adt/header/friendmatrix.h"
+#include "../adt/charmachine.c"
+#include "../adt/wordmachine.c"
+#include "../adt/time.c"
+#include "../adt/datetime.c"
+#include "../adt/listdinkicauan.c"
+#include "../adt/friendmatrix.c"
 
 // gcc -o main program/kicauan.c adt/string.c adt/wordmachine.c adt/charmachine.c adt/datetime.c adt/listdinkicauan.c adt/time.c adt/friendmatrix.c 
 
@@ -27,6 +27,7 @@ int main() {
         STARTSENTENCE();
         command = currentWord;
         kata = splitCommand(&w, command, 1);
+        displayWord(kata);
 
         if (command.Length>kata.Length) {
             kata2 = splitCommand(&w, command, 2);

@@ -18,9 +18,7 @@ void CreateListStatikUser(ListStatikUser *l){
             UserBio(*l, i, j) = '\0';
         }
 
-        ListDin noHP;
-        CreateListDin(&noHP, 16);
-        l->data->noHP = noHP;
+        CreateListDin(&(l->data[i].noHP), 16);
 
         UserId(*l, i) = i+1;
 
@@ -138,8 +136,8 @@ void printListofUser(ListStatikUser l){
             printf("Foto dengan warna:\n");
             displayMatrixFoto(UserFoto(l, i), UserWarnaFoto(l, i));
 
-            // printf("Warna foto:\n");
-            // displayMatrix(UserWarnaFoto(l, i));
+            printf("Warna foto:\n");
+            displayMatrix(UserWarnaFoto(l, i));
 
             printf("--------------------\n");            
         }
@@ -233,6 +231,7 @@ boolean checkPass(ListStatikUser l, Word name, Word pass){
     }
     return found;
 }
+
 
 // Mengembalikan Id dari user dengan username bernilai name. Mengembalikan 0 jika tidak ada
 int getIdOfName(ListStatikUser l, Word name){

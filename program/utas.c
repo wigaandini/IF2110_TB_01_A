@@ -7,6 +7,8 @@
 #include "../adt/header/listdinkicauan.h"
 #include "../adt/header/liststatikuser.h"
 #include "../adt/header/charmachine.h"
+#include "../adt/header/datetime.h"
+#include "../adt/header/friendmatrix.h"
 
 void BIKIN_UTAS(int idKicau, ListKicauan *listKicau, ListLinierUtas *listUtasPers, ListUtas *listUtasGlobal, int idAuthor, UtasType *u){
     int indexUtas;
@@ -35,7 +37,7 @@ void BIKIN_UTAS(int idKicau, ListKicauan *listKicau, ListLinierUtas *listUtasPer
 
             CreateUtas(u, idAuthor, indexUtas, text, waktu);
             insertLastGlobal(listUtasGlobal, ELMTLISTKICAU(*listKicau, idKicau-1));
-            insertLastPers(listUtasPers, u);
+            insertLastPers(listUtasPers, *u);
 
             printf("Apakah Anda ingin melanjutkan utas ini? (YA/TIDAK) ");
             STARTSENTENCE();
@@ -43,9 +45,10 @@ void BIKIN_UTAS(int idKicau, ListKicauan *listKicau, ListLinierUtas *listUtasPer
                 printf("\nMasukkan kicauan:\n");
                 STARTSENTENCE();
                 printf("\n");
+                text = currentWord;
 
                 CreateUtas(u, idAuthor, indexUtas, text, waktu);
-                insertLastPers(listUtasPers, u);
+                insertLastPers(listUtasPers, *u);
 
                 printf("Apakah Anda ingin melanjutkan utas ini? (YA/TIDAK) ");
                 STARTSENTENCE();
@@ -53,7 +56,7 @@ void BIKIN_UTAS(int idKicau, ListKicauan *listKicau, ListLinierUtas *listUtasPer
                     printf("Utas selesai!\n\n");
                 }
             }
-            UTAS(ELMTLISTKICAU(*listKicau, idKicau-1)) = u;
+            UTAS(ELMTLISTKICAU(*listKicau, idKicau-1)) = *listUtasPers;
         }
         else{
             printf("Utas ini bukan milik anda!\n");
@@ -88,7 +91,7 @@ void SAMBUNG_UTAS(int idUtas, int indexUtas, ListLinierUtas *listUtasPers, ListU
                 Time(waktu) = DetikToTIME(current_time);
 
                 CreateUtas(u, idAuthor, indexUtas, text, waktu);
-                insertLastPers(listUtasPers, u);
+                insertLastPers(listUtasPers, *u);
             }
             else if(indexUtas > getLastIdxUtasPers(*listUtasPers)){
                 printf("Index terlalu tinggi!\n");

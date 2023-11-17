@@ -136,4 +136,5 @@ boolean checkPass(ListStatikUser l, Word name, Word pass);
 
 // Mengembalikan Id dari user dengan username bernilai name
 int getIdOfName(ListStatikUser l, Word name);
+
 #endif

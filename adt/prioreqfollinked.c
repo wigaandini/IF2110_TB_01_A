@@ -1,5 +1,4 @@
 #include "header/prioreqfollinked.h"
-#include "header/friendmatrix.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -7,12 +6,12 @@
 //13522040
 
 /* Prototype manajemen memori */
-Address newReq(FriendMatrix m, ElType idus, ElType ifol){
+Address newReq(FriendMatrix m, ElTypeReq idus, ElTypeReq ifol){
 /* Mengembalikan alamat sebuah Node hasil alokasi dengan info = x, 
    atau NIL jika alokasi gagal */
     Address p;
-    ElType nfus = howMuchFriend(m, idus); //Jumlah follower orang yang merequest
-    ElType nffol = howMuchFriend(m, ifol); //Jumlah follower orang yang direquest
+    ElTypeReq nfus = howMuchFriend(m, idus); //Jumlah follower orang yang merequest
+    ElTypeReq nffol = howMuchFriend(m, ifol); //Jumlah follower orang yang direquest
     p = (Address)malloc(sizeof(req));
     if(p!=NULL){
         IDUSER(p) = idus;
@@ -36,7 +35,7 @@ int lengthReqFol(Prioreqfol q){
     int N;
 
     N = 0;
-    if(!isEmpty(q)){
+    if(!isEmptyReqFol(q)){
         p = ADDR_HEAD(q);
         do{
             N++;
@@ -64,7 +63,7 @@ void daftarPermintaan(Prioreqfol q){
 }
 
 /*** Primitif Enqueue/Dequeue ***/
-void SendReqFol(Prioreqfol *qfol, FriendMatrix m, ElType idus, ElType ifol){
+void SendReqFol(Prioreqfol *qfol, FriendMatrix m, ElTypeReq idus, ElTypeReq ifol){
 /* qfol adallah queue yang dimiliki orang yang ingin difollow
 Idus adalah orang yang merequest
 Ifol adalah orang yang direquest
@@ -74,7 +73,7 @@ Maka priority request follow pada adt pengguna ucup akan bertambah
     Address p, pre, nex;
     p = newReq(m, idus, ifol);
     if(p!=NULL){
-        if(isEmpty(*qfol)){
+        if(isEmptyReqFol(*qfol)){
             ADDR_HEAD(*qfol) = p;
             ADDR_TAIL(*qfol) = p;
         }
@@ -106,7 +105,7 @@ Maka priority request follow pada adt pengguna ucup akan bertambah
     }
 }
 
-void dequeueReqFol(Prioreqfol *q, ElType *x){
+void dequeueReqFol(Prioreqfol *q, ElTypeReq *x){
 /* Proses: Menghapus x pada bagian HEAD dari q dan mendealokasi elemen HEAD */
 /* Pada dasarnya operasi deleteFirst */
 /* I.S. q tidak mungkin kosong */

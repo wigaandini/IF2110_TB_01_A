@@ -86,6 +86,9 @@ void MASUK(ListStatikUser *l, boolean *isLoggedIn, int *id_login){      // belum
             }
         }
     }
+    else{
+        printf("Wah Anda sudah masuk. Keluar dulu yuk!\n");
+    }
 }
 
 void KELUAR(ListStatikUser *l, boolean *isLoggedIn, int *id_login){
