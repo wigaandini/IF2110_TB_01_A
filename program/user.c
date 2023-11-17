@@ -12,8 +12,9 @@
 void DAFTAR(ListStatikUser *l, boolean isLoggedIn){
     Word nama, pass;
     if(!isLoggedIn){
-        if(isUserDataEmpty(*l)){
-            printf("Masukkan nama:\n");
+        if(!isUserDataFull(*l)){
+            // Nama
+            printf("\nMasukkan nama:\n");
             STARTSENTENCE();
             while (currentWord.Length > 20 || checkUserExist(*l, currentWord)) {        // error handling
                 if (currentWord.Length > 20) {
@@ -45,37 +46,43 @@ void DAFTAR(ListStatikUser *l, boolean isLoggedIn){
             printf("\nJumlah pengguna telah mencapai batas maksimal. Silakan coba lagi nanti.\n\n");
         }
     }
-    else{
-        printf("Anda sudah masuk. Keluar terlebih dahulu untuk melakukan daftar.\n");
+    else{    // Kondisi sudah login
+        printf("\nAnda sudah masuk. Keluar terlebih dahulu untuk melakukan daftar.\n\n");
     }
 }
 
-void MASUK(ListStatikUser *l, boolean *isLoggedIn){
+void MASUK(ListStatikUser *l, boolean *isLoggedIn, int *id_login){      // belum selesai
     Word nama, pass;
-    printf("Masukkan nama:\n");
-    STARTSENTENCE();
-    nama = currentWord;
-    printf("\n");
-    if(!isLoggedIn){
-        while(!checkUserExist(*l,nama)){
-            printf("Wah, nama yang Anda cari tidak ada. Masukkan nama lain!\n");
-            printf("Masukkan nama:\n");
+    if(*isLoggedIn){
+        printf("\nWah Anda sudah masuk. Keluar dulu yuk!\n\n");
+    }
+    else{
+        printf("\nMasukkan nama:\n");
+        STARTSENTENCE();
+        while (currentWord.Length > 20 || !checkUserExist(*l, currentWord)) {
+            if (currentWord.Length > 20) {
+                printf("\nNama yang Anda masukkan terlalu panjang. Silakan masukkan nama lain!\n");
+            }
+            else {
+                printf("\nWah, nama yang Anda cari tidak ada. Masukkan nama lain!\n");
+            }
+            printf("\nMasukkan nama:\n");
             STARTSENTENCE();
-            nama = currentWord;
-            printf("\n");
         }
-        printf("Masukkan kata sandi:\n");
+        nama = currentWord;
+
+        printf("\nMasukkan kata sandi:\n");
         STARTSENTENCE();
         pass = currentWord;
-        printf("\n");
         while(!checkPass(*l, nama, pass)){
-            printf("Wah, kata sandi yang Anda masukkan belum tepat. Periksa kembali kata sandi Anda!\n");
-            printf("Masukkan kata sandi:\n");
+            printf("\nWah, kata sandi yang Anda masukkan belum tepat. Periksa kembali kata sandi Anda!\n");
+            printf("\nMasukkan kata sandi:\n");
             STARTSENTENCE();
             pass = currentWord;
             printf("\n");
             if(checkPass(*l, nama, pass)){
                 *isLoggedIn = true;
+                *id_login = getIdOfName(*l, nama);
             }
         }
     }
@@ -84,13 +91,15 @@ void MASUK(ListStatikUser *l, boolean *isLoggedIn){
     }
 }
 
-void KELUAR(boolean *isLoggedIn){
-    if(!isLoggedIn){
-        printf("Anda belum login! Masuk terlebih dahulu untuk menikmati layanan Burbir.\n");
+void KELUAR(ListStatikUser *l, boolean *isLoggedIn, int *id_login){
+    if(!*isLoggedIn){
+        printf("\nAnda belum login! Masuk terlebih dahulu untuk menikmati layanan Burbir.\n\n");
     }
     else{
-        printf("Anda berhasil logout. Sampai jumpa di pertemuan berikutnya!\n");
+        // Update status login dan id login
         *isLoggedIn = false;
+        *id_login = 0;
+        printf("\nAnda berhasil logout. Sampai jumpa di pertemuan berikutnya!\n\n");
     }
 }
 
