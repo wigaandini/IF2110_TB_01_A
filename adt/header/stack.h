@@ -12,7 +12,6 @@
 typedef struct
 {
     Word Text;
-    int id;
     DATETIME Waktu;
 }Draf;
 
@@ -20,15 +19,22 @@ typedef struct
 #define MaxEl 100
 /* Nil adalah stack dengan elemen kosong . */
 
-typedef Draf infotype;
-typedef int address;   /* indeks tabel */
+typedef Draf infotypeDraf;
+typedef int addressDraf;   /* indeks tabel */
 
 /* Contoh deklarasi variabel bertype stack dengan ciri TOP : */
 /* Versi I : dengan menyimpan tabel dan alamat top secara eksplisit*/
 typedef struct { 
+<<<<<<< Updated upstream
   infotype T[MaxEl]; /* tabel penyimpan elemen */
   address TOP;  /* alamat TOP: elemen puncak */
 } Stack;
+=======
+  infotypeDraf T[MaxEl]; /* tabel penyimpan elemen */
+  addressDraf TOP;  /* alamat TOP: elemen puncak */
+  int idUser;
+} DrafStack;
+>>>>>>> Stashed changes
 /* Definisi stack S kosong : S.TOP = Nil */
 /* Elemen yang dipakai menyimpan nilai Stack T[0]..T[MaxEl-1] */
 /* Jika S adalah Stack maka akses elemen : */
@@ -41,7 +47,11 @@ typedef struct {
 
 /* ************ Prototype ************ */
 /* *** Konstruktor/Kreator *** */
+<<<<<<< Updated upstream
 void CreateEmpty(Stack *S);
+=======
+void CreateEmptyStack(DrafStack *S);
+>>>>>>> Stashed changes
 /* I.S. sembarang; */
 /* F.S. Membuat sebuah stack S yang kosong berkapasitas MaxEl */
 /* jadi indeksnya antara 0.. MaxEl */
@@ -54,13 +64,21 @@ boolean IsFull(Stack S);
 /* Mengirim true jika tabel penampung nilai elemen stack penuh */
 
 /* ************ Menambahkan sebuah elemen ke Stack ************ */
+<<<<<<< Updated upstream
 void Push(Stack * S, infotype X);
+=======
+void Push(DrafStack * S, infotypeDraf X);
+>>>>>>> Stashed changes
 /* Menambahkan X sebagai elemen Stack S. */
 /* I.S. S mungkin kosong, tabel penampung elemen stack TIDAK penuh */
 /* F.S. X menjadi TOP yang baru,TOP bertambah 1 */
 
 /* ************ Menghapus sebuah elemen Stack ************ */
+<<<<<<< Updated upstream
 void Pop(Stack * S, infotype* X);
+=======
+void Pop(DrafStack * S, infotypeDraf* X);
+>>>>>>> Stashed changes
 /* Menghapus X dari Stack S. */
 /* I.S. S  tidak mungkin kosong */
 /* F.S. X adalah nilai elemen TOP yang lama, TOP berkurang 1 */
