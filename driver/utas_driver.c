@@ -37,13 +37,10 @@ int main() {
         printf("%d\n", countWords(command));
 
         if (countWords(command) == 1) {
-            // Only one word in the command, no need to split
             displayWord(command);
             printf("\n");
-            // Assign the command to kata for further comparison
             kata = command;
         } else {
-            // More than one word, split the command
             kata = splitCommand(&w, command, 1);
             displayWord(kata);
             printf("\n");
