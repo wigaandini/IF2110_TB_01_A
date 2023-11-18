@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/anton/Documents/IF2110_TB_01_A/adt",
-      "program": "c:/Users/anton/Documents/IF2110_TB_01_A/adt/build/Debug/outDebug",
+      "cwd": "c:/Users/anton/Documents/IF2110_TB_01_A",
+      "program": "c:/Users/anton/Documents/IF2110_TB_01_A/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

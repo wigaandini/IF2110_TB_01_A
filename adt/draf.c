@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include "header/draf.h"
 
-void LihatDraf(Stack S){
-    if (IsEmpty(S))
+void LihatDraf(DrafStack S){
+    if (IsEmptyStack(S))
     {
         printf("Yah, anda belum memiliki draf apapun! Buat dulu ya :D\n");
     }
@@ -23,7 +23,7 @@ void LihatDraf(Stack S){
 
 }
 
-void AddDraf(Stack * S,Word word){
+void AddDraf(DrafStack * S,Word word){
     time_t current_time;
     time(&current_time);
     current_time+=3600*7;
@@ -43,7 +43,7 @@ void AddDraf(Stack * S,Word word){
     Push(S,Draf);
 }
 
-void EditDraf(Stack * S,Word word){
+void EditDraf(DrafStack * S,Word word){
     Draf temp;
     Pop(S, &temp);
 
@@ -66,10 +66,6 @@ void EditDraf(Stack * S,Word word){
     Push(S,Draf);
 }
 
-void DeleteDraf(Stack *S,Draf *Out){
+void DeleteDraf(DrafStack *S,Draf *Out){
     Pop(S,Out);
-}
-
-void PostDraf(){
-
 }
