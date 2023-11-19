@@ -37,7 +37,11 @@ void Push(DrafStack * S, infotypeDraf X)
 }
 
 /* ************ Menghapus sebuah elemen Stack ************ */
+<<<<<<< Updated upstream
 void Pop(DrafStack * S, infotypeDraf * X)
+=======
+void Pop(DrafStack * S, infotypeDraf* X)
+>>>>>>> Stashed changes
 /* Menghapus X dari Stack S. */
 /* I.S. S  tidak mungkin kosong */
 /* F.S. X adalah nilai elemen TOP yang lama, TOP berkurang 1 */

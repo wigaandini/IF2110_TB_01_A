@@ -11,10 +11,14 @@ void LihatDraf(DrafStack S){
         {
             printf("%c",X.Text.TabWord[i]);
         }
+<<<<<<< Updated upstream
         printf("\n");
 
         TulisDATETIME(X.Waktu);
         printf("\n");
+=======
+        printf("\n");   
+>>>>>>> Stashed changes
     }
 }
 

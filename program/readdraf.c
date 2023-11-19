@@ -217,7 +217,10 @@ int ReadDraf(DrafStack *S, Word user){
         Pop(&reverse,&X);
         Push(S,X);
     }
+<<<<<<< Updated upstream
     
+=======
+>>>>>>> Stashed changes
 
     return 0;
 }
