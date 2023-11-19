@@ -220,14 +220,14 @@ void addUser(ListStatikUser *l, Word name, Word pw)         // Ini kayanya masuk
 //     return found;
 // }
 
-// boolean checkPass(ListStatikUser l, Word name, Word pass){
-//     int i = 0;
-//     boolean found = false;
-//     while(!found && i < banyakUser(l)){
-//         if(l.data[i].nama == WordToString(name) && l.data[i].sandi == WordToString(pass)){
-//             found = true;
-//         }
-//         i++;
-//     }
-//     return found;
-// }
+boolean checkPass(ListStatikUser l, Word name, Word pass){
+    int i = 0;
+    boolean found = false;
+    while(!found && i < banyakUser(l)){
+        if(l.data[i].nama == WordToString(name) && l.data[i].sandi == WordToString(pass)){
+            found = true;
+        }
+        i++;
+    }
+    return found;
+}
