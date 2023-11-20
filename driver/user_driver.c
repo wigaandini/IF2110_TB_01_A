@@ -20,6 +20,7 @@ int main(){
     ListStatikUser l;
     CreateListStatikUser(&l);
     boolean login = false;
+    int idUser = 1;
 
     do {
         printf(">> ");
@@ -31,9 +32,9 @@ int main(){
             DAFTAR(&l, login);
             printListofUser(l);
         } else if (compareString(currentWord, "KELUAR")) {
-            KELUAR(&login);  // Pass login by reference
+            KELUAR(&l, &login, &idUser);
         } else if (compareString(currentWord, "MASUK")) {
-            MASUK(&l, &login);  // Pass login and username by reference
+            MASUK(&l, &login, &idUser);
         } else if (compareString(currentWord, "TUTUP_PROGRAM")) {
             TUTUP_PROGRAM();
         }

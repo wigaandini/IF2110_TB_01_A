@@ -82,7 +82,8 @@ void printListofUser(ListStatikUser l){
         for(i=0; i<banyakUser(l); i++){         // iterasi tiap user
             printf("ID\t: %d\n", UserId(l, i));
 
-            printf("Name\t: %s\n", l.data[i].nama);
+            printf("Name\t: ");
+            displayString(l.data[i].nama); printf("\n");
             
             printf("Pass\t: %s\n", l.data[i].sandi);
             

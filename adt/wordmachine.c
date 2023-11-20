@@ -133,7 +133,6 @@ int WordToInt(Word str){
         if (str.TabWord[i] >= '0' && str.TabWord[i] <= '9') {
             result = result * 10 + (str.TabWord[i] - '0');
         } else {
-            // Handle non-numeric characters
             return 0;
         }
     }
@@ -203,10 +202,42 @@ boolean CharIsInt(char c){
 }
 
 boolean compareString(Word str1, char* str2){
+    // int i;
+    // // if (lengthWord(str1) != lengthString(str2)){
+    // //     return false;
+    // // }
+    // // else{
+    //     for (i = 0; i < lengthWord(str1)-1; i++){
+    //         if (str1.TabWord[i] != str2[i]){
+    //             return false;
+    //         }
+    //     }
+    //     return true;
+    // // }
     int i;
-    for (i = 0; i < str1.Length-1; i++){
-        if (str1.TabWord[i] != str2[i]){
-            return false;
+
+    //Hitung panjang str2
+    int lenStr2 = 0;
+    while (str2[lenStr2] != '\0'){
+        lenStr2++;
+    }
+
+    // printf("len ");
+    // displayWord(str1);
+    // printf(" = %d\n", str1.Length);
+    // printf("len %s = %d\n", str2, lenStr2);
+
+    if (str1.Length > lenStr2){    
+        return false;
+    }
+    else{
+        for (i = 0; i < lenStr2; i++){
+            if (str1.TabWord[i] != str2[i]){
+                return false;
+            }
+            if (i >= str1.Length && str2[i] != '\0'){
+                return false;
+            }
         }
     }
     return true;
@@ -318,15 +349,12 @@ void LowerCase(){
 
 int countWords(Word w) {
     int count = 0;
-    int isWord = 0;  // Flag to track if the current character is part of a word
+    int isWord = 0; 
 
     for (int i = 0; i < w.Length; i++) {
-        // If the current character is a space or tab, set the flag to 0
         if (w.TabWord[i] == ' ' || w.TabWord[i] == '\t') {
             isWord = 0;
         }
-        // If the current character is not a space or tab and the flag is 0,
-        // it means we've encountered the beginning of a new word. Increment the count.
         else if (isWord == 0) {
             isWord = 1;
             count++;
@@ -335,3 +363,12 @@ int countWords(Word w) {
     return count;
 }
 /* Menghitung jumlah kata di suatu kalimat */
+
+int lengthString(char *str) {
+    int length = 0;
+    while (str[length] != '\0') {
+        length++;
+    }
+    return length;
+}
+/* Menghitung panjang string */

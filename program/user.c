@@ -20,7 +20,7 @@ void DAFTAR(ListStatikUser *l, boolean isLoggedIn){
                 if (currentWord.Length > 20) {
                     printf("\nNama yang Anda masukkan terlalu panjang. Silakan masukkan nama lain!\n");
                 }
-                else {
+                else if(checkUserExist(*l, currentWord)) {
                     printf("\nWah, sayang sekali nama tersebut telah diambil.\n");
                 }
                 printf("\nMasukkan nama:\n");
@@ -85,9 +85,6 @@ void MASUK(ListStatikUser *l, boolean *isLoggedIn, int *id_login){      // belum
                 *id_login = getIdOfName(*l, nama);
             }
         }
-    }
-    else{
-        printf("Wah Anda sudah masuk. Keluar dulu yuk!\n");
     }
 }
 

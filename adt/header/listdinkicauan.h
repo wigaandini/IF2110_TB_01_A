@@ -8,6 +8,8 @@
 #include "datetime.h"
 #include "liststatikuser.h"
 #include "friendmatrix.h"
+#include "listlinierutas.h"
+#include "balasan.h"
 
 #define CAPACITYMAXLISTKICAUAN 100
 #define IDX_MIN 0
@@ -23,8 +25,8 @@ typedef struct {
     int idauthor;   //id author
     DATETIME waktu; //waktu unggah kicauan
     //tipekicauan
-    Address sambunganUtas;  //address sambungan utas
-    Address balasan;        //list of address balasan(?)
+    AddressUtas sambunganUtas;  //address sambungan utas
+    AddressBalasan balasan;        //list of address balasan(?)
 } Kicauan;
 
 typedef struct {
@@ -104,4 +106,5 @@ void DisplaySatuKicau(ListStatikUser l, Kicauan k);
 void DisplayAllKicauan(ListStatikUser l, ListKicauan k);
 /* Untuk konfigurasi, jadi bisa liat semua isi list din kicauan*/
 
+int countTypeUtas(ListKicauan l);
 #endif

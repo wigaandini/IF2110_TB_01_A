@@ -10,7 +10,47 @@
 #include "../adt/header/datetime.h"
 #include "../adt/header/friendmatrix.h"
 
-void BIKIN_UTAS(int idKicau, ListKicauan *listKicau, ListLinierUtas *listUtasPers, ListUtas *listUtasGlobal, int idAuthor, UtasType *u){
+int searchIdKicau(int idUtas, ListKicauan l){
+    int count = 0;
+    while(UTAS(ELMTLISTKICAU(l, count)) != NULL && idUtas != count){
+        count++;
+    }
+    return ID(ELMTLISTKICAU(l, count));
+}
+
+void DisplaySatuUtas(UtasType u, ListStatikUser l){
+    printf("    | INDEX = %d\n", idxUtas(u));
+    printf("    | ");
+    displayString(l.data[idAuthor(u)-1].nama);
+    printf("\n    | ");
+    TulisDATETIME(Waktu(u));
+    printf("\n");
+    printf("    | ");
+    displayWord(Text(u));
+    printf("\n\n");
+}
+
+void DisplayUtasPers(ListStatikUser l, ListLinierUtas u, int idUser, int idUtas, ListKicauan listKicau){
+    int idAuthor;
+    AddressUtas p = FIRST(u);
+    int idKicau = searchIdKicau(idUtas, listKicau);
+    idAuthor = IDAUTHOR(ELMTLISTKICAU(listKicau, idKicau-1));
+    DisplaySatuKicau(l, ELMTLISTKICAU(listKicau, idKicau-1));
+    int countUtas = countTypeUtas(listKicau);
+    for (int i = countUtas - 1; i >= 0; i--) {
+        if (idAuthor == idUser) {
+            DisplaySatuUtas(INFOUtas(p), l);
+            p = NEXTUtas(p);
+        } else {
+            if(UserTipe(l, idAuthor-1) == PUBLIK){
+                DisplaySatuUtas(INFOUtas(p), l);
+                p = NEXTUtas(p);
+            }
+        } 
+    }
+}
+
+void BIKIN_UTAS(int idKicau, ListKicauan *listKicau, ListLinierUtas *listUtasPers, int idAuthor, UtasType *u){
     int indexUtas;
     Word text;
     DATETIME waktu;
@@ -36,8 +76,8 @@ void BIKIN_UTAS(int idKicau, ListKicauan *listKicau, ListLinierUtas *listUtasPer
             Time(waktu) = DetikToTIME(current_time);
 
             CreateUtas(u, idAuthor, indexUtas, text, waktu);
-            insertLastGlobal(listUtasGlobal, ELMTLISTKICAU(*listKicau, idKicau-1));
             insertLastPers(listUtasPers, *u);
+            UTAS(ELMTLISTKICAU(*listKicau, idKicau-1)) = newNode(*u);
 
             printf("Apakah Anda ingin melanjutkan utas ini? (YA/TIDAK) ");
             STARTSENTENCE();
@@ -56,7 +96,6 @@ void BIKIN_UTAS(int idKicau, ListKicauan *listKicau, ListLinierUtas *listUtasPer
                     printf("Utas selesai!\n\n");
                 }
             }
-            UTAS(ELMTLISTKICAU(*listKicau, idKicau-1)) = *listUtasPers;
         }
         else{
             printf("Utas ini bukan milik anda!\n");
@@ -67,12 +106,16 @@ void BIKIN_UTAS(int idKicau, ListKicauan *listKicau, ListLinierUtas *listUtasPer
     }
 }
 
+boolean isIdUtasValid(ListKicauan listKicau, int idUtas){
+    return (idUtas > 0 && idUtas <= countTypeUtas(listKicau));
+}
 
-void SAMBUNG_UTAS(int idUtas, int indexUtas, ListLinierUtas *listUtasPers, ListUtas *listUtasGlobal, int idAuthor, UtasType *u){
+void SAMBUNG_UTAS(int idUtas, int indexUtas, ListLinierUtas *listUtasPers, int idAuthor, UtasType *u, ListKicauan listKicau){
     Word text;
     DATETIME waktu;
-    if(isIdUtasGlobalValid(*listUtasGlobal, idUtas)){
-        if(IDAUTHOR(ELMTLISTUTAS(*listUtasGlobal, idUtas-1)) == idAuthor){
+    int idKicau = searchIdKicau(idUtas, listKicau);
+    if(isIdUtasValid(listKicau, idUtas)){
+        if(IDAUTHOR(ELMTLISTKICAU(listKicau, idKicau-1)) == idAuthor){
             if(indexUtas == getLastIdxUtasPers(*listUtasPers)){
                 printf("Masukkan kicauan:\n");
                 STARTSENTENCE();
@@ -110,12 +153,13 @@ void SAMBUNG_UTAS(int idUtas, int indexUtas, ListLinierUtas *listUtasPers, ListU
 }
 
 
-void HAPUS_UTAS(int idUtas, int indexUtas, ListLinierUtas *listUtasPers, ListUtas *listUtasGlobal, int idAuthor, UtasType *u){
+void HAPUS_UTAS(int idUtas, int indexUtas, ListLinierUtas *listUtasPers, int idAuthor, UtasType *u, ListKicauan listKicau){
     Word text;
     DATETIME waktu;
+    int idKicau = searchIdKicau(idUtas, listKicau);
     Address p = FIRST(*listUtasPers);
-    if(isIdUtasGlobalValid(*listUtasGlobal, idUtas)){
-        if(IDAUTHOR(ELMTLISTUTAS(*listUtasGlobal, idUtas-1)) == idAuthor){
+    if(isIdUtasValid(listKicau, idUtas)){
+        if(IDAUTHOR(ELMTLISTKICAU(listKicau, idKicau-1)) == idAuthor){
             if(indexUtas == 0){
                 printf("Anda tidak bisa menghapus kicauan utama!\n");
             }
@@ -136,124 +180,17 @@ void HAPUS_UTAS(int idUtas, int indexUtas, ListLinierUtas *listUtasPers, ListUta
     }   
 }
 
-
-void CETAK_UTAS(ListStatikUser l, ListUtas listUtasGlobal, ListLinierUtas listUtasPers, int idUser, int idUtas){
-    if(isIdUtasGlobalValid(listUtasGlobal, idUtas)){
+void CETAK_UTAS(ListStatikUser l, ListLinierUtas listUtasPers, int idUser, int idUtas, ListKicauan listKicau){
+    int idKicau = searchIdKicau(idUtas, listKicau);
+    if(isIdUtasValid(listKicau, idUtas)){
         if(UserTipe(l, idUser - 1) == PUBLIK){
             printf("Akun yang membuat utas ini adalah akun privat! Ikuti dahulu akun ini untuk melihat utasnya!\n");
         }
         else{
-            DisplayUtasPers(l, listUtasGlobal, listUtasPers, idUser, idUtas);
+            DisplayUtasPers(l, listUtasPers, idUser, idUtas, listKicau);
         }
     }
     else{
         printf("Utas tidak ditemukan!\n");
     }
 }
-
-
-
-
-// int main(){
-//     Word w;
-//     Word utasWord = splitCommand(&w, word, 1);
-//     // displayWord(utas);
-//     Word idWord = splitCommand(&w, word, 2);
-//     int idInt = WordToInt(idWord);
-//     char* idStr = WordToString(idWord);
-//     char* utasStr = MergeString("UTAS", idStr);
-//     // printf("%s", utasStr);
-//     // if (compareString(word, utasStr)){
-//         printf("\nUtas berhasil dibuat!\n\n");
-//         printf("Masukkan kicauan:\n");
-//         STARTSENTENCE();
-//         printf("\n");
-//         printf("Apakah Anda ingin melanjutkan utas ini? (YA/TIDAK) ");
-//         STARTSENTENCE();
-//         while(compareString(currentWord, "YA")){
-//             printf("\nMasukkan kicauan:\n");
-//             STARTSENTENCE();
-//             printf("\n");
-//             printf("Apakah Anda ingin melanjutkan utas ini? (YA/TIDAK) ");
-//             STARTSENTENCE();
-//             if(compareString(currentWord, "TIDAK")){
-//                 printf("Utas selesai!\n\n");
-//             }
-//         }
-//     // }
-//     // printf("\n");
-//     // displayWord(id);
-
-
-
-
-
-//     Word w;
-//     Word sambungWord = splitCommand(&w, word, 1);
-//     // displayWord(utas);
-//     Word idUtas = splitCommand(&w, word, 2);
-//     Word idSambung = splitCommand(&w, word, 3);
-//     int idUtasInt = WordToInt(idUtas);
-//     int idSambungInt = WordToInt(idSambung);
-//     char* idUtasStr = WordToString(idUtas);
-//     char* idSambungStr = WordToString(idSambung);
-//     char* utasStr = MergeString("SAMBUNG_UTAS", idUtasStr);
-//     char* sambungStr = MergeString(utasStr, idSambungStr);
-//     printf("\nMasukkan kicauan:\n");
-//     STARTSENTENCE();
-//     printf("\n");
-
-
-
-
-
-
-//     Word w, kata, cWord;
-//     printf(">> ");
-//     STARTSENTENCE();
-//     // UTAS(currentWord);
-//     cWord = currentWord;
-//     kata = splitCommand(&w, cWord, 1);
-//     displayWord(kata);
-//     if(compareString(kata,"UTAS")){
-//         UTAS(currentWord);
-//     }
-//     else if(compareString(kata,"SAMBUNG_UTAS")){
-//         SAMBUNG_UTAS(currentWord);
-//     }
-// }
-//     Word idW;
-//     int i = 0;
-//     while(currentChar != MARK && currentChar != BLANK && currentChar != LineMARK && i < 4){
-//         currentWord.TabWord[i] = currentChar;
-//         ADV();
-//         i ++;
-//     }
-
-//     int j = 0;
-//     while(currentChar != MARK && currentChar != BLANK && currentChar != LineMARK){
-//         idW.TabWord[j] = currentChar;
-//         ADV();
-//         j ++;
-//         idW.Length = j;
-//     }
-
-//     int id = WordToInt(idW);
-//     printf("%d\n", id);
-//     char* idStr = WordToString(idW);
-//     // char* utasStr = "UTAS " + idStr;
-//     // if (compareString(currentWord, utasStr)){
-//     //     printf("Utas berhasil dibuat!\n\n");
-//     //     printf("Masukkan kicauan:\n");
-//     //     STARTSENTENCE();
-//     //     printf("Apakah Anda ingin melanjutkan utas ini? (YA/TIDAK) ");
-//     //     STARTSENTENCE();
-//     //     while(compareString(currentWord, "YA")){
-//     //         printf("Masukkan kicauan:\n");
-//     //         STARTSENTENCE();
-//     //     }
-//     //     if(compareString(currentWord, "TIDAK")){
-//     //         printf("Utas selesai!\n\n");
-//     //     }
-//     // }
-// }

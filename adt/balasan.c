@@ -6,7 +6,7 @@
 #include "header/listdinkicauan.h"
 #include "header/wordmachine.h"
 
-// ALERT !!! ListDinKicauan deklarasinya masih rada error
+// ALERT !!! ListKicauan deklarasinya masih rada error
 
 AddressBalasan newBalasan(int id, Word teks, int idPenulis, DATETIME waktu){
     AddressBalasan p = (AddressBalasan)malloc(sizeof(Balasan));
@@ -82,7 +82,7 @@ void displaySemuaBalasan(AddressBalasan a, FriendMatrix *fh, ListStatikUser *lsu
     displaySemuaBalasan(SIBLINGBALASAN(*a), fh, lsu, curUserId, indent);
 }
 
-void BALASAN(ListDinKicauan *l, FriendMatrix *fh, ListStatikUser *lsu, int idKicau, int curUserId){
+void BALASAN(ListKicauan *l, FriendMatrix *fh, ListStatikUser *lsu, int idKicau, int curUserId){
     if(idKicau >= listLength(*l)){
         printf("Tidak terdapat kicauan dengan id tersebut!\n");
         return;
@@ -98,7 +98,7 @@ void BALASAN(ListDinKicauan *l, FriendMatrix *fh, ListStatikUser *lsu, int idKic
     displaySemuaBalasan(ELMT(*l, idKicau).balasan, fh, lsu, curUserId, 0);
 }
 
-void BALAS(ListDinKicauan *l, FriendMatrix *fh, ListStatikUser *lsu, Word textBalasan, DATETIME curTime, int idKicau, int idBalasan, int curUserId, int *curIdBalasan){
+void BALAS(ListKicauan *l, FriendMatrix *fh, ListStatikUser *lsu, Word textBalasan, DATETIME curTime, int idKicau, int idBalasan, int curUserId, int *curIdBalasan){
     if(idKicau >= listLength(*l)){ // banyakKicau belum terdefinisi
         printf("Wah, tidak terdapat kicauan yang ingin Anda balas!\n");
         return;
@@ -144,7 +144,7 @@ void hapusHelper(AddressBalasan cur){
     free(cur);
 }
 
-void HAPUS_BALASAN(ListDinKicauan *l, int curUserId, int idKicau, int idBalasan){
+void HAPUS_BALASAN(ListKicauan *l, int curUserId, int idKicau, int idBalasan){
     if(idKicau >= listLength(*l)){ // banyakKicau belum terdefinisi
         printf("Wah, tidak terdapat kicauan yang ingin Anda hapus!\n");
         return;

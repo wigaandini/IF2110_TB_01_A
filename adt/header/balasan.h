@@ -46,13 +46,13 @@ AddressBalasan newBalasan(int id, Word teks, int idPenulis, DATETIME waktu);
 /* ***************************************************************** */
 /* KELOMPOK BACA/TULIS                                               */
 /* ***************************************************************** */
-void BALASAN(ListDinKicauan *l, FriendMatrix *fh, ListStatikUser *lsu, int idKicau, int curUserId);
+void BALASAN(ListKicauan *l, FriendMatrix *fh, ListStatikUser *lsu, int idKicau, int curUserId);
 /* I.S. sembarang */
 /* F.S. apabila idKicau valid:
         men-display semua balasan dari Kicauan dengan idKicau */
 /*      otherwise, menampilkan pesan error                    */
 
-void BALAS(ListDinKicauan *l, FriendMatrix *fh, ListStatikUser *lsu, Word textBalasan, DATETIME curTime, int idKicau, int idBalasan, int curUserId, int *curIdBalasan);
+void BALAS(ListKicauan *l, FriendMatrix *fh, ListStatikUser *lsu, Word textBalasan, DATETIME curTime, int idKicau, int idBalasan, int curUserId, int *curIdBalasan);
 /* I.S. sembarang */
 /* F.S. apabila idBalasan dan idKicau valid serta pengguna dapat membalas:
         membuat Balasan di Kicauan dengan idKicau dan Balasan dengan idBalasan */
@@ -65,7 +65,7 @@ void displaySemuaBalasan(AddressBalasan a, FriendMatrix *fh, ListStatikUser *lsu
 /* ***************************************************************** */
 /* OPERASI LAINNYA                                                   */
 /* ***************************************************************** */
-void HAPUS_BALASAN(ListDinKicauan *l, int curUserId, int idKicau, int idBalasan);
+void HAPUS_BALASAN(ListKicauan *l, int curUserId, int idKicau, int idBalasan);
 
 AddressBalasan searchAddressBalasan(AddressBalasan a, int idBalasan);
 
