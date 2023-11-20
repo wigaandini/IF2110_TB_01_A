@@ -11,8 +11,8 @@ typedef int ElType;
 /* Queue dengan representasi berkait dengan pointer */
 typedef struct node* Address;
 typedef struct node { 
-    int iduser;
-    int idfollow;
+    int iduser; // id yang merequest
+    int idfollow; // id yang direquest
     int nfrienduser;
     int nfriendfollow;
     Address next; 
