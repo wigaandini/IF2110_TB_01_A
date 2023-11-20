@@ -14,13 +14,13 @@ void CreateEmptyStack(DrafStack *S)
 }
 
 /* ************ Predikat Untuk test keadaan KOLEKSI ************ */
-boolean IsEmpty(DrafStack S)
+boolean IsEmptyStack(DrafStack S)
 /* Mengirim true jika Stack kosong: lihat definisi di atas */
 {
     return Top(S) == Nil;
 }
 
-boolean IsFull(DrafStack S)
+boolean IsFullStack(DrafStack S)
 /* Mengirim true jika tabel penampung nilai elemen stack penuh */
 {
     return Top(S) == MaxEl-1;
