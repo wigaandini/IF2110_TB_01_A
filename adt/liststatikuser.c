@@ -23,6 +23,9 @@ void CreateListStatikUser(ListStatikUser *l){
         UserId(*l, i) = i+1;
 
         UserWeton(*l, i) = EMPTYWETON;
+
+        UserTipe(*l, i) = PUBLIK;
+
         Matrix foto;
         createMatrix(5, 5, &foto);
         for (int i=0; i<5; i++) {
@@ -89,7 +92,7 @@ void printListofUser(ListStatikUser l){
             printf("Bio\t: %s\n", l.data[i].bio);
 
             printf("No. HP\t: ");
-            for (int j=0; j<UserNoHPLength(l, i); j++) {
+            for (int j=0; j<UserNoHPNeff(l, i); j++) {
                 printf("%d", UserNoHP(l, i, j));
             }
             printf("\n");
@@ -208,23 +211,11 @@ void addUser(ListStatikUser *l, Word name, Word pw)         // Ini kayanya masuk
     }
 }
 
-// boolean checkUserExist(ListStatikUser l, Word name){
-//     int i = 0;
-//     boolean found = false;
-//     while(!found && i < banyakUser(l)){
-//         if(l.data[i].nama == WordToString(name)){
-//             found = true;
-//         }
-//         i++;
-//     }
-//     return found;
-// }
-
-boolean checkPass(ListStatikUser l, Word name, Word pass){
+boolean checkUserExist(ListStatikUser l, Word name){
     int i = 0;
     boolean found = false;
     while(!found && i < banyakUser(l)){
-        if(l.data[i].nama == WordToString(name) && l.data[i].sandi == WordToString(pass)){
+        if(compareString(name, l.data[i].nama)){
             found = true;
         }
         i++;
@@ -232,7 +223,29 @@ boolean checkPass(ListStatikUser l, Word name, Word pass){
     return found;
 }
 
-boolean isLoggedIn(ListStatikUser l, Word currentUsername) {
-    int i = indexUser(l, currentUsername);
-    return (i != IDX_UNDEF) && (UserName(l, i, 0) != '\0');
+boolean checkPass(ListStatikUser l, Word name, Word pass){
+    int i = 0;
+    boolean found = false;
+    while(!found && i < banyakUser(l)){
+        if ((compareString(name, l.data[i].nama)) && compareString(pass, l.data[i].sandi)) {
+            found = true;
+        }
+        i++;
+    }
+    return found;
+}
+
+
+// Mengembalikan Id dari user dengan username bernilai name. Mengembalikan 0 jika tidak ada
+int getIdOfName(ListStatikUser l, Word name){
+    int i = 0;
+    boolean found = false;
+    while(!found && i < banyakUser(l)){
+        if(compareString(name, l.data[i].nama)){
+            found = true;
+        }
+        i++;
+    }
+    printf("\nhasil getIdOfName = %d\n", i);
+    return i;
 }

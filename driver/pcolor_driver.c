@@ -7,7 +7,7 @@ Modified at: 23/10/2023
 **/
 
 #include <stdio.h>
-#include "pcolor.h"
+#include "../adt/pcolor.c"
 
 int main()
 {
