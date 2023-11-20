@@ -18,9 +18,9 @@ void DAFTAR(ListStatikUser *l, boolean isLoggedIn){
             STARTSENTENCE();
             while (currentWord.Length > 20 || checkUserExist(*l, currentWord)) {        // error handling
                 if (currentWord.Length > 20) {
-                    printf("\nNama yang Anda masukkan terlalu panjang. Silakan masukkan nama lain!\n");
+                    printf("\nNama yang Anda masukkan melebihi 20 karakter. Silakan masukkan nama lain!\n");
                 }
-                else {
+                else if (checkUserExist(*l, currentWord)) {
                     printf("\nWah, sayang sekali nama tersebut telah diambil.\n");
                 }
                 printf("\nMasukkan nama:\n");
@@ -32,7 +32,7 @@ void DAFTAR(ListStatikUser *l, boolean isLoggedIn){
             printf("\nMasukkan kata sandi:\n");
             STARTSENTENCE();
             while (currentWord.Length > 20) {           // error handling
-                printf("\nKata sandi yang Anda masukkan terlalu panjang. Silakan masukkan kata sandi lain!\n");
+                printf("\nKata sandi yang Anda masukkan melebihi 20 karakter. Silakan masukkan kata sandi lain!\n");
                 printf("\nMasukkan kata sandi:\n");
                 STARTSENTENCE();
             }
@@ -61,9 +61,9 @@ void MASUK(ListStatikUser *l, boolean *isLoggedIn, int *id_login){      // belum
         STARTSENTENCE();
         while (currentWord.Length > 20 || !checkUserExist(*l, currentWord)) {
             if (currentWord.Length > 20) {
-                printf("\nNama yang Anda masukkan terlalu panjang. Silakan masukkan nama lain!\n");
+                printf("\nNama yang Anda masukkan melebihi 20 karakter. Silakan masukkan nama lain!\n");
             }
-            else {
+            else if (!checkUserExist(*l, currentWord)){
                 printf("\nWah, nama yang Anda cari tidak ada. Masukkan nama lain!\n");
             }
             printf("\nMasukkan nama:\n");
@@ -85,9 +85,6 @@ void MASUK(ListStatikUser *l, boolean *isLoggedIn, int *id_login){      // belum
                 *id_login = getIdOfName(*l, nama);
             }
         }
-    }
-    else{
-        printf("Wah Anda sudah masuk. Keluar dulu yuk!\n");
     }
 }
 
