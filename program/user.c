@@ -80,11 +80,10 @@ void MASUK(ListStatikUser *l, boolean *isLoggedIn, int *id_login){      // belum
             STARTSENTENCE();
             pass = currentWord;
             printf("\n");
-            if(checkPass(*l, nama, pass)){
-                *isLoggedIn = true;
-                *id_login = getIdOfName(*l, nama);
-            }
+           
         }
+        *isLoggedIn = true;
+        *id_login = getIdOfName(*l, nama);
     }
 }
 
