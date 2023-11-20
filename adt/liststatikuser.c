@@ -23,6 +23,9 @@ void CreateListStatikUser(ListStatikUser *l){
         UserId(*l, i) = i+1;
 
         UserWeton(*l, i) = EMPTYWETON;
+
+        UserTipe(*l, i) = PUBLIK;
+
         Matrix foto;
         createMatrix(5, 5, &foto);
         for (int i=0; i<5; i++) {
@@ -212,7 +215,7 @@ boolean checkUserExist(ListStatikUser l, Word name){
     int i = 0;
     boolean found = false;
     while(!found && i < banyakUser(l)){
-        if(l.data[i].nama == WordToString(name)){
+        if(compareString(name, l.data[i].nama)){
             found = true;
         }
         i++;
@@ -224,7 +227,7 @@ boolean checkPass(ListStatikUser l, Word name, Word pass){
     int i = 0;
     boolean found = false;
     while(!found && i < banyakUser(l)){
-        if(l.data[i].nama == WordToString(name) && l.data[i].sandi == WordToString(pass)){
+        if ((compareString(name, l.data[i].nama)) && compareString(pass, l.data[i].sandi)) {
             found = true;
         }
         i++;
@@ -243,5 +246,6 @@ int getIdOfName(ListStatikUser l, Word name){
         }
         i++;
     }
+    printf("\nhasil getIdOfName = %d\n", i);
     return i;
 }

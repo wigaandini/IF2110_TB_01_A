@@ -204,7 +204,7 @@ boolean CharIsInt(char c){
 
 boolean compareString(Word str1, char* str2){
     int i;
-    for (i = 0; i < str1.Length-1; i++){
+    for (i = 0; i < str1.Length; i++){
         if (str1.TabWord[i] != str2[i]){
             return false;
         }
