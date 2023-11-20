@@ -2,23 +2,19 @@
 #include "header/draf.h"
 
 void LihatDraf(DrafStack S){
-    if (IsEmptyStack(S))
+    infotypeDraf X;
+    while (!IsEmptyStack(S))
     {
-        printf("Yah, anda belum memiliki draf apapun! Buat dulu ya :D\n");
-    }
-    else
-    {
-        Draf temp = InfoTop(S);
-        printf("Ini draf terakhir anda:\n");
-        printf("| ");
-        TulisDATETIME(temp.Waktu);
-        printf("\n");
-        int j;
-        printf("| ");
-        for (j = 0; j < temp.Text.Length; j++) {
-            printf("%c", temp.Text.TabWord[j]);
+        Pop(&S,&X);
+        int i;
+        for ( i = 0; i < X.Text.Length; i++)
+        {
+            printf("%c",X.Text.TabWord[i]);
         }
-        printf("\n");   
+        printf("\n");
+
+        TulisDATETIME(X.Waktu);
+        printf("\n");
     }
 
 }
@@ -68,4 +64,8 @@ void EditDraf(DrafStack * S,Word word){
 
 void DeleteDraf(DrafStack *S,Draf *Out){
     Pop(S,Out);
+}
+
+void PostDraf(){
+
 }
