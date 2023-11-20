@@ -4,7 +4,7 @@
 #ifndef __WORDMACHINE_H__
 #define __WORDMACHINE_H__
 
-#include "../adt/boolean.h"
+#include "boolean.h"
 #include "charmachine.h"
 
 #define NMax 280

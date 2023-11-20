@@ -4,13 +4,9 @@
 #ifndef __CHAR_MACHINE_H__
 #define __CHAR_MACHINE_H__
 
-#include "../adt/boolean.h"
+#include "boolean.h"
 
-<<<<<<< HEAD:adt/wordmachine/charmachine.h
-#define LineMARK
-=======
 #define LineMARK 10
->>>>>>> main:adt/header/charmachine.h
 #define MARK ';'
 /* State Mesin */
 extern char currentChar;

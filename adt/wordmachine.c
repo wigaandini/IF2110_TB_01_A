@@ -215,29 +215,9 @@ boolean compareString(Word str1, char* str2){
     //     return true;
     // // }
     int i;
-
-    //Hitung panjang str2
-    int lenStr2 = 0;
-    while (str2[lenStr2] != '\0'){
-        lenStr2++;
-    }
-
-    // printf("len ");
-    // displayWord(str1);
-    // printf(" = %d\n", str1.Length);
-    // printf("len %s = %d\n", str2, lenStr2);
-
-    if (str1.Length > lenStr2){    
-        return false;
-    }
-    else{
-        for (i = 0; i < lenStr2; i++){
-            if (str1.TabWord[i] != str2[i]){
-                return false;
-            }
-            if (i >= str1.Length && str2[i] != '\0'){
-                return false;
-            }
+    for (i = 0; i < str1.Length-1; i++){
+        if (str1.TabWord[i] != str2[i]){
+            return false;
         }
     }
     return true;

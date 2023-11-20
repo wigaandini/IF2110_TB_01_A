@@ -3,12 +3,8 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 
-<<<<<<< HEAD:adt/matrix/matrix.h
-#include "../adt/boolean.h"
-=======
 #include "boolean.h"
 #include "pcolor.h"
->>>>>>> main:adt/header/matrix.h
 
 /* Ukuran maksimum baris dan kolom */
 #define ROW_CAP 5

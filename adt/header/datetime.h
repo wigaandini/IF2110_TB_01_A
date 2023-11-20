@@ -5,7 +5,7 @@
 #ifndef DATETIME_H
 #define DATETIME_H
 
-#include "../adt/boolean.h"
+#include "boolean.h"
 #include "time.h"
 
 /* *** Definisi TYPE DATETIME <DD/MM/YY HH:MM:SS> *** */

@@ -13,7 +13,7 @@ typedef struct
 {
     Word Text;
     DATETIME Waktu;
-}Draf;
+} Draf;
 
 #define Nil -1
 #define MaxEl 100
