@@ -35,7 +35,7 @@ void ReadDraf(ListStatikUser *l){
     CreateEmptyStack(&reverse);
 
     int temp=0;
-    int count=0;
+    // int count=0;
 
     boolean first=true;
     while (!EOP) {
@@ -155,10 +155,10 @@ void ReadDraf(ListStatikUser *l){
                     if (idmasuk!=-1){
                         dummy.Text.TabWord[i]=bacaan.TabWord[i];
                         dummy.Text.Length++;
-                        printf("%c", dummy.Text.TabWord[i]);
+                        // printf("%c", dummy.Text.TabWord[i]);
                     }
                 }
-                printf("\n");
+                // printf("\n");
 
                 while (currentChar == '\n') {
                     ADVconfig();

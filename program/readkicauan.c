@@ -4,9 +4,9 @@
 
 void ReadKicauan(ListKicauan *k, ListStatikUser l,FriendMatrix F){ 
     STARTconfig("config/kicauan.config");
-    int temp=0;
+    // int temp=0;
     int count=0;
-    int user=0;
+    // int user=0;
 
     boolean first=true;
     while (!EOP) {
@@ -34,8 +34,9 @@ void ReadKicauan(ListKicauan *k, ListStatikUser l,FriendMatrix F){
             }
             // printf("\n");
             // printf("tot:%d\n",tot);
-            CreateListGlobalKicauan(k,tot);
-            temp=tot*4;
+            
+            CreateListGlobalKicauan(k,1000);
+            // temp=tot*4;
 
             while (currentChar == '\n') {
                 ADVconfig();
@@ -142,18 +143,25 @@ void ReadKicauan(ListKicauan *k, ListStatikUser l,FriendMatrix F){
                     boolean betul=true;
                     for (int i = 0; bacaan.TabWord[i] != '\0'; i++) {
                         // printf("banding: %c,%c\n",bacaan.TabWord[i],l.data[user_now].nama[i]);
-                        if (bacaan.TabWord[i]!=l.data[user_now].nama[i] && betul)
-                        {
+                        if (bacaan.TabWord[i]!=l.data[user_now].nama[i] && betul){
                             betul=false;
                         }
                     }
                     user_now++;
-                    if (betul)
-                    {
+                    if (betul){
+                        printf("%s\n",bacaan.TabWord);
                         found=true;
                     }
                 }
-                ELMTLISTKICAU(*k,NEFFLISTKICAU(*k)).idauthor=user_now;
+                printf("usernow:%d\n",user_now);
+
+                if (found)
+                {
+                    ELMTLISTKICAU(*k,NEFFLISTKICAU(*k)).idauthor=user_now;
+                }
+                
+                // ELMTLISTKICAU(*k,NEFFLISTKICAU(*k)).idauthor=user_now;
+                // user_now=0;
                 // printf("%d\n",ELMTLISTKICAU(*k,NEFFLISTKICAU(*k)).idauthor);
 
                 while (currentChar == '\n') {

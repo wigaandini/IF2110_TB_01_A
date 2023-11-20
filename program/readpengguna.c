@@ -12,6 +12,9 @@ int charToInt(char c) {
     if (c >= '0' && c <= '9') {
         return (c - '0');
     }
+    else{
+        return -1;
+    }
 }
 
 void ReadUser(ListStatikUser *l,FriendMatrix *F) {
@@ -34,7 +37,7 @@ void ReadUser(ListStatikUser *l,FriendMatrix *F) {
     int friendcount=0; //patokan matriks teman
 
     boolean reqfirst=true;
-    int reqcount=0; //patokan matriks permintaan
+    // int reqcount=0; //patokan matriks permintaan
 
     while (!EOP) {
         if (first){
@@ -89,7 +92,7 @@ void ReadUser(ListStatikUser *l,FriendMatrix *F) {
                 }
                 count++;
                 // printf("%s\n",l.data[user].nama);
-                UserId(*l, user+1);
+                UserId(*l, user)=user+1;
             }
             else if (count%11==1){ //PASSWORD
                 Word bacaan;
@@ -305,6 +308,11 @@ void ReadUser(ListStatikUser *l,FriendMatrix *F) {
                 }
                 bacaan.TabWord[i] = '\0';
 
+                for (int i = 0; bacaan.TabWord[i] != '\0'; i++) {
+                    // printf("%c", bacaan.TabWord[i]);
+                }
+                // printf("\n");
+
                 while (currentChar == '\n') {
                     ADVconfig();
                 }
@@ -322,17 +330,17 @@ void ReadUser(ListStatikUser *l,FriendMatrix *F) {
                 bacaan.TabWord[i] = '\0';
                 
                 for (int i = 0; bacaan.TabWord[i] != '\0'; i++) {
-                    int idus;
-                    int ifol;
+                    // int idus;
+                    // int ifol;
                     if (i%2==0){
                         // ELMTFRIEND(R,reqcount,i/2)=charToInt(bacaan.TabWord[i]);
                         if (i/2==0)
                         {
-                            idus=charToInt(bacaan.TabWord[i]);
+                            // idus=charToInt(bacaan.TabWord[i]);
                         }
                         else if (i/2==1)
                         {
-                            ifol=charToInt(bacaan.TabWord[i]);
+                            // ifol=charToInt(bacaan.TabWord[i]);
                         }
                         else if (i/2==3)
                         {
