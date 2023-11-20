@@ -8,14 +8,12 @@
 #ifndef DRAF_H
 #define DRAF_H
 
-void LihatDraf(Stack S);
+void LihatDraf(DrafStack S);
 
-void AddDraf(Stack * S,Word word);
+void AddDraf(DrafStack * S,Word word);
 
-void EditDraf(Stack * S,Word word);
+void EditDraf(DrafStack * S,Word word);
 
-void DeleteDraf(Stack *S,Draf *Out);
-
-void PostDraf();
+void DeleteDraf(DrafStack *S,Draf *Out);
 
 #endif

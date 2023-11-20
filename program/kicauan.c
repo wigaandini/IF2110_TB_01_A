@@ -9,44 +9,91 @@
 #include "../adt/listdinkicauan.c"
 #include "../adt/friendmatrix.c"
 
-// gcc -o main program/kicauan.c adt/string.c adt/wordmachine.c adt/charmachine.c adt/datetime.c adt/listdinkicauan.c adt/time.c adt/friendmatrix.c 
+void Berkicau(ListStatikUser U, ListKicauan *l, Kicauan *k, int idauthor){
+    char c;
+    int id;
+    DATETIME waktu;
+    Word text;
 
-int main() {
-    Word w, command, kata, kata2;
-    ListKicauan k;
-    ListStatikUser l;
-    Kicauan tweet;
-    int idUser, idKicauan;
-    FriendMatrix m;
+    id = NEFFLISTKICAU(*l) + 1;
 
-    CreateListGlobalKicauan(&k, CAPACITYMAXLISTKICAUAN);
+    time_t current_time;
+    time(&current_time);
+    current_time+=3600*7;
 
-    idUser = 1; // sementara, nantinya nyesuaiin sama user yg lagi login
-    do {      
-        printf(">> ");
-        STARTSENTENCE();
-        command = currentWord;
-        kata = splitCommand(&w, command, 1);
-        displayWord(kata);
+    struct tm* timeinfo = gmtime(&current_time);
 
-        if (command.Length>kata.Length) {
-            kata2 = splitCommand(&w, command, 2);
-            idKicauan = WordToInt(kata2);
+    Year(waktu) = 1900 + timeinfo->tm_year;
+    Month(waktu) = timeinfo->tm_mon + 1;
+    Day(waktu) = timeinfo->tm_mday;
+    Time(waktu) = DetikToTIME(current_time);
+
+
+    printf("Masukkan kicauan :\n");
+    STARTSENTENCE();
+    text = currentWord;
+    if (isEmptyWord(text)) {
+        printf("Kicauan tidak boleh hanya berisi spasi!\n");
+    } else {
+        CreateKicauan(k, id, text, idauthor, waktu);
+
+        printf("Selamat! kicauan telah diterbitkan!\nDetil kicauan:\n");
+        DisplaySatuKicau(U, *k);
+        insertLastKicauan(l, *k);
+    }
+}
+
+void DisplayKicauan(ListStatikUser l, ListKicauan k, int idUser, FriendMatrix m){
+    int idAuthor;
+    for (int i = NEFFLISTKICAU(k) - 1 ; i >= 0; i--) {
+        idAuthor = IDAUTHOR(ELMTLISTKICAU(k, i));
+        if (idAuthor == idUser) {
+            DisplaySatuKicau(l, ELMTLISTKICAU(k, i));
+        } else {
+            if(isFriend(m, idAuthor, idUser)){
+                DisplaySatuKicau(l, ELMTLISTKICAU(k, i));
+            }
         } 
-        
-        if(compareString(kata,"KICAU")){
-            Berkicau(l, &k, &tweet, idUser);
+    }
+}
+
+void SUKA_KICAUAN(ListStatikUser l, ListKicauan *k, int idKicauan, int idUser, FriendMatrix m){
+    if (!isIdKicauanValid(*k, idKicauan)) {
+        printf("Tidak ditemukan kicauan dengan ID = %d\n", idKicauan);
+    } else {
+        int idAuthor = IDAUTHOR(ELMTLISTKICAU(*k, idKicauan-1));
+        if(UserTipe(l, idAuthor-1) == PUBLIK){
+            LIKE(ELMTLISTKICAU(*k, idKicauan-1))++;
+        }  else {
+            if (idAuthor == idUser) {
+                LIKE(ELMTLISTKICAU(*k, idKicauan-1))++;
+            } else {
+                if(isFriend(m, idAuthor, idUser)){
+                    LIKE(ELMTLISTKICAU(*k, idKicauan-1))++;
+                } else {
+                    printf("Wah, kicauan tersebut dibuat oleh akun privat! Ikuti akun itu dulu ya\n");
+                }
+            }
         }
-        else if(compareString(kata,"KICAUAN")){
-            DisplayKicauan(l, k, idUser, m);
+        DisplaySatuKicau(l, ELMTLISTKICAU(*k,idKicauan-1));
+    }
+}
+
+void UBAH_KICAUAN(ListStatikUser l, ListKicauan *k, int idKicauan, int idUser){
+    Word newText;
+
+    if (isIdKicauanValid(*k, idKicauan)) {
+        int idAuthor = IDAUTHOR(ELMTLISTKICAU(*k, idKicauan-1));
+        if (idAuthor == idUser) {
+            printf("Masukkan kicauan baru : \n");
+            STARTSENTENCE();
+            newText = currentWord;
+            TEXT(ELMTLISTKICAU(*k,idKicauan-1)) = newText;
+            DisplaySatuKicau(l, ELMTLISTKICAU(*k, idKicauan-1));
+        } else {
+            printf("Kicauan dengan ID = %d bukan milikmu!\n", idKicauan);
         }
-        else if(compareString(kata,"SUKA_KICAUAN")){
-            SUKA_KICAUAN(l, &k, idKicauan, idUser, m);
-        }
-        else if(compareString(kata,"UBAH_KICAUAN")){
-            UBAH_KICAUAN(l, &k, idKicauan, idUser);
-        }
-        
-    } while (!compareString(currentWord, "EXIT"));
-    
+    } else {
+        printf("Tidak ditemukan kicauan dengan ID = %d!\n", idKicauan);
+    }
 }

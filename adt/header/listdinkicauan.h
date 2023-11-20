@@ -101,31 +101,7 @@ void DisplaySatuKicau(ListStatikUser l, Kicauan k);
 /* Proses : Membaca komponen id, text, like, idauthor,
     dan waktu kemudian menampilkannnya ke layar*/
 
-void Berkicau(ListStatikUser U, ListKicauan *l, Kicauan *k, int idauthor);
-/* I.S. : Kicauan tidak terdefinisi */
-/* F.S. : Kicauan terdefinisi dan merupakan kicauan yang valid */
-/* Proses : Membaca komponen id, text, idauthor, dan waktu sehingga membentuk Kicauan
-    yang valid. Tidak mungkin menghasilkan Simulator yang tidak valid. */
-/* Pembacaan dilakukan dengan mengetikkan komponen text, membaca file Konfigurasi Kicauan untuk mendapat id kicauan 
-    dan melakukan increment terhadap id kicauan terakhir, mengambil data pengguna untuk idauthor, serta membaca waktu.*/
-
-void DisplayKicauan(ListStatikUser l, ListKicauan k, int idUser, FriendMatrix m);
-/* I.S. : File konfigurasi kicauan terdefinisi*/
-/* F.S. : Menampilkan seluruh komponen kicauan dari akun yang berteman dengan akun pengguna dan kicauan dirinya sendiri*/
-/* Proses : Membaca file konfigurasi kicauan, mengidentifikasi tiap kicauan yang ada dalam file konfigurasi dan menampilkannya
-    dengan kondisi (idauthor berteman dengan pengguna atau idauthor bersifat publik)*/
-
-/* ***************************************************************** */
-/* OPERASI LAINNYA                                             */
-/* ***************************************************************** */
-
-void SUKA_KICAUAN(ListStatikUser l, ListKicauan *k, int idKicauan, int idUser, FriendMatrix m);
-/* I.S. : Kicauan terdefinisi */
-/* F.S. : Apabila suatu kicauan dapat diakses oleh pengguna (isBerteman dengan idauthor true atau idauthor publik)
-    jumlah like diincrement*/
-
-void UBAH_KICAUAN(ListStatikUser l, ListKicauan *k, int idKicauan, int idUser);
-/* I.S. : Kicauan terdefinisi*/
-/* F.S. : Isi text kicauan berubah sesuai dengan perubahan yang dilakukan pengguna*/
+void DisplayAllKicauan(ListStatikUser l, ListKicauan k);
+/* Untuk konfigurasi, jadi bisa liat semua isi list din kicauan*/
 
 #endif
