@@ -130,14 +130,9 @@ void ganti_profil(ListStatikUser *UserData, int id_login) {
 
 
 // Perintah LIHAT_PROFIL [NAMA]
-void lihat_profil(ListStatikUser DataUser, char nama[]) {       // Masukkan nya dalam bentuk list of char atau apa nih
-    // Menghitung panjang nama[]
-    int namaLength = 0;
-    while (nama[namaLength] != '\0'){
-        namaLength++;
-    }
+void lihat_profil(ListStatikUser DataUser, Word nama) {       // Masukkan nya dalam bentuk list of char atau apa nih
     
-    if (namaLength > 20) {  // Jika nama lebih dari 20 karakter
+    if (nama.Length > 20) {  // Jika nama lebih dari 20 karakter
         printf("\nNama yang Anda masukkan melebihi 20 karakter. Silakan ulangi dan masukkan nama lain!\n\n");
         return;
     }
@@ -146,12 +141,12 @@ void lihat_profil(ListStatikUser DataUser, char nama[]) {       // Masukkan nya 
     int id = 0;
     for (int i = 0; i < 20; i++) {
         for (int j = 0; j < 20; j++) {
-            if (j < namaLength) {
-                if (nama[j] != UserName(DataUser, i, j)) {
+            if (j < nama.Length) {
+                if (nama.TabWord[j] != UserName(DataUser, i, j)) {
                     break;
                 }
             }
-            if (j > namaLength-1 && UserName(DataUser, i, j) != '\0') {
+            if (j > nama.Length-1 && UserName(DataUser, i, j) != '\0') {
                 break;
             }
             if (j == 19) {
