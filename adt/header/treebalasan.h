@@ -58,6 +58,8 @@ AddressBalasan insertBalasan(AddressBalasan a, Word text, int curIdBalasan, int 
 
 AddressBalasan findPrev(AddressBalasan a, AddressBalasan prev, boolean *fd, int idBalasan);
 
+int numBalasan(AddressBalasan a);
+
 void hapusHelper(AddressBalasan cur);
 
 #endif
