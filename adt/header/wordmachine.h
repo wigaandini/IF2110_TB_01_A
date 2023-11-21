@@ -104,4 +104,7 @@ void LowerCase();
 
 int countWords(Word w);
 /* Menghitung jumlah kata di suatu kalimat */
+
+int lengthString(char *str);
+/* Menghitung panjang string */
 #endif

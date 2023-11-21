@@ -129,7 +129,7 @@ void printList(ListDin l){
 
 /* ********** OPERATOR ARITMATIKA ********** */
 /* *** Aritmatika list : Penjumlahan, pengurangan, perkalian, ... *** */
-ListDin plusMinusList(ListDin l1, ListDin l2, boolean plus){
+ListDin plusMinusList(ListDin l1, ListDin l2, boolean plus){                // GA KEPAKE DI TUBES ALSTRUKDAT
     ListDin l3; 
     IdxType i;
     CreateListDin(&l3, CAPACITY(l1));

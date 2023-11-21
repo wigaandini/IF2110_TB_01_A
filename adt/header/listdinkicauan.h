@@ -8,6 +8,8 @@
 #include "datetime.h"
 #include "liststatikuser.h"
 #include "friendmatrix.h"
+#include "listlinierutas.h"
+#include "treebalasan.h"
 
 #define CAPACITYMAXLISTKICAUAN 100
 #define IDX_MIN 0
@@ -22,9 +24,8 @@ typedef struct {
     int like;       //jumlah like kicauan
     int idauthor;   //id author
     DATETIME waktu; //waktu unggah kicauan
-    //tipekicauan
-    Address sambunganUtas;  //address sambungan utas
-    Address balasan;        //list of address balasan(?)
+    AddressUtas sambunganUtas;  //address sambungan utas
+    AddressBalasan balasan;        //list of address balasan
 } Kicauan;
 
 typedef struct {
@@ -39,8 +40,8 @@ typedef struct {
 #define LIKE(K) (K).like
 #define IDAUTHOR(K) (K).idauthor
 #define WAKTU(K) (K).waktu
-#define UTAS(K) (K).sambunganUtas
-#define BALASAN(K) (K).balasan
+#define ADDRESSUTAS(K) (K).sambunganUtas
+#define ADDRESSBALASAN(K) (K).balasan
 
 #define NEFFLISTKICAU(L) (L).nEff
 #define BUFFERLISTKICAU(L) (L).buffer
