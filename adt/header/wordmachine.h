@@ -107,4 +107,6 @@ int countWords(Word w);
 
 int lengthString(char *str);
 /* Menghitung panjang string */
+
+void concatenate(char *str,char *str2,char *str3);
 #endif
