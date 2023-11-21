@@ -12,6 +12,7 @@
 #include "wordmachine.h"
 #include "listdin.h"
 #include "draf.h"
+#include "prioreqfollinked.h"
 
 /*  Kamus Umum */
 #define CAPACITYUSER 20
@@ -48,7 +49,7 @@ typedef struct {        // Elemen dari list berupa tipe data buatan "UserData",
    enum TipeAkun tipe;
    Matrix foto;
    Matrix warnaFoto;
-
+   Prioreqfol userReq;
    DrafStack drafuser;
 } UserData;             // type elemen list
 
