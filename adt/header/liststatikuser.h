@@ -11,6 +11,7 @@
 #include "matrix.h"
 #include "wordmachine.h"
 #include "listdin.h"
+#include "draf.h"
 
 /*  Kamus Umum */
 #define CAPACITYUSER 20
@@ -47,6 +48,8 @@ typedef struct {        // Elemen dari list berupa tipe data buatan "UserData",
    enum TipeAkun tipe;
    Matrix foto;
    Matrix warnaFoto;
+
+   DrafStack drafuser;
 } UserData;             // type elemen list
 
 typedef int IdxType;

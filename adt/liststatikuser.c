@@ -25,6 +25,8 @@ void CreateListStatikUser(ListStatikUser *l){
         UserWeton(*l, i) = EMPTYWETON;
 
         UserTipe(*l, i) = PUBLIK;
+        
+        CreateEmptyStack(&(l->data[i].drafuser));
 
         Matrix foto;
         createMatrix(5, 5, &foto);
@@ -94,7 +96,7 @@ void printListofUser(ListStatikUser l){
 
             printf("No. HP\t: ");
             for (int j=0; j<UserNoHPNeff(l, i); j++) {
-                printf("%d", UserNoHP(l, i, j));
+                printf("%c", UserNoHP(l, i, j));
             }
             printf("\n");
 
