@@ -70,7 +70,7 @@ int main(){
     if (jalan)
     {
         boolean selesai=false, isLoggedIn=false;
-        int id_login=-1;
+        int id_login=-1;        // id_login = -1 berarti belum login. id_login yang digunakan [1..banyakUser]
         Word w, command, kata;
         while (!selesai){
             printf("\n>> ");
@@ -109,16 +109,17 @@ int main(){
 
         else if (compareString(kata,"LIHAT_PROFIL")){ //LIHAT_PROFIL
             Word nama = splitCommand(&w, command, 2);
-            char name[] = WordToString(nama);
-            lihat_profil(l, name);
+            displayWord(nama);
+            printf("\n");
+            lihat_profil(l, nama, isLoggedIn);
         }
 
         else if (compareString(kata,"ATUR_JENIS_AKUN")){ //ATUR_JENIS_AKUN
-            atur_jenis_akun(&l, id_login);
+            atur_jenis_akun(&l, id_login, isLoggedIn);
         }
 
         else if (compareString(kata,"UBAH_FOTO_PROFIL")){ //UBAH_FOTO_PROFIL
-            printf("\nUBAHPROFIL\n");
+            ubah_foto_profil(l, id_login);
         }
 
         // BAGIAN PERINTAH (TEMAN)
@@ -210,6 +211,7 @@ int main(){
         // printf("ter:%s\n",Terminal.TabWord);
         // printf("cr:%s\n",currentWord.TabWord);
     }
-    return 0;
+    }
     
+    return 0;
 }
