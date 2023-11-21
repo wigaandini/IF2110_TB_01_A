@@ -1,17 +1,30 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "header/balasan.h"
+#include "header/treebalasan.h"
 #include "header/liststatikuser.h"
 #include "header/friendmatrix.h"
 #include "header/wordmachine.h"
 #include "header/listdinkicauan.h"
+
+void langsungAddBalasan(ListKicauan *l, Word textBalasan, DATETIME curTime, int idKicau, int idBalasan, int curUserId, int *curIdBalasan){
+    if(idBalasan == -1){
+        ELMTLISTKICAU(*l, idKicau).balasan = insertBalasan(ELMTLISTKICAU(*l, idKicau).balasan, textBalasan, ++(*curIdBalasan), -1, curTime);
+    }else{
+        AddressBalasan curBalasan = searchAddressBalasan(ELMTLISTKICAU(*l, idKicau).balasan, idBalasan);
+        if(curBalasan == NIL){
+            printf("Wah, tidak terdapat balasan yang ingin Anda balas!\n");
+            return;
+        }
+        CHILDBALASAN(*curBalasan) = insertBalasan(CHILDBALASAN(*curBalasan), textBalasan, ++(*curIdBalasan), curUserId, curTime);
+    }
+}
 
 void BALASAN(ListKicauan *l, FriendMatrix *fh, ListStatikUser *lsu, int idKicau, int curUserId){
     if(idKicau >= NEFFLISTKICAU(*l)){
         printf("Tidak terdapat kicauan dengan id tersebut!\n");
         return;
     }
-    if(UserTipe(*lsu, ELMTLISTKICAU(*l, idKicau).idauthor) == PRIVAT && !isFriend(*fh, curUserId, ELMTLISTKICAU(*l, idKicau).idauthor)){ // isFriend masih belum ada (4/11)
+    if(UserTipe(*lsu, ELMTLISTKICAU(*l, idKicau).idauthor - 1) == PRIVAT && !isFriend(*fh, curUserId, ELMTLISTKICAU(*l, idKicau).idauthor - 1)){ // isFriend masih belum ada (4/11)
         printf("Wah, kicauan tersebut dibuat oleh pengguna dengan akun privat!\n");
         return;
     }
@@ -27,7 +40,7 @@ void BALAS(ListKicauan *l, FriendMatrix *fh, ListStatikUser *lsu, Word textBalas
         printf("Wah, tidak terdapat kicauan yang ingin Anda balas!\n");
         return;
     }
-    if(UserTipe(*lsu, ELMTLISTKICAU(*l, idKicau).idauthor) == PRIVAT && !isFriend(*fh, curUserId, ELMTLISTKICAU(*l, idKicau).idauthor)){ // isFriend masih belum ada (4/11)
+    if(UserTipe(*lsu, ELMTLISTKICAU(*l, idKicau).idauthor - 1) == PRIVAT && !isFriend(*fh, curUserId, ELMTLISTKICAU(*l, idKicau).idauthor - 1)){ // isFriend masih belum ada (4/11)
         printf("Wah, akun tersebut merupakan akun privat dan anda belum berteman akun tersebut!\n");
         return;
     }

@@ -58,6 +58,11 @@
   "C_Cpp_Runner.msvcSecureNoWarnings": false,
   "files.associations": {
     "friendmatrix.h": "c",
-    "stack.h": "c"
+    "stack.h": "c",
+    "listdinkicauan.h": "c",
+    "stdlib.h": "c",
+    "charmachine.h": "c",
+    "treebalasan.h": "c",
+    "configmachine.h": "c"
   }
 }
