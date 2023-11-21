@@ -101,7 +101,8 @@ int main() {
 
     // Uji fungsi splitCommand
     Word w;
-    splitCommand(&w, str1, 2);
+    Word command = {"Hello World", 11};
+    splitCommand(&w, command, 2);
     printf("Hasil splitCommand: ");
     displayWord(w);  // Seharusnya mencetak "World"
 
