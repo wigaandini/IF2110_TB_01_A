@@ -5,7 +5,7 @@
 #include "header/listdinkicauan.h"
 #include "header/liststatikuser.h"
 
-const char* namaFileBalasan = "/pengguna.config";
+const char* namaFileBalasan = "/balasan.config";
 
 char *inputNamaFolder(FILE *stream){
     char *str;
