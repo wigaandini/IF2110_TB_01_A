@@ -97,7 +97,6 @@ void ganti_profil(ListStatikUser *UserData, int id_login) {
     // Perbarui No HP
     for (int i = 0; i < currentWord.Length; i++) {
         insertLast(&(*UserData).data[id_login-1].noHP, currentWord.TabWord[i]);
-        printList((*UserData).data[id_login-1].noHP);
     }
 
     // Meminta masukkan Weton
@@ -213,14 +212,14 @@ void atur_jenis_akun(ListStatikUser *DataUser, int id_login, boolean isLoggedin)
 
 
 // Perintah UBAH_FOTO_PROFIL
-void ubah_foto_profil(ListStatikUser DataUser, int id_login) {
+void ubah_foto_profil(ListStatikUser *DataUser, int id_login) {
     if (id_login == -1) {    // Jika belum login
         printf("\nAnda belum masuk. Masuk dulu yuk!\n\n");
         return;
     }
     // Print foto profil saat ini
     printf("Foto profil Anda saat ini adalah\n");
-    displayMatrixFoto(UserFoto(DataUser, id_login-1), UserWarnaFoto(DataUser, id_login-1));
+    displayMatrixFoto(UserFoto(*DataUser, id_login-1), UserWarnaFoto(*DataUser, id_login-1));
     printf("\n");
 
     // Meminta masukkan foto profil
@@ -232,8 +231,8 @@ void ubah_foto_profil(ListStatikUser DataUser, int id_login) {
     int kolom = 0, baris = 0;         
     for (int j = 0; j < currentWord.Length; j++) {  // Masih salah // Length sudah pasti 99
         if (currentWord.TabWord[j] == 'R' || currentWord.TabWord[j] == 'G' || currentWord.TabWord[j] == 'B') {
-            UserWarnaFoto(DataUser, id_login-1).mem[baris][kolom] = currentWord.TabWord[j];
-            UserFoto(DataUser, id_login-1).mem[baris][kolom] = currentWord.TabWord[j+2];
+            UserWarnaFoto(*DataUser, id_login-1).mem[baris][kolom] = currentWord.TabWord[j];
+            UserFoto(*DataUser, id_login-1).mem[baris][kolom] = currentWord.TabWord[j+2];
             kolom++;
         }
         if (kolom == 5) {
