@@ -131,11 +131,20 @@ void DisplayAllKicauan(ListStatikUser l, ListKicauan k){
     }
 }
 
+//     int count = 0;
+//     int i = 0;
+//     while(ADDRESSUTAS(ELMTLISTKICAU(l, i)) != NULL && i < NEFFLISTKICAU(l)){
+//         count++;
+//     }
+//     return count;
+
 int countTypeUtas(ListKicauan l){
-    int count = 0;
-    int i = 0;
-    while(ADDRESSUTAS(ELMTLISTKICAU(l, i)) != NULL && i < NEFFLISTKICAU(l)){
-        count++;
+    int i = 0, count = 0;
+    while(i < NEFFLISTKICAU(l)){
+        if(ADDRESSUTAS(ELMTLISTKICAU(l, i)) != NULL){
+           count ++;
+        }
+        i++;
     }
     return count;
 }
