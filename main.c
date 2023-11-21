@@ -119,7 +119,7 @@ int main(){
         }
 
         else if (compareString(kata,"UBAH_FOTO_PROFIL")){ //UBAH_FOTO_PROFIL
-            ubah_foto_profil(l, id_login);
+            ubah_foto_profil(&l, id_login);
         }
 
         // BAGIAN PERINTAH (TEMAN)
