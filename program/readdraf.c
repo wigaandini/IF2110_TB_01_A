@@ -1,13 +1,14 @@
 #include "../adt/header/draf.h"
 #include "../adt/header/configmachine.h"
 #include "../adt/header/wordmachine.h"
+#include "../adt/header/liststatikuser.h"
 #include <stdio.h>
 
-int charToInt(char c) {
-    if (c >= '0' && c <= '9') {
-        return (c - '0');
-    }
-}
+// int charToInt(char c) {
+//     if (c >= '0' && c <= '9') {
+//         return (c - '0');
+//     }
+// }
 
 int pangkat(int a,int b){
     if (b==0){
@@ -17,20 +18,28 @@ int pangkat(int a,int b){
     return a*pangkat(a,b-1);
 }
 
-int ReadDraf(DrafStack *S, Word user){
-    STARTconfig("config/draf.config");
-    CreateEmptyStack(S);
+// void ReadDraf(ListStatikUser *l){
+// }
 
+void ReadDraf(ListStatikUser *l){
+    STARTconfig("config/draf.config");
+    
+    // int n=0;
+    // for ( n = 0; n < banyakUser(*l); n++)
+    // {
+    //     displayMatrixFoto(UserFoto(*l, n), UserWarnaFoto(*l, n));
+    //     LihatDraf((*l).data[n].drafuser);
+    // }
+    
     DrafStack reverse;
     CreateEmptyStack(&reverse);
 
     int temp=0;
-    int count=0;
+    // int count=0;
 
     boolean first=true;
     while (!EOP) {
-        if (first)
-        {
+        if (first){
             Word bacaan;
             int i = 0;
 
@@ -52,7 +61,7 @@ int ReadDraf(DrafStack *S, Word user){
                     }
                 }
             }
-            
+            // printf("temp:%d\n",temp);
 
             while (currentChar == '\n') {
                 ADVconfig();
@@ -108,14 +117,18 @@ int ReadDraf(DrafStack *S, Word user){
             // printf("totdraf:%d\n",totdraf);
             // printf("\n");
 
-            boolean cocok=true;
-            for (i = 0; i < revert.Length; i++)
-            {
-                if (revert.TabWord[i]!=user.TabWord[i])
-                {
-                    cocok=false;
+            int idmasuk=-1;
+            int n;
+            for (n = 0; n < banyakUser(*l); n++){
+                boolean adauser=true;
+                for (i = 0; i < revert.Length; i++){
+                    if (revert.TabWord[i]!=(l->data[n].nama[i])){
+                        adauser=false;
+                    }
                 }
-                // printf("%c %c\n",revert.TabWord[i],user.TabWord[i]);
+                if (adauser){
+                    idmasuk=n;
+                }
             }
 
             while (currentChar == '\n') {
@@ -139,7 +152,7 @@ int ReadDraf(DrafStack *S, Word user){
                 bacaan.TabWord[i] = '\0';
 
                 for (int i = 0; bacaan.TabWord[i] != '\0'; i++) {
-                    if (cocok){
+                    if (idmasuk!=-1){
                         dummy.Text.TabWord[i]=bacaan.TabWord[i];
                         dummy.Text.Length++;
                         // printf("%c", dummy.Text.TabWord[i]);
@@ -163,7 +176,7 @@ int ReadDraf(DrafStack *S, Word user){
 
                 int totwaktu=0;
                 for (int i = 0; bacaan2.TabWord[i] != '\0'; i++) {
-                    if (cocok){
+                    if (idmasuk!=-1){
                         if (i<2){
                             totwaktu=totwaktu*10+charToInt(bacaan2.TabWord[i]);
                         } else if (i==2){
@@ -204,19 +217,15 @@ int ReadDraf(DrafStack *S, Word user){
                     ADVconfig();
                 }
 
-                if (cocok){
+                if (idmasuk!=-1){
                     Push(&reverse,dummy);
                 }
             }
+            while (!IsEmptyStack(reverse)){
+                Draf XX;
+                Pop(&reverse,&XX);
+                Push(&(l->data[idmasuk].drafuser),XX);
+            }
         }
     }
-
-    while (!IsEmptyStack(reverse))
-    {
-        infotypeDraf X;
-        Pop(&reverse,&X);
-        Push(S,X);
-    }
-
-    return 0;
 }
