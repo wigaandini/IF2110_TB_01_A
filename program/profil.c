@@ -161,7 +161,11 @@ void lihat_profil(ListStatikUser DataUser, Word nama) {       // Masukkan nya da
     }
 
     if (UserTipe(DataUser, id-1) != PUBLIK) {   // Jika akun privat
-        printf("\nWah, akun %s diprivat nih. Ikuti dulu yuk untuk bisa melihat profil %s!\n\n", nama, nama);
+        printf("\nWah, akun ");
+        displayWord(nama);
+        printf(" diprivat nih. Ikuti dulu yuk untuk bisa melihat profil ");
+        displayWord(nama);
+        printf("!\n\n");
         return;
     }
 
