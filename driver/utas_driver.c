@@ -12,9 +12,10 @@
 #include "../program/utas.c"
 #include "../adt/time.c"
 #include "../adt/matrix.c"
-#include "../adt/listdin.c"
 #include "../adt/pcolor.c"
 #include "../program/user.c"
+#include "../adt/treebalasan.c"
+#include "../adt/listdin.c"
 
 int main() {
     Word w, command, kata;

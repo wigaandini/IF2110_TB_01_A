@@ -102,6 +102,20 @@ int indexOfPers(ListLinierUtas l, UtasType val){
 /* menambahkan elemen pertama dengan nilai val jika alokasi berhasil. */
 /* Jika alokasi gagal: I.S.= F.S. */
 
+/****************** PRIMITIF BERDASARKAN NILAI ******************/
+/*** PENAMBAHAN ELEMEN ***/
+void insertFirstPers(ListLinierUtas *l, UtasType val){
+    AddressUtas p = newNodeUtas(val);
+    if (p != NULL){
+        NEXTUtas(p) = FIRSTUtas(*l);
+        FIRSTUtas(*l) = p;
+    }
+}
+/* I.S. l mungkin kosong */
+/* F.S. Melakukan alokasi sebuah elemen dan */
+/* menambahkan elemen pertama dengan nilai val jika alokasi berhasil. */
+/* Jika alokasi gagal: I.S.= F.S. */
+
 void insertLastPers(ListLinierUtas *l, UtasType val){
     AddressUtas p, last;
     if (isListUtasPersEmpty(*l)){

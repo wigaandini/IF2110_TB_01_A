@@ -9,7 +9,7 @@
 #include "header/listdinkicauan.h"
 #include "header/friendmatrix.h"
 #include "header/listlinierutas.h"
-#include "header/balasan.h"
+#include "header/treebalasan.h"
 
 
 /* ***************************************************************** */
@@ -108,8 +108,8 @@ void CreateKicauan(Kicauan *k, int id, Word text, int idauthor, DATETIME waktu){
     LIKE(*k) = 0;
     IDAUTHOR(*k) = idauthor;
     WAKTU(*k) = waktu;
-    UTAS(*k) = NULL;
-    BALASAN(*k) = NULL;
+    ADDRESSUTAS(*k) = NULL;
+    ADDRESSBALASAN(*k) = NULL;
 }
 
 void DisplaySatuKicau(ListStatikUser l, Kicauan k){
@@ -134,7 +134,7 @@ void DisplayAllKicauan(ListStatikUser l, ListKicauan k){
 int countTypeUtas(ListKicauan l){
     int count = 0;
     int i = 0;
-    while(UTAS(ELMTLISTKICAU(l, i)) != NULL && i < NEFFLISTKICAU(l)){
+    while(ADDRESSUTAS(ELMTLISTKICAU(l, i)) != NULL && i < NEFFLISTKICAU(l)){
         count++;
     }
 }

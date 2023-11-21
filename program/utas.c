@@ -12,7 +12,7 @@
 
 int searchIdKicau(int idUtas, ListKicauan l){
     int count = 0;
-    while(UTAS(ELMTLISTKICAU(l, count)) != NULL && idUtas != count){
+    while(ADDRESSUTAS(ELMTLISTKICAU(l, count)) != NULL && idUtas != count){
         count++;
     }
     return ID(ELMTLISTKICAU(l, count));
@@ -77,7 +77,7 @@ void BIKIN_UTAS(int idKicau, ListKicauan *listKicau, ListLinierUtas *listUtasPer
 
             CreateUtas(u, idAuthor, indexUtas, text, waktu);
             insertLastPers(listUtasPers, *u);
-            UTAS(ELMTLISTKICAU(*listKicau, idKicau-1)) = newNodeUtas(*u);
+            ADDRESSUTAS(ELMTLISTKICAU(*listKicau, idKicau-1)) = newNodeUtas(*u);
 
             printf("Apakah Anda ingin melanjutkan utas ini? (YA/TIDAK) ");
             STARTSENTENCE();

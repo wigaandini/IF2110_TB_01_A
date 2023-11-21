@@ -11,8 +11,6 @@
 /* State Mesin */
 extern char currentChar;
 extern boolean EOP;
-extern boolean EOFile;
-
 static FILE *pita;
 static int retval;
 
