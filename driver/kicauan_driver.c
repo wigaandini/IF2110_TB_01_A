@@ -2,12 +2,13 @@
 #include <stdlib.h>
 #include <time.h>
 #include "../adt/header/boolean.h"
-#include "../adt/header/charmachine.h"
-#include "../adt/header/wordmachine.h"
-#include "../adt/header/time.h"
-#include "../adt/header/datetime.h"
-#include "../adt/header/listdinkicauan.h"
-#include "../adt/header/friendmatrix.h"
+#include "../adt/charmachine.c"
+#include "../adt/wordmachine.c"
+#include "../adt/time.c"
+#include "../adt/datetime.c"
+#include "../adt/listdinkicauan.c"
+#include "../adt/friendmatrix.c"
+#include "../program/kicauan.c"
 
 // gcc -o main driver/kicauan_driver.c program/kicauan.c adt/wordmachine.c adt/charmachine.c adt/datetime.c adt/listdinkicauan.c adt/time.c adt/friendmatrix.c 
 

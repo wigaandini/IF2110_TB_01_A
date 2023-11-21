@@ -13,7 +13,6 @@
 #include "charmachine.h"
 #include "liststatikuser.h"
 #include "friendmatrix.h"
-#include "listdinkicauan.h"
 
 #define CAPACITYMAXLISTUTAS 100
 #define IDX_MIN 0
@@ -22,62 +21,45 @@
 
 /* Definisi Linked List Utas Personal */
 typedef struct {
+    int idUtas;
     int idAuthor;
     int indexUtas;
     Word text;
     DATETIME waktu;
 } UtasType;
 
-typedef struct node* Address;
-typedef struct node {
+typedef struct nodeUtas* AddressUtas;
+typedef struct nodeUtas {
     UtasType info;
-    Address next;
-} Node;
+    AddressUtas next;
+} NodeUtas;
 
-/* Definisi List Penyimpan Semua Utas.Utas Global (buat cari idUtas)*/
-typedef struct
-{
-    Kicauan *buffer; 
-    int nEff;      
-    int capacity;  
-} ListUtas;
+#define INFOUtas(p) (p)->info
+#define NEXTUtas(p) (p)->next
 
-#define INFO(p) (p)->info
-#define NEXT(p) (p)->next
-
-typedef Address ListLinierUtas;
+typedef AddressUtas ListLinierUtas;
 
 /* *** Notasi Akses: selektor Utas Personal *** */
-#define idKicau(U) (U).idKicau
+#define idUtas(U) (U).idUtas
 #define idAuthor(U) (U).idAuthor
 #define idxUtas(U) (U).indexUtas
 #define Text(U) (U).text
 #define Waktu(U) (U).waktu
 
 #define IDXUNDEF (-1)
-#define FIRST(l) (l)
+#define FIRSTUtas(l) (l)
 
-/* *** Notasi Akses: selektor Utas Global *** */
-#define NEFFLISTUTAS(L) (L).nEff
-#define BUFFERLISTUTAS(L) (L).buffer
-#define ELMTLISTUTAS(L, i) (L).buffer[i]
-#define CAPACITYUTAS(L) (L).capacity
-
-Address newNode(UtasType val);
+AddressUtas newNodeUtas(UtasType val);
 /* Definisi List : */
-/* List kosong : FIRST(l) = NULL */
-/* Setiap elemen dengan Address p dapat diacu INFO(p), NEXT(p) */
-/* Elemen terakhir list: jika addressnya Last, maka NEXT(Last)=NULL */
+/* List kosong : FIRSTUtas(l) = NULL */
+/* Setiap elemen dengan AddressUtas p dapat diacu INFOUtas(p), NEXTUtas(p) */
+/* Elemen terakhir list: jika addressnya Last, maka NEXTUtas(Last)=NULL */
 
 /* PROTOTYPE */
 /****************** PEMBUATAN LIST KOSONG ******************/
 void CreateListUtasPers(ListLinierUtas *l);
 /* I.S. sembarang             */
 /* F.S. Terbentuk list kosong */
-
-void CreateListUtasGlobal(ListUtas *l, int capacity);
-/* Menyimpan seluruh utas yang telah dibuat */
-/* Prekondisi : list kosong */
 
 void CreateUtas(UtasType *u, int idAuthor, int indexUtas, Word text, DATETIME waktu);
 /* I.S. sembarang             */
@@ -86,30 +68,6 @@ void CreateUtas(UtasType *u, int idAuthor, int indexUtas, Word text, DATETIME wa
 /****************** TEST LIST KOSONG ******************/
 boolean isListUtasPersEmpty(ListLinierUtas l);
 /* Mengirim true jika list kosong */
-
-boolean isListUtasGlobalEmpty(ListUtas l);
-/* Mengirimkan true jika list l kosong, mengirimkan false jika tidak */
-
-boolean isListUtasGlobalFull(ListUtas l);
-
-void dealocateListUtasGlobal(ListUtas *l);
-
-/********* OPERASI LAIN ***********/
-/* ********** OPERASI LAIN ********** */
-void copyListUtas(ListUtas lIn, ListUtas *lOut);
-/* I.S. lIn terdefinisi tidak kosong, lOut sembarang */
-/* F.S. lOut berisi salinan dari lIn (identik, nEff dan capacity sama) */
-/* Proses : Menyalin isi lIn ke lOut */ 
-
-/* ********* MENGUBAH UKURAN ARRAY ********* */
-void expandListUtas(ListUtas *l, int num);
-
-IdxType getLastIdxUtasGlobal(ListUtas l);
-/* Prekondisi : List l tidak kosong */
-/* Mengirimkan indeks elemen l terakhir */
-
-/* *** Menambahkan elemen terakhir *** */
-void insertLastGlobal(ListUtas *l, Kicauan val);
 
 /****************** GETTER SETTER ********************/
 UtasType getElmtPers(ListLinierUtas l, int idx);
@@ -125,11 +83,6 @@ int indexOfPers(ListLinierUtas l, UtasType val);
 /* F.S. Mencari apakah ada elemen list l yang bernilai val */
 /* Jika ada, mengembalikan indeks elemen pertama l yang bernilai val */
 /* Mengembalikan IDXUNDEF jika tidak ditemukan */
-
-/* ********** Test Indeks yang valid ********** */
-boolean isIdUtasGlobalValid(ListUtas l, int id);
-/* Mengirimkan true jika id adalah indeks yang valid utk kapasitas list l */
-/* yaitu antara indeks yang terdefinisi utk container*/
 
 /****************** PRIMITIF BERDASARKAN NILAI ******************/
 /*** PENAMBAHAN ELEMEN ***/
@@ -180,13 +133,12 @@ void copyListUtasPers(ListLinierUtas *l1, ListLinierUtas *l2);
 /* L1 dan L2 "menunjuk" kepada list yang sama.*/
 /* Tidak ada alokasi/dealokasi elemen */
 
-void DisplaySatuUtas(UtasType u, ListStatikUser l);
-
-void DisplayUtasPers(ListStatikUser l, ListUtas k, ListLinierUtas u, int idUser, int idUtas);
-
 int getLastIdxUtasPers(ListLinierUtas l);
 /* I.S. l terdefinisi, idx indeks yang valid dalam l, yaitu 0..length(l) */
 /* F.S. Mengembalikan nilai elemen l pada indeks idx */
 
 boolean isIdxUtasPersValid(ListLinierUtas l, int idx);
+
+AddressUtas searchAddressUtas(AddressUtas a, int idUtas);
+
 #endif

@@ -8,6 +8,9 @@
 #include "header/datetime.h"
 #include "header/listdinkicauan.h"
 #include "header/friendmatrix.h"
+#include "header/listlinierutas.h"
+#include "header/treebalasan.h"
+
 
 /* ***************************************************************** */
 /* DEFINISI PRIMITIF                                                 */
@@ -105,8 +108,8 @@ void CreateKicauan(Kicauan *k, int id, Word text, int idauthor, DATETIME waktu){
     LIKE(*k) = 0;
     IDAUTHOR(*k) = idauthor;
     WAKTU(*k) = waktu;
-    UTAS(*k) = NULL;
-    BALASAN(*k) = NULL;
+    ADDRESSUTAS(*k) = NULL;
+    ADDRESSBALASAN(*k) = NULL;
 }
 
 void DisplaySatuKicau(ListStatikUser l, Kicauan k){
@@ -125,5 +128,13 @@ void DisplaySatuKicau(ListStatikUser l, Kicauan k){
 void DisplayAllKicauan(ListStatikUser l, ListKicauan k){
     for (int i = NEFFLISTKICAU(k) - 1 ; i >= 0; i--) {
         DisplaySatuKicau(l, ELMTLISTKICAU(k, i));
+    }
+}
+
+int countTypeUtas(ListKicauan l){
+    int count = 0;
+    int i = 0;
+    while(ADDRESSUTAS(ELMTLISTKICAU(l, i)) != NULL && i < NEFFLISTKICAU(l)){
+        count++;
     }
 }
