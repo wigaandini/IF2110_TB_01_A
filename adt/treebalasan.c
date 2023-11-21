@@ -94,6 +94,13 @@ AddressBalasan findPrev(AddressBalasan a, AddressBalasan prev, boolean *fd, int 
     return findPrev(CHILDBALASAN(*a), a, fd, idBalasan);
 }
 
+int numBalasan(AddressBalasan a){
+    if(a == NULL){
+        return 0;
+    }
+    return (1 + numBalasan(SIBLINGBALASAN(*a)) + numBalasan(CHILDBALASAN(*a)));
+}
+
 void hapusHelper(AddressBalasan cur){
     if(cur == NULL){
         return;

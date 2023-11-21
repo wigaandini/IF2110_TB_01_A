@@ -17,8 +17,10 @@ int charToInt(char c) {
     }
 }
 
-void ReadUser(ListStatikUser *l,FriendMatrix *F) {
-    STARTconfig("config/pengguna.config");
+void ReadUser(ListStatikUser *l,FriendMatrix *F, char *path) {
+    char realpath[200];
+    concatenate(realpath, path, "/pengguna.config");
+    STARTconfig(realpath);
 
     // ListStatikUser l; //DATA USER
     CreateListStatikUser(l);

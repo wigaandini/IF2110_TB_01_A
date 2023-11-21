@@ -21,8 +21,10 @@ int pangkat(int a,int b){
 // void ReadDraf(ListStatikUser *l){
 // }
 
-void ReadDraf(ListStatikUser *l){
-    STARTconfig("config/draf.config");
+void ReadDraf(ListStatikUser *l,char* path){
+    char realpath[200];
+    concatenate(realpath, path, "/draf.config");
+    STARTconfig(realpath);
     
     // int n=0;
     // for ( n = 0; n < banyakUser(*l); n++)

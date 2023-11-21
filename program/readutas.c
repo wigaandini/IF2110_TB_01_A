@@ -2,8 +2,10 @@
 #include "../adt/header/listlinierutas.h" 
 
 
-void ReadUtas(ListKicauan *kicau,ListStatikUser l){
-    STARTconfig("config/utas.config");
+void ReadUtas(ListKicauan *kicau,ListStatikUser l,char* path){
+    char realpath[200];
+    concatenate(realpath, path, "/utas.config");
+    STARTconfig(realpath);
 
     int count=0;
     int tempid=0;
@@ -115,7 +117,7 @@ void ReadUtas(ListKicauan *kicau,ListStatikUser l){
                         {
                             boolean tepat=true;
                             for (i = 0; temp.TabWord[i] != '\0'; i++){
-                                printf("%c", temp.TabWord[i]);
+                                // printf("%c", temp.TabWord[i]);
                                 namadicari.TabWord[i]=temp.TabWord[i];
                                 namadicari.Length++;
                                 if (namadicari.TabWord[i]!=l.data[k].nama[i]){
@@ -180,7 +182,7 @@ void ReadUtas(ListKicauan *kicau,ListStatikUser l){
                         ADVconfig();
                     }
                 }
-                printf("tempid:%d\n",tempid);
+                // printf("tempid:%d\n",tempid);
                 insertLastPers(&((*kicau).buffer[tempid-1].sambunganUtas),dummy);
                 count++;
             }

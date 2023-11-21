@@ -2,9 +2,10 @@
 #include "../adt/header/listdinkicauan.h"
 #include "../adt/header/liststatikuser.h"
 
-void ReadKicauan(ListKicauan *k, ListStatikUser l,FriendMatrix F){ 
-    STARTconfig("config/kicauan.config");
-    // int temp=0;
+void ReadKicauan(ListKicauan *k, ListStatikUser l,FriendMatrix F, char* path){ 
+    char realpath[200];
+    concatenate(realpath, path, "/kicauan.config");
+    STARTconfig(realpath);
     int count=0;
     // int user=0;
 
