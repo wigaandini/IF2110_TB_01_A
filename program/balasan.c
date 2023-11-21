@@ -6,6 +6,19 @@
 #include "header/wordmachine.h"
 #include "header/listdinkicauan.h"
 
+void langsungAddBalasan(ListKicauan *l, Word textBalasan, DATETIME curTime, int idKicau, int idBalasan, int curUserId, int *curIdBalasan){
+    if(idBalasan == -1){
+        ELMTLISTKICAU(*l, idKicau).balasan = insertBalasan(ELMTLISTKICAU(*l, idKicau).balasan, textBalasan, ++(*curIdBalasan), -1, curTime);
+    }else{
+        AddressBalasan curBalasan = searchAddressBalasan(ELMTLISTKICAU(*l, idKicau).balasan, idBalasan);
+        if(curBalasan == NIL){
+            printf("Wah, tidak terdapat balasan yang ingin Anda balas!\n");
+            return;
+        }
+        CHILDBALASAN(*curBalasan) = insertBalasan(CHILDBALASAN(*curBalasan), textBalasan, ++(*curIdBalasan), curUserId, curTime);
+    }
+}
+
 void BALASAN(ListKicauan *l, FriendMatrix *fh, ListStatikUser *lsu, int idKicau, int curUserId){
     if(idKicau >= NEFFLISTKICAU(*l)){
         printf("Tidak terdapat kicauan dengan id tersebut!\n");
