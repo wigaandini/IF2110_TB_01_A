@@ -29,26 +29,6 @@ char *inputNamaFolder(FILE *stream){
     return realloc(str, sizeof(*str) * len);
 }
 
-void writeRecursion(FILE* fptr, int par, AddressBalasan adr, ListStatikUser lsu){
-    if(adr == NULL){
-        return;
-    }
-    fprintf(fptr, "%d %d\n", par, adr->id);
-    int i;
-    for(i = 0; i < adr->teks.Length; ++i){
-        fprintf(fptr, "%c", adr->teks.TabWord[i]);
-    }
-    fprintf(fptr, '\n');
-    for(i = 0; lsu.data[adr->idPenulis].nama[i] != '\0'; ++i){
-        fprintf(fptr, "%c", lsu.data[adr->idPenulis].nama[i]);
-    }
-    fprintf(fptr, '\n');
-    fprintf(fptr, "%d/%d/%d %02d:%02d:%02d", adr->waktu.DD, adr->waktu.MM, adr->waktu.YYYY, adr->waktu.T.HH, adr->waktu.T.MM, adr->waktu.T.SS);
-    fprintf(fptr, '\n');
-    writeRecursion(fptr, par, SIBLINGBALASAN(*adr), lsu);
-    writeRecursion(fptr, IDBALASAN(*adr), CHILDBALASAN(*adr), lsu);
-}
-
 void simpandraf(ListStatikUser lsu){
     char *namaFolder = inputNamaFolder(stdin);
     int ch = mkdir(namaFolder);
@@ -63,29 +43,37 @@ void simpandraf(ListStatikUser lsu){
         return;
     }
     int i, cnt = 0;
-    for(i = 0; i < NEFFLISTKICAU(l); ++i){
-        if(ELMTLISTKICAU(l, i).balasan != NULL){
+    for(i = 0; i < banyakUser(lsu); ++i){
+        if(lsu.data[i].drafuser.TOP != -1){
             cnt++;
         }
     }
     fprintf(fptr, "%d\n", cnt);
-    for(i = 0; i < NEFFLISTKICAU(l); ++i){
-        if(ELMTLISTKICAU(l, i).balasan != NULL){
-            fprintf(fptr, "%d\n", ELMTLISTKICAU(l, i).id);
-            fprintf(fptr, "%d\n", numBalasan(ELMTLISTKICAU(l, i).balasan));
-            writeRecursion(fptr, -1, ELMTLISTKICAU(l, i).balasan, lsu);
+    for(i = 0; i < banyakUser(lsu); ++i){
+        if(lsu.data[i].drafuser.TOP != -1){
+            int j;
+            for(j = 0; j < lsu.data[i].nama[j] != '\0'; ++j){
+                fprintf(fptr, "%c", lsu.data[i].nama[j]);
+            }
+            fprintf(fptr, " ");
+            fprintf(fptr, "%d\n", lsu.data[i].drafuser.TOP + 1);
+            while(!IsEmptyStack(lsu.data[i].drafuser)){
+                Draf topelem;
+                Pop(&(lsu.data[i].drafuser), &topelem);
+                int k;
+                for(k = 0; k < topelem.Text.Length; ++k){
+                    fprintf(fptr, "%c", topelem.Text.TabWord[k]);
+                }
+                DATETIME curWaktu = topelem.Waktu;
+                fprintf(fptr, "%d/%d/%d %02d:%02d:%02d", curWaktu.DD, curWaktu.MM, curWaktu.YYYY, curWaktu.T.HH, curWaktu.T.MM, curWaktu.T.SS);
+                fprintf(fptr, '\n');
+            }
+
         }
     }
     fclose(fptr);
 }
 
 int main(){
-    AddressBalasan root = newNode();
-    root->id = -1;
-    strcpy(root->teks, "iniroot");
-    root->idPenulis = -1;
-    makeAll(root);
-    printf("hreeee\n");
-    simpanPengguna(root);
     return 0;
 }
