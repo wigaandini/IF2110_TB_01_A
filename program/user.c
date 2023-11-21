@@ -84,6 +84,8 @@ void MASUK(ListStatikUser *l, boolean *isLoggedIn, int *id_login){      // belum
         }
         *isLoggedIn = true;
         *id_login = getIdOfName(*l, nama);
+
+        printf("\nAnda telah berhasil masuk dengan nama pengguna Tuan Bri. Mari menjelajahi BurBir bersama Ande-Ande Lumut!\n\n");
     }
 }
 
