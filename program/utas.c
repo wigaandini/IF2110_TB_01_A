@@ -32,7 +32,7 @@ void DisplaySatuUtas(UtasType u, ListStatikUser l){
 
 void DisplayUtasPers(ListStatikUser l, ListLinierUtas u, int idUser, int idUtas, ListKicauan listKicau){
     int idAuthor;
-    AddressUtas p = FIRST(u);
+    AddressUtas p = FIRSTUtas(u);
     int idKicau = searchIdKicau(idUtas, listKicau);
     idAuthor = IDAUTHOR(ELMTLISTKICAU(listKicau, idKicau-1));
     DisplaySatuKicau(l, ELMTLISTKICAU(listKicau, idKicau-1));
@@ -77,7 +77,7 @@ void BIKIN_UTAS(int idKicau, ListKicauan *listKicau, ListLinierUtas *listUtasPer
 
             CreateUtas(u, idAuthor, indexUtas, text, waktu);
             insertLastPers(listUtasPers, *u);
-            UTAS(ELMTLISTKICAU(*listKicau, idKicau-1)) = newNode(*u);
+            UTAS(ELMTLISTKICAU(*listKicau, idKicau-1)) = newNodeUtas(*u);
 
             printf("Apakah Anda ingin melanjutkan utas ini? (YA/TIDAK) ");
             STARTSENTENCE();
@@ -157,7 +157,7 @@ void HAPUS_UTAS(int idUtas, int indexUtas, ListLinierUtas *listUtasPers, int idA
     Word text;
     DATETIME waktu;
     int idKicau = searchIdKicau(idUtas, listKicau);
-    Address p = FIRST(*listUtasPers);
+    AddressUtas p = FIRSTUtas(*listUtasPers);
     if(isIdUtasValid(listKicau, idUtas)){
         if(IDAUTHOR(ELMTLISTKICAU(listKicau, idKicau-1)) == idAuthor){
             if(indexUtas == 0){

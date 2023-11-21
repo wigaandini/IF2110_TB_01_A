@@ -47,11 +47,11 @@ typedef AddressUtas ListLinierUtas;
 #define Waktu(U) (U).waktu
 
 #define IDXUNDEF (-1)
-#define FIRST(l) (l)
+#define FIRSTUtas(l) (l)
 
 AddressUtas newNodeUtas(UtasType val);
 /* Definisi List : */
-/* List kosong : FIRST(l) = NULL */
+/* List kosong : FIRSTUtas(l) = NULL */
 /* Setiap elemen dengan AddressUtas p dapat diacu INFOUtas(p), NEXTUtas(p) */
 /* Elemen terakhir list: jika addressnya Last, maka NEXTUtas(Last)=NULL */
 

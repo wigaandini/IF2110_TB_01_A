@@ -31,8 +31,6 @@ void ADV();
           currentChar mungkin = MARK
           Jika  currentChar = MARK maka EOP akan menyala (true) */
 
-<<<<<<< HEAD:adt/wordmachine/charmachine.h
-=======
 
 void START();
 /* Mesin siap dioperasikan. Pita disiapkan untuk dibaca.
@@ -49,7 +47,6 @@ void ADV();
               currentChar mungkin = MARK.
                      Jika  currentChar = MARK maka EOP akan menyala (true) */
 
->>>>>>> main:adt/header/charmachine.h
 void STARTFILE(char namaFile[]);
 
 void END();

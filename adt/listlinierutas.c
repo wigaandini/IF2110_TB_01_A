@@ -16,20 +16,20 @@ AddressUtas newNodeUtas(UtasType val){
     return p;
 }
 /* Definisi List : */
-/* List kosong : FIRST(l) = NULL */
+/* List kosong : FIRSTUtas(l) = NULL */
 /* Setiap elemen dengan AddressUtas p dapat diacu INFOUtas(p), NEXTUtas(p) */
 /* Elemen terakhir list: jika addressnya Last, maka NEXTUtas(Last)=NULL */
 
 /* PROTOTYPE */
 /****************** PEMBUATAN LIST KOSONG ******************/
 void CreateListUtasPers(ListLinierUtas *l){
-    FIRST(*l) = NULL;
+    FIRSTUtas(*l) = NULL;
 }
 /* I.S. sembarang             */
 /* F.S. Terbentuk list kosong */
 
 void CreateUtas(UtasType *u, int idAuthor, int indexUtas, Word text, DATETIME waktu){
-    AddressUtas p = newNode(*u);
+    AddressUtas p = newNodeUtas(*u);
     idAuthor(*u) = idAuthor;
     idxUtas(*u) = indexUtas;
     Text(*u) = text;
@@ -41,7 +41,7 @@ void CreateUtas(UtasType *u, int idAuthor, int indexUtas, Word text, DATETIME wa
 
 /****************** TEST LIST KOSONG ******************/
 boolean isListUtasPersEmpty(ListLinierUtas l){
-    return (FIRST(l) == NULL);
+    return (FIRSTUtas(l) == NULL);
 }
 /* Mengirim true jika list kosong */
 
@@ -49,7 +49,7 @@ boolean isListUtasPersEmpty(ListLinierUtas l){
 UtasType getElmtPers(ListLinierUtas l, int idx){
     int i = 0;
     AddressUtas p;
-    p = FIRST(l);
+    p = FIRSTUtas(l);
     while (i < idx){
         i ++;
         p = NEXTUtas(p);
@@ -62,7 +62,7 @@ UtasType getElmtPers(ListLinierUtas l, int idx){
 void setElmtPers(ListLinierUtas *l, int idx, UtasType val){
     int i = 0;
     AddressUtas p;
-    p = FIRST(*l);
+    p = FIRSTUtas(*l);
     while (i < idx){
         i ++;
         p = NEXTUtas(p);
@@ -76,7 +76,7 @@ int indexOfPers(ListLinierUtas l, UtasType val){
     AddressUtas p;
     boolean found = false;
     int i = 0;
-    p = FIRST(l);
+    p = FIRSTUtas(l);
     while (p != NULL && !found){
         if(INFOUtas(p).idAuthor == val.idAuthor && INFOUtas(p).indexUtas == val.indexUtas && compareWord(INFOUtas(p).text, val.text) && INFOUtas(p).waktu.DD == val.waktu.DD && INFOUtas(p).waktu.MM == val.waktu.MM && INFOUtas(p).waktu.YYYY == val.waktu.YYYY && INFOUtas(p).waktu.T.HH == val.waktu.T.HH && INFOUtas(p).waktu.T.MM == val.waktu.T.MM && INFOUtas(p).waktu.T.SS == val.waktu.T.SS){
             found = true;
@@ -108,9 +108,9 @@ void insertLastPers(ListLinierUtas *l, UtasType val){
         insertFirstPers(l, val);
     }
     else{
-        p = newNode(val);
+        p = newNodeUtas(val);
         if (p != NULL){
-            last = FIRST(*l);
+            last = FIRSTUtas(*l);
             while (NEXTUtas(last) != NULL){
                 last = NEXTUtas(last);
             }
@@ -130,9 +130,9 @@ void insertAtPers(ListLinierUtas *l, UtasType val, int idx){
         insertFirstPers(l, val);
     }
     else{
-        p = newNode(val);
+        p = newNodeUtas(val);
         if (p != NULL){
-            loc = FIRST(*l);
+            loc = FIRSTUtas(*l);
             while (i < idx-1){
                 i ++;
                 loc = NEXTUtas(loc);
@@ -149,9 +149,9 @@ void insertAtPers(ListLinierUtas *l, UtasType val, int idx){
 
 /*** PENGHAPUSAN ELEMEN ***/
 void deleteFirstPers(ListLinierUtas *l, UtasType *val){
-    AddressUtas p = FIRST(*l);
+    AddressUtas p = FIRSTUtas(*l);
     *val = INFOUtas(p);
-    FIRST(*l) = NEXTUtas(p);
+    FIRSTUtas(*l) = NEXTUtas(p);
     free(p);
 }
 /* I.S. List l tidak kosong  */
@@ -159,14 +159,14 @@ void deleteFirstPers(ListLinierUtas *l, UtasType *val){
 /*      dan alamat elemen pertama di-dealokasi */
 void deleteLastPers(ListLinierUtas *l, UtasType *val){
     AddressUtas p, loc;
-    p = FIRST(*l);
+    p = FIRSTUtas(*l);
     loc = NULL;
     while (NEXTUtas(p) != NULL){
         loc = p;
         p = NEXTUtas(p);
     }
     if (loc == NULL){
-        FIRST(*l) = NULL;
+        FIRSTUtas(*l) = NULL;
     }
     else{
         NEXTUtas(loc) = NULL;
@@ -185,7 +185,7 @@ void deleteAtPers(ListLinierUtas *l, int idx, UtasType *val){
         deleteFirstPers(l, val);
     }
     else{
-        loc = FIRST(*l);
+        loc = FIRSTUtas(*l);
         while (i < idx-1){
             i ++;
             loc = NEXTUtas(loc);
@@ -204,7 +204,7 @@ void deleteAtPers(ListLinierUtas *l, int idx, UtasType *val){
 /****************** PROSES SEMUA ELEMEN LIST ******************/
 int length(ListLinierUtas l){
     int count = 0;
-    AddressUtas p = FIRST(l);
+    AddressUtas p = FIRSTUtas(l);
     while (p != NULL){
         count ++;
         p = NEXTUtas(p);
@@ -215,7 +215,7 @@ int length(ListLinierUtas l){
 
 /***************** FUNGSI dan PROSEDUR TAMBAHAN **************/
 void deleteAll(ListLinierUtas *l){
-    AddressUtas p = FIRST(*l);
+    AddressUtas p = FIRSTUtas(*l);
     UtasType val;
     while(p != NULL){
         deleteFirstPers(l, &val);
@@ -228,7 +228,7 @@ void deleteAll(ListLinierUtas *l){
 void copyListUtasPers(ListLinierUtas *l1, ListLinierUtas *l2){
     *l2 = *l1;
     // CreateList(l2);
-    // FIRST(*l2) = FIRST(*l1);
+    // FIRSTUtas(*l2) = FIRSTUtas(*l1);
 }
 /* I.S. L1 sembarang. F.S. L2=L1 */
 /* L1 dan L2 "menunjuk" kepada list yang sama.*/
@@ -237,7 +237,7 @@ void copyListUtasPers(ListLinierUtas *l1, ListLinierUtas *l2){
 int getLastIdxUtasPers(ListLinierUtas l){
     int i = 0;
     AddressUtas p;
-    p = FIRST(l);
+    p = FIRSTUtas(l);
     while (NEXTUtas(p) != NULL){
         i ++;
         p = NEXTUtas(p);
@@ -248,7 +248,7 @@ int getLastIdxUtasPers(ListLinierUtas l){
 /* F.S. Mengembalikan nilai elemen l pada indeks idx */
 
 boolean isIdxUtasPersValid(ListLinierUtas l, int idx){
-    AddressUtas p = FIRST(l);
+    AddressUtas p = FIRSTUtas(l);
     boolean found = false;
     while(p != NULL && !found){
         if(idxUtas(INFOUtas(p)) == idx){
