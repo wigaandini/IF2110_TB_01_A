@@ -16,6 +16,8 @@
 #include "../program/user.c"
 #include "../adt/treebalasan.c"
 #include "../adt/listdin.c"
+#include "../adt/draf.c"
+#include "../adt/stack.c"
 
 int main() {
     Word w, command, kata;

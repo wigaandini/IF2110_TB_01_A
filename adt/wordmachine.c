@@ -55,7 +55,7 @@ void ADVWORD(){
 
 void CopyWord(){
     int i = 0;
-    while ((currentChar != ENTER) && (currentChar != BLANK) && currentChar != MARK){
+    while ((currentChar != ENTER) && (currentChar != BLANK) && currentChar != MARK && currentChar != LineMARK){
         if (i == NMax){
             break;
         }
@@ -91,7 +91,7 @@ void IgnoreEnter(){
 
 void CopySpace(){
     int i = 0;
-    while (currentChar != LineMARK){
+    while (currentChar != MARK){
         currentWord.TabWord[i] = currentChar;
         ADV();
         i++;
