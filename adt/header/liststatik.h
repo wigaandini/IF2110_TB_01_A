@@ -6,6 +6,7 @@
 #ifndef LISTSTATIK_H
 #define LISTSTATIK_H
 
+
 #include "boolean.h"
 
 /*  Kamus Umum */

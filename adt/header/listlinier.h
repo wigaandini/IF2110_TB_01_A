@@ -6,6 +6,7 @@
 #ifndef listlinier_H
 #define listlinier_H
 
+
 #include "boolean.h"
 
 /* Definisi Node : */
