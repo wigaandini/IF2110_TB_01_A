@@ -78,11 +78,8 @@ boolean compareWord(Word str1, Word str2);
 
 void displayWord(Word word);
 
-<<<<<<< HEAD:adt/wordmachine/wordmachine.h
-=======
 void displayString(char* str);
 
->>>>>>> main:adt/header/wordmachine.h
 boolean WordIsInt(Word kata);
 
 boolean CharIsInt(char c);
@@ -93,8 +90,6 @@ Word stringToWord(char str[], int len);
 
 Word MergeWord(Word word1, Word word2);
 
-<<<<<<< HEAD:adt/wordmachine/wordmachine.h
-=======
 int StringToInt(char *str);
 
 Word splitCommand(Word *w, Word command, int kataKe);
@@ -112,5 +107,4 @@ int countWords(Word w);
 
 int lengthString(char *str);
 /* Menghitung panjang string */
->>>>>>> main:adt/header/wordmachine.h
 #endif

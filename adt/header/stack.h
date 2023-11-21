@@ -9,12 +9,6 @@
 #include "wordmachine.h"
 #include "datetime.h"
 
-typedef struct
-{
-    Word Text;
-    DATETIME Waktu;
-} Draf;
-
 #define Nil -1
 #define MaxEl 100
 /* Nil adalah stack dengan elemen kosong . */
@@ -63,9 +57,9 @@ void CreateEmptyStack(DrafStack *S);
 /* Ciri stack kosong : TOP bernilai Nil */
 
 /* ************ Predikat Untuk test keadaan KOLEKSI ************ */
-boolean IsEmpty(Stack S);
+boolean IsEmptyStack(DrafStack S);
 /* Mengirim true jika Stack kosong: lihat definisi di atas */
-boolean IsFull(Stack S);
+boolean IsFullStack(DrafStack S);
 /* Mengirim true jika tabel penampung nilai elemen stack penuh */
 
 /* ************ Menambahkan sebuah elemen ke Stack ************ */
