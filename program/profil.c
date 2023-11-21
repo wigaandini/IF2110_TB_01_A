@@ -41,6 +41,10 @@ void print_profil(ListStatikUser UserData, int id_login) {
 
 // Perintah GANTI_PROFIL
 void ganti_profil(ListStatikUser *UserData, int id_login) {
+    if (id_login == -1) {    // Jika belum login
+        printf("\nAnda belum masuk. Masuk dulu yuk!\n\n");
+        return;
+    }
     // Print nama, bio, noHP, dan weton
     print_profil(*UserData, id_login);
 
