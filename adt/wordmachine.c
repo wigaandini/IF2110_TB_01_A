@@ -55,7 +55,7 @@ void ADVWORD(){
 
 void CopyWord(){
     int i = 0;
-    while ((currentChar != ENTER) && (currentChar != BLANK) && currentChar != MARK && currentChar != LineMARK){
+    while ((currentChar != ENTER) && (currentChar != BLANK) && currentChar != MARK){
         if (i == NMax){
             break;
         }
@@ -106,6 +106,8 @@ void CopySpace(){
 
 void STARTSENTENCE(){
     START();
+    IgnoreEnter();
+    IgnoreBlanks();
     if(currentChar == MARK){
         EndWord = true;
     }

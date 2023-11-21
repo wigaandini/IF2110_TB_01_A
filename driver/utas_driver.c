@@ -34,17 +34,9 @@ int main() {
         printf(">> ");
         STARTSENTENCE();
         command = currentWord;
-        printf("%d\n", countWords(command));
-
-        if (countWords(command) == 1) {
-            displayWord(command);
-            printf("\n");
-            kata = command;
-        } else {
-            kata = splitCommand(&w, command, 1);
-            displayWord(kata);
-            printf("\n");
-        }
+        kata = splitCommand(&w, command, 1);
+        displayWord(kata);
+        printf("\n");
 
         if (compareString(kata, "UTAS")) {
             idKicau = WordToInt(splitCommand(&w, command, 2));
