@@ -149,11 +149,11 @@ void ReadKicauan(ListKicauan *k, ListStatikUser l,FriendMatrix F){
                     }
                     user_now++;
                     if (betul){
-                        printf("%s\n",bacaan.TabWord);
+                        // printf("%s\n",bacaan.TabWord);
                         found=true;
                     }
                 }
-                printf("usernow:%d\n",user_now);
+                // printf("usernow:%d\n",user_now);
 
                 if (found)
                 {
