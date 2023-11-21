@@ -7,8 +7,8 @@
 #include <stdlib.h>
 #include "header/listlinierutas.h"
 
-AddressUtas newNode(UtasType val){
-    AddressUtas p = (AddressUtas) malloc(sizeof(Node));
+AddressUtas newNodeUtas(UtasType val){
+    AddressUtas p = (AddressUtas) malloc(sizeof(NodeUtas));
     if(p != NULL){
         INFOUtas(p) = val;
         NEXTUtas(p) = NULL;

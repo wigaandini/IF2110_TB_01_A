@@ -28,11 +28,11 @@ typedef struct {
     DATETIME waktu;
 } UtasType;
 
-typedef struct node* AddressUtas;
-typedef struct node {
+typedef struct nodeUtas* AddressUtas;
+typedef struct nodeUtas {
     UtasType info;
     AddressUtas next;
-} Node;
+} NodeUtas;
 
 #define INFOUtas(p) (p)->info
 #define NEXTUtas(p) (p)->next
@@ -49,7 +49,7 @@ typedef AddressUtas ListLinierUtas;
 #define IDXUNDEF (-1)
 #define FIRST(l) (l)
 
-AddressUtas newNode(UtasType val);
+AddressUtas newNodeUtas(UtasType val);
 /* Definisi List : */
 /* List kosong : FIRST(l) = NULL */
 /* Setiap elemen dengan AddressUtas p dapat diacu INFOUtas(p), NEXTUtas(p) */
