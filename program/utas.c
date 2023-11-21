@@ -56,11 +56,11 @@ void DisplayUtasPers(ListStatikUser l, ListLinierUtas u, int idUser, int idUtas,
     int countUtas = countTypeUtas(listKicau);
     for (int i = 0; i < length(u); i++) {
         if (idAuthor == idUser) {
-            DisplaySatuUtas(INFOUtas(p), l, idxUtas(INFOUtas(p) + 1);
+            DisplaySatuUtas(INFOUtas(p), l, idxUtas(INFOUtas(p)) + 1);
             p = NEXTUtas(p);
         } else {
             if(UserTipe(l, idAuthor-1) == PUBLIK){
-                DisplaySatuUtas(INFOUtas(p), l, idxUtas(INFOUtas(p) + 1));
+                DisplaySatuUtas(INFOUtas(p), l, idxUtas(INFOUtas(p)) + 1);
                 p = NEXTUtas(p);
             }
         } 
