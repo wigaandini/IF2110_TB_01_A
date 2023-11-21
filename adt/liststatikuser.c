@@ -249,6 +249,5 @@ int getIdOfName(ListStatikUser l, Word name){
         }
         i++;
     }
-    printf("\nhasil getIdOfName = %d\n", i);
     return i;
 }
