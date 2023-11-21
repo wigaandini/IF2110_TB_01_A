@@ -30,6 +30,10 @@ void DisplaySatuUtas(UtasType u, ListStatikUser l){
     printf("\n\n");
 }
 
+boolean isIdUtasValid(ListKicauan listKicau, int idUtas){
+    return (idUtas > 0 && idUtas <= countTypeUtas(listKicau));
+}
+
 void DisplayUtasPers(ListStatikUser l, ListLinierUtas u, int idUser, int idUtas, ListKicauan listKicau){
     int idAuthor;
     AddressUtas p = FIRSTUtas(u);
@@ -106,10 +110,6 @@ void BIKIN_UTAS(int idKicau, ListKicauan *listKicau, ListLinierUtas *listUtasPer
     }
 }
 
-boolean isIdUtasValid(ListKicauan listKicau, int idUtas){
-    return (idUtas > 0 && idUtas <= countTypeUtas(listKicau));
-}
-
 void SAMBUNG_UTAS(int idUtas, int indexUtas, ListLinierUtas *listUtasPers, int idAuthor, UtasType *u, ListKicauan listKicau){
     Word text;
     DATETIME waktu;
@@ -151,7 +151,6 @@ void SAMBUNG_UTAS(int idUtas, int indexUtas, ListLinierUtas *listUtasPers, int i
         printf("Utas tidak ditemukan!\n");
     }   
 }
-
 
 void HAPUS_UTAS(int idUtas, int indexUtas, ListLinierUtas *listUtasPers, int idAuthor, UtasType *u, ListKicauan listKicau){
     Word text;

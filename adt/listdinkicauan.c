@@ -137,4 +137,5 @@ int countTypeUtas(ListKicauan l){
     while(ADDRESSUTAS(ELMTLISTKICAU(l, i)) != NULL && i < NEFFLISTKICAU(l)){
         count++;
     }
+    return count;
 }
