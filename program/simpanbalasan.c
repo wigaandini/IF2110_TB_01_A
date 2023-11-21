@@ -39,8 +39,8 @@ void writeRecursion(FILE* fptr, int par, AddressBalasan adr, ListStatikUser lsu)
         fprintf(fptr, "%c", adr->teks.TabWord[i]);
     }
     fprintf(fptr, '\n');
-    for(i = 0; lsu.data[adr->idPenulis].nama[i] != '\0'; ++i){
-        fprintf(fptr, "%c", lsu.data[adr->idPenulis].nama[i]);
+    for(i = 0; lsu.data[adr->idPenulis - 1].nama[i] != '\0'; ++i){
+        fprintf(fptr, "%c", lsu.data[adr->idPenulis - 1].nama[i]);
     }
     fprintf(fptr, '\n');
     fprintf(fptr, "%d/%d/%d %02d:%02d:%02d", adr->waktu.DD, adr->waktu.MM, adr->waktu.YYYY, adr->waktu.T.HH, adr->waktu.T.MM, adr->waktu.T.SS);
@@ -80,12 +80,5 @@ void simpanbalasan(ListKicauan l, ListStatikUser lsu){
 }
 
 int main(){
-    AddressBalasan root = newNode();
-    root->id = -1;
-    strcpy(root->teks, "iniroot");
-    root->idPenulis = -1;
-    makeAll(root);
-    printf("hreeee\n");
-    simpanPengguna(root);
     return 0;
 }

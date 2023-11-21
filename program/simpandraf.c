@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
+#include "header/treebalasan.h"
 #include "header/listdinkicauan.h"
 #include "header/liststatikuser.h"
 
-const char* namaFileKicauan = "/kicauan.config";
+const char* namaFileDraf = "/draf.config";
 
 char *inputNamaFolder(FILE *stream){
     char *str;
@@ -48,41 +49,43 @@ void writeRecursion(FILE* fptr, int par, AddressBalasan adr, ListStatikUser lsu)
     writeRecursion(fptr, IDBALASAN(*adr), CHILDBALASAN(*adr), lsu);
 }
 
-void simpankicauan(ListKicauan l, ListStatikUser lsu){
+void simpandraf(ListStatikUser lsu){
     char *namaFolder = inputNamaFolder(stdin);
     int ch = mkdir(namaFolder);
     if(ch == -1){
         printf("Failed creating new directory\n");
         return;
     }
-    strcat(namaFolder, namaFileKicauan);
+    strcat(namaFolder, namaFileDraf);
     FILE* fptr = fopen(namaFolder, "ab+");
     if(fptr == NULL){
         printf("Failed making new file\n");
         return;
     }
-    fprintf(fptr, "%d\n", NEFFLISTKICAU(l));
-    int i;
+    int i, cnt = 0;
     for(i = 0; i < NEFFLISTKICAU(l); ++i){
-        fprintf(fptr, "%d\n", ELMTLISTKICAU(l, i).id);
-        int j;
-        for(j = 0; j < ELMTLISTKICAU(l, i).text.Length; ++j){
-            fprintf(fptr, "%c", ELMTLISTKICAU(l, i).text.TabWord[j]);
+        if(ELMTLISTKICAU(l, i).balasan != NULL){
+            cnt++;
         }
-        fprintf(fptr, '\n');
-        fprintf(fptr, "%d\n", ELMTLISTKICAU(l, i).like);
-        for(j = 0; lsu.data[ELMTLISTKICAU(l, i).idauthor - 1].nama[j] != '\0'; ++j){
-            fprintf(fptr, "%c", lsu.data[ELMTLISTKICAU(l, i).idauthor - 1].nama[j]);
+    }
+    fprintf(fptr, "%d\n", cnt);
+    for(i = 0; i < NEFFLISTKICAU(l); ++i){
+        if(ELMTLISTKICAU(l, i).balasan != NULL){
+            fprintf(fptr, "%d\n", ELMTLISTKICAU(l, i).id);
+            fprintf(fptr, "%d\n", numBalasan(ELMTLISTKICAU(l, i).balasan));
+            writeRecursion(fptr, -1, ELMTLISTKICAU(l, i).balasan, lsu);
         }
-        fprintf(fptr, '\n');
-        DATETIME curWaktu = ELMTLISTKICAU(l, i).waktu;
-        fprintf(fptr, "%d/%d/%d %02d:%02d:%02d", curWaktu.DD, curWaktu.MM, curWaktu.YYYY, curWaktu.T.HH, curWaktu.T.MM, curWaktu.T.SS);
-        fprintf(fptr, '\n');
-        
     }
     fclose(fptr);
 }
 
 int main(){
+    AddressBalasan root = newNode();
+    root->id = -1;
+    strcpy(root->teks, "iniroot");
+    root->idPenulis = -1;
+    makeAll(root);
+    printf("hreeee\n");
+    simpanPengguna(root);
     return 0;
 }

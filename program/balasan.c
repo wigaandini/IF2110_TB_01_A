@@ -11,7 +11,7 @@ void BALASAN(ListKicauan *l, FriendMatrix *fh, ListStatikUser *lsu, int idKicau,
         printf("Tidak terdapat kicauan dengan id tersebut!\n");
         return;
     }
-    if(UserTipe(*lsu, ELMTLISTKICAU(*l, idKicau).idauthor) == PRIVAT && !isFriend(*fh, curUserId, ELMTLISTKICAU(*l, idKicau).idauthor)){ // isFriend masih belum ada (4/11)
+    if(UserTipe(*lsu, ELMTLISTKICAU(*l, idKicau).idauthor - 1) == PRIVAT && !isFriend(*fh, curUserId, ELMTLISTKICAU(*l, idKicau).idauthor - 1)){ // isFriend masih belum ada (4/11)
         printf("Wah, kicauan tersebut dibuat oleh pengguna dengan akun privat!\n");
         return;
     }
@@ -27,7 +27,7 @@ void BALAS(ListKicauan *l, FriendMatrix *fh, ListStatikUser *lsu, Word textBalas
         printf("Wah, tidak terdapat kicauan yang ingin Anda balas!\n");
         return;
     }
-    if(UserTipe(*lsu, ELMTLISTKICAU(*l, idKicau).idauthor) == PRIVAT && !isFriend(*fh, curUserId, ELMTLISTKICAU(*l, idKicau).idauthor)){ // isFriend masih belum ada (4/11)
+    if(UserTipe(*lsu, ELMTLISTKICAU(*l, idKicau).idauthor - 1) == PRIVAT && !isFriend(*fh, curUserId, ELMTLISTKICAU(*l, idKicau).idauthor - 1)){ // isFriend masih belum ada (4/11)
         printf("Wah, akun tersebut merupakan akun privat dan anda belum berteman akun tersebut!\n");
         return;
     }
