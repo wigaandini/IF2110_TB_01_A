@@ -41,6 +41,10 @@ void print_profil(ListStatikUser UserData, int id_login) {
 
 // Perintah GANTI_PROFIL
 void ganti_profil(ListStatikUser *UserData, int id_login) {
+    if (id_login == -1) {    // Jika belum login
+        printf("\nAnda belum masuk. Masuk dulu yuk!\n\n");
+        return;
+    }
     // Print nama, bio, noHP, dan weton
     print_profil(*UserData, id_login);
 
@@ -130,35 +134,19 @@ void ganti_profil(ListStatikUser *UserData, int id_login) {
 
 
 // Perintah LIHAT_PROFIL [NAMA]
-void lihat_profil(ListStatikUser DataUser, char nama[]) {       // Masukkan nya dalam bentuk list of char atau apa nih
-    // Menghitung panjang nama[]
-    int namaLength = 0;
-    while (nama[namaLength] != '\0'){
-        namaLength++;
-    }
+void lihat_profil(ListStatikUser DataUser, Word nama, boolean isLoggedin) {       // Masukkan nya dalam bentuk list of char atau apa nih
     
-    if (namaLength > 20) {  // Jika nama lebih dari 20 karakter
+    if (nama.Length > 20) {  // Jika nama lebih dari 20 karakter
         printf("\nNama yang Anda masukkan melebihi 20 karakter. Silakan ulangi dan masukkan nama lain!\n\n");
+        return;
+    }
+    else if (!isLoggedin) { // Jika belum login
+        printf("\nAnda belum masuk. Masuk dulu yuk!\n\n");
         return;
     }
 
     // Cari ID dari nama
-    int id = 0;
-    for (int i = 0; i < 20; i++) {
-        for (int j = 0; j < 20; j++) {
-            if (j < namaLength) {
-                if (nama[j] != UserName(DataUser, i, j)) {
-                    break;
-                }
-            }
-            if (j > namaLength-1 && UserName(DataUser, i, j) != '\0') {
-                break;
-            }
-            if (j == 19) {
-                id = i+1;
-            }
-        }
-    }
+    int id = getIdOfName(DataUser, nama);
 
     if (id == 0) {  // Jika nama tidak ditemukan
         printf("\nNama tidak ditemukan!\n\n");
@@ -166,7 +154,11 @@ void lihat_profil(ListStatikUser DataUser, char nama[]) {       // Masukkan nya 
     }
 
     if (UserTipe(DataUser, id-1) != PUBLIK) {   // Jika akun privat
-        printf("\nWah, akun %s diprivat nih. Ikuti dulu yuk untuk bisa melihat profil %s!\n\n", nama, nama);
+        printf("\nWah, akun ");
+        displayWord(nama);
+        printf(" diprivat nih. Ikuti dulu yuk untuk bisa melihat profil ");
+        displayWord(nama);
+        printf("!\n\n");
         return;
     }
 
@@ -174,14 +166,21 @@ void lihat_profil(ListStatikUser DataUser, char nama[]) {       // Masukkan nya 
     print_profil(DataUser, id);
 
     // Print foto profil
-    printf("Foto profil akun %s\n", nama);
+    printf("Foto profil akun ");
+    displayWord(nama);
+    printf("\n");
     displayMatrixFoto(UserFoto(DataUser, id-1), UserWarnaFoto(DataUser, id-1));
     printf("\n");
 }
 
 
 // Perintah ATUR_JENIS_AKUN
-void atur_jenis_akun(ListStatikUser *DataUser, int id_login) {
+void atur_jenis_akun(ListStatikUser *DataUser, int id_login, boolean isLoggedin) {
+
+    if (!isLoggedin) {  // Jika belum login
+        printf("\nAnda belum masuk. Masuk dulu yuk!\n\n");
+        return;
+    }
     // Print nama, bio, noHP, dan weton
     print_profil(*DataUser, id_login);
 
@@ -215,6 +214,10 @@ void atur_jenis_akun(ListStatikUser *DataUser, int id_login) {
 
 // Perintah UBAH_FOTO_PROFIL
 void ubah_foto_profil(ListStatikUser DataUser, int id_login) {
+    if (id_login == -1) {    // Jika belum login
+        printf("\nAnda belum masuk. Masuk dulu yuk!\n\n");
+        return;
+    }
     // Print foto profil saat ini
     printf("Foto profil Anda saat ini adalah\n");
     displayMatrixFoto(UserFoto(DataUser, id_login-1), UserWarnaFoto(DataUser, id_login-1));

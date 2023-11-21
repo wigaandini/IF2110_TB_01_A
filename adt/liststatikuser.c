@@ -239,7 +239,7 @@ boolean checkPass(ListStatikUser l, Word name, Word pass){
 }
 
 
-// Mengembalikan Id dari user dengan username bernilai name. Mengembalikan 0 jika tidak ada
+// Mengembalikan Id dari user dengan username bernilai name. Mengembalikan -1 jika tidak ada
 int getIdOfName(ListStatikUser l, Word name){
     int i = 0;
     boolean found = false;
@@ -249,6 +249,8 @@ int getIdOfName(ListStatikUser l, Word name){
         }
         i++;
     }
-    printf("\nhasil getIdOfName = %d\n", i);
+    if (!found) {
+        return -1;
+    }
     return i;
 }
