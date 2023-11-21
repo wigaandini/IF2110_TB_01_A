@@ -282,4 +282,7 @@ AddressUtas searchAddressUtas(AddressUtas a, int idUtas){
     if(idUtas(INFOUtas(a)) == idUtas){
         return a;
     }
+    else{
+        return NULL;
+    }
 }
