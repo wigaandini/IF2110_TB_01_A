@@ -455,6 +455,7 @@ float average(List l){
     while(p != NULL){
         sum += INFO(p);
         count ++;
+        p = NEXT(p);
     }
     return ((float)sum/count);
 }

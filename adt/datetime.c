@@ -203,6 +203,9 @@ DATETIME DATETIMENextNDetik(DATETIME D, int N){
         akhir %= 86400;
         time = DetikToTIME(akhir);
     }
+    else{
+        time = DetikToTIME(akhir);
+    }
 
     CreateDATETIME(&date, Day(D), Month(D), Year(D), Hour(time), Minute(time), Second(time));
     return date;
@@ -233,6 +236,9 @@ DATETIME DATETIMEPrevNDetik(DATETIME D, int N){
         }
 
         akhir += 86400;
+        time = DetikToTIME(akhir);
+    }
+    else{
         time = DetikToTIME(akhir);
     }
 
