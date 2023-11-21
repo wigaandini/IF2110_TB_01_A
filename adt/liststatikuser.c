@@ -25,6 +25,8 @@ void CreateListStatikUser(ListStatikUser *l){
         UserWeton(*l, i) = EMPTYWETON;
 
         UserTipe(*l, i) = PUBLIK;
+        
+        CreateEmptyStack(&(l->data[i].drafuser));
 
         Matrix foto;
         createMatrix(5, 5, &foto);
