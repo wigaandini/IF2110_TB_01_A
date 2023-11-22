@@ -147,27 +147,47 @@ void ReadUser(ListStatikUser *l,FriendMatrix *F, char *path) {
                 // }
             }
             else if (count%11==3){ //NOHP
-                Word bacaan;
-                int i = 0;
+                // Word bacaan;
+                // int i = 0;
 
-                // ListDin dummy;
-                // CreateListDin(&dummy,16);
+                // // ListDin dummy;
+                // // CreateListDin(&dummy,16);
 
-                while (!EOP && currentChar != '\n') {
-                    bacaan.TabWord[i] = currentChar;
-                    i++;
-                    ADVconfig();
-                }
-                bacaan.TabWord[i] = '\0';
+                // while (!EOP && currentChar != '\n') {
+                //     bacaan.TabWord[i] = currentChar;
+                //     i++;
+                //     ADVconfig();
+                // }
+                // bacaan.TabWord[i] = '\0';
 
-                for (int i = 0; bacaan.TabWord[i+1] != '\0'; i++) {
-                    // printf("%c", bacaan.TabWord[i]);
-                    insertLast(&((*l).data[user].noHP),bacaan.TabWord[i]);
-                }
+                // for (int i = 0; bacaan.TabWord[i+1] != '\0'; i++) {
+                //     // printf("%c", bacaan.TabWord[i]);
+                //     insertLast(&((*l).data[user].noHP),bacaan.TabWord[i]);
+                // }
 
                 // printList(l.data[user].noHP);
                 // printf("\n");
+                char *bacaan;
+                int i = 0;
+                int maxSize=2;
+                bacaan = (char *)malloc(maxSize* sizeof(char));
 
+                while (!EOP && currentChar != '\n') {
+                    if (i >= maxSize-1) {
+                        maxSize *= 2;
+                        bacaan = (char *)realloc(bacaan, maxSize * sizeof(char));
+                    }
+                    bacaan[i] = currentChar;
+                    i++;
+                    ADVconfig();
+                }
+                bacaan[i] = '\0';
+
+                for (int i = 0; bacaan[i] != '\0'; i++) {
+                    // printf("%c", bacaan.TabWord[i]);
+                    insertLast(&((*l).data[user].noHP),bacaan[i]);
+                }
+                free(bacaan);
 
                 while (currentChar == '\n') {
                     ADVconfig();
@@ -300,20 +320,21 @@ void ReadUser(ListStatikUser *l,FriendMatrix *F, char *path) {
         else{ //MATRIKS REQUEST
             if (reqfirst)
             {
-                Word bacaan;
-                int i = 0;
+                // Word bacaan;
+                // int i = 0;
 
                 while (!EOP && currentChar != '\n') {
-                    bacaan.TabWord[i] = currentChar;
-                    i++;
+                    // bacaan.TabWord[i] = currentChar;
+                    // i++;
                     ADVconfig();
                 }
-                bacaan.TabWord[i] = '\0';
-
-                for (int i = 0; bacaan.TabWord[i] != '\0'; i++) {
-                    // printf("%c", bacaan.TabWord[i]);
-                }
-                // printf("\n");
+                // bacaan.TabWord[i] = '\0';
+                // int reqtotal=0;
+                // for (int i = 0; bacaan.TabWord[i] != '\0'; i++) {
+                //     // printf("%c", bacaan.TabWord[i]);
+                //     reqtotal=reqtotal*10+charToInt(bacaan.TabWord[i]);
+                // }
+                // // printf("\n");
 
                 while (currentChar == '\n') {
                     ADVconfig();
@@ -330,26 +351,29 @@ void ReadUser(ListStatikUser *l,FriendMatrix *F, char *path) {
                     ADVconfig();
                 }
                 bacaan.TabWord[i] = '\0';
-                
+
+                int space=0;
+                int idus=0;
+                int ifol=0;
                 for (int i = 0; bacaan.TabWord[i] != '\0'; i++) {
-                    // int idus;
-                    // int ifol;
-                    if (i%2==0){
-                        // ELMTFRIEND(R,reqcount,i/2)=charToInt(bacaan.TabWord[i]);
-                        if (i/2==0)
-                        {
-                            // idus=charToInt(bacaan.TabWord[i]);
-                        }
-                        else if (i/2==1)
-                        {
-                            // ifol=charToInt(bacaan.TabWord[i]);
-                        }
-                        else if (i/2==3)
-                        {
-                            // sendReqFol(&R,F,idus,ifol);
-                            // SendReqFol(&R, F, idus,ifol);
-                        }
+                    // printf("cc:%c\n",bacaan.TabWord[i]);
+                    // printf("space:%d\n",space);
+                    if (bacaan.TabWord[i]==' '){
+                        space++;
                     }
+                    // printf("space2:%d\n",space);
+                    
+                    if (space==0 && bacaan.TabWord[i]!=' '){
+                        // printf("idus:%c\n",bacaan.TabWord[i]);
+                        idus=idus*10+charToInt(bacaan.TabWord[i]);
+                    } else if (space==1 && bacaan.TabWord[i]!=' '){
+                        // printf("ifol:%c\n",bacaan.TabWord[i]);
+                        ifol=ifol*10+charToInt(bacaan.TabWord[i]);
+                    }else if(space==2 && bacaan.TabWord[i]!=' '){
+                        sendReqFol(&(l->data[idus-1].userReq),*F,idus,ifol);
+                    }
+                    // printf("idus:%d\n",idus);
+                    // printf("ifol:%d\n",ifol);
                 }
 
                 while (currentChar == '\n') {
