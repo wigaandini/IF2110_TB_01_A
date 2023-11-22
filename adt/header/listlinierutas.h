@@ -141,4 +141,6 @@ boolean isIdxUtasPersValid(ListLinierUtas l, int idx);
 
 AddressUtas searchAddressUtas(AddressUtas a, int idUtas);
 
+int searchPositionIndex(ListLinierUtas listUtasPers, int indexUtas);
+
 #endif

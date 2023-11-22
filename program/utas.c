@@ -70,7 +70,7 @@ void BIKIN_UTAS(int idKicau, ListKicauan *listKicau, ListLinierUtas *listUtasPer
     Word text;
     DATETIME waktu;
     CreateListUtasPers(listUtasPers);
-    if(isIdKicauanValid(*listKicau, ID(ELMTLISTKICAU(*listKicau, idKicau-1)))){
+    if(isIdKicauanValid(*listKicau, ID(ELMTLISTKICAU(*listKicau, idKicau-1))) && ADDRESSUTAS(ELMTLISTKICAU(*listKicau, idKicau-1)) == NULL){
         if(IDAUTHOR(ELMTLISTKICAU(*listKicau, idKicau-1)) == idAuthor){
             printf("Utas berhasil dibuat!\n\n");
             printf("Masukkan kicauan:\n");
@@ -117,6 +117,9 @@ void BIKIN_UTAS(int idKicau, ListKicauan *listKicau, ListLinierUtas *listUtasPer
         else{
             printf("Utas ini bukan milik anda!\n");
         }
+    }
+    else if(ADDRESSUTAS(ELMTLISTKICAU(*listKicau, idKicau-1)) != NULL){
+        printf("Kicauan ini sudah dijadikan utas\n");
     }
     else{
         printf("Kicauan tidak ditemukan!\n");
@@ -176,7 +179,7 @@ void HAPUS_UTAS(int idUtas, int indexUtas, ListLinierUtas *listUtasPers, int idA
                 printf("Anda tidak bisa menghapus kicauan utama!\n");
             }
             else if (isIdxUtasPersValid(*listUtasPers, indexUtas)){
-                deleteAtPers(listUtasPers, indexUtas-1, u);
+                deleteAtPers(listUtasPers, searchPositionIndex(*listUtasPers, indexUtas), u);
                 printf("Kicauan sambungan berhasil dihapus!\n\n");
             }
             else{

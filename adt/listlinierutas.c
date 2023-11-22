@@ -286,3 +286,19 @@ AddressUtas searchAddressUtas(AddressUtas a, int idUtas){
         return NULL;
     }
 }
+
+int searchPositionIndex(ListLinierUtas listUtasPers, int indexUtas){
+    boolean found = false;
+    int i = 0;
+    AddressUtas p = FIRSTUtas(listUtasPers);
+    while(!found && i < length(listUtasPers)){
+        if(idxUtas(INFOUtas(p)) == indexUtas){
+            found = true;
+        }
+        else{
+            i++;
+            p = NEXTUtas(p);
+        }
+    }
+    return i;
+}
