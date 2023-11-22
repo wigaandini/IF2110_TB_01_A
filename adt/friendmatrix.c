@@ -33,6 +33,7 @@ IdxType getLastIdxColFriend(FriendMatrix m){
 IdxType howMuchFriend(FriendMatrix m, IdxType i){
 // Mengeluarkan jumlah teman yang dia dimilki
 // Prekondisi: i adalah id user yang terdefinisi (efektif)
+    i--; //Dikurangi karena indeks user mulai dari 1, bukan dari 0
     int j;
     int sum = 0;
     for(j = 0; j<=getLastIdxColFriend(m); j++){
@@ -46,12 +47,18 @@ IdxType howMuchFriend(FriendMatrix m, IdxType i){
 boolean isIdxEffFriend(FriendMatrix m, IdxType i, IdxType j){
 // Mengirimkan true jika i, j adalah Index efektif bagi m
 // Index efektif berarti id user tersebut sudah terdaftar */
+    i--;
+    j--;
+    //Dikurangi karena indeks user mulai dari 1 sedangkan index matrix dari 0
     return (i>=0)&&(i<=getLastIdxRowFriend(m))&&(j>=0)&&(j<=getLastIdxRowFriend(m));
 }
 
 boolean isFriend(FriendMatrix m, IdxType i, IdxType j){
 // Prekondisi: i dan j adalah index yang efektif 
 // Mengirimkan true jika user id i dan id j saling berteman  
+    i--;
+    j--;
+    //Dikurangi karena indeks user mulai dari 1 sedangkan index matrix dari 0
     return ((ELMTFRIEND(m,i,j) == 1)&&(ELMTFRIEND(m,j,i) == 1));
 }
 
@@ -66,6 +73,9 @@ void addFriend(FriendMatrix *m, IdxType i, IdxType j){
 // Prekondisi: i dan j adalah index yang efektif
 // Prekondisi: i != j
 // Prekondisi: i dan j belum berteman
+    i--;
+    j--;
+    //Dikurangi karena indeks user mulai dari 1 sedangkan index matrix dari 0
     ELMTFRIEND(*m,i,j) = 1;
     ELMTFRIEND(*m,j,i) = 1;   
 }
@@ -74,7 +84,23 @@ void deleteFriend(FriendMatrix *m, IdxType i, IdxType j){
 // Prekondisi: i dan j adalah index yang efektif
 // Prekondisi: i != j
 // Prekondisi: i dan j berteman
+    i--;
+    j--;
+    //Dikurangi karena indeks user mulai dari 1 sedangkan index matrix dari 0
     ELMTFRIEND(*m,i,j) = 0;
     ELMTFRIEND(*m,j,i) = 0;  
+}
+
+void displayFriend(FriendMatrix m, IdxType idus){
+    // Idus adalah id user yang sedang login
+    idus --; //Idus mulai dari satu sedangkan penyimpanan dari matrix dimulai dari 0
+    int j;
+    
+    for(j = 0; j <= getLastIdxColFriend(m); j++){
+        if((idus != j)&&(isFriend(m, idus, j))){
+            printf("Id teman: %i\n", ELMTFRIEND(m, idus, j));
+        }
+    }
+    
 }
 

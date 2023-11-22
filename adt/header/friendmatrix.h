@@ -63,5 +63,7 @@ void deleteFriend(FriendMatrix *m, IdxType i, IdxType j);
 int howMuchFriend(FriendMatrix m, IdxType i);
 //mengeluarkan jumlah teman yang dia dimilki
 
+void displayFriend(FriendMatrix m, IdxType idus);
+//Menampilkan teman
 
 #endif

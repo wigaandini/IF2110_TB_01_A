@@ -19,10 +19,10 @@ int main() {
     CreateListStatikUser(&l);
 
     FriendMatrix F; //MATRIKS PERTEMANAN
-    createMatrixFriend(20,20,&F);
+    createMatrixFriend(&F);
 
     FriendMatrix R; //MATRIKS PERMINTAAN
-    createMatrixFriend(20,3,&R);
+    createMatrixFriend(&R);
 
     boolean first=true;
     int count=0; //patokan
