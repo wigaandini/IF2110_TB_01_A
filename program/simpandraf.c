@@ -1,43 +1,31 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
-#include "header/treebalasan.h"
-#include "header/listdinkicauan.h"
-#include "header/liststatikuser.h"
+#include "../adt/header/treebalasan.h"
+#include "../adt/header/listdinkicauan.h"
+#include "../adt/header/liststatikuser.h"
 
-const char* namaFileDraf = "/draf.config";
+char* namaFileDraf = "/draf.config";
 
-char *inputNamaFolder(FILE *stream){
-    char *str;
-    char ch;
-    int len = 0, size = 1;
-    str = realloc(NULL, sizeof(*str));
-    if(str == NULL){
-        return str;
+void concatString(char *ans, char *p1, char *p2){
+    while(*p1){
+        *ans = *p1;
+        p1++;
+        ans++;
     }
-    while((scanf("%c", &ch)) && ch != '\n'){
-        str[len++] = ch;
-        if(len == size){
-            str = realloc(str, sizeof(*str) * (size + 10));
-            size += 10;
-            if(str == NULL){
-                return str;
-            }
-        }
+    while (*p2){
+       *ans = *p2;
+       p2++;
+       ans++;
     }
-    str[len++] = '\0';
-    return realloc(str, sizeof(*str) * len);
+    *ans = '\0';
 }
 
-void simpandraf(ListStatikUser lsu){
-    char *namaFolder = inputNamaFolder(stdin);
+void simpandraf(ListStatikUser lsu, char *namaFolder){
     int ch = mkdir(namaFolder);
-    if(ch == -1){
-        printf("Failed creating new directory\n");
-        return;
-    }
-    strcat(namaFolder, namaFileDraf);
-    FILE* fptr = fopen(namaFolder, "ab+");
+    char namaFile[1000];
+    concatString(namaFile, namaFolder, namaFileDraf);
+    FILE* fptr = fopen(namaFile, "ab+");
     if(fptr == NULL){
         printf("Failed making new file\n");
         return;
@@ -66,14 +54,10 @@ void simpandraf(ListStatikUser lsu){
                 }
                 DATETIME curWaktu = topelem.Waktu;
                 fprintf(fptr, "%d/%d/%d %02d:%02d:%02d", curWaktu.DD, curWaktu.MM, curWaktu.YYYY, curWaktu.T.HH, curWaktu.T.MM, curWaktu.T.SS);
-                fprintf(fptr, '\n');
+                fprintf(fptr, "\n");
             }
 
         }
     }
     fclose(fptr);
-}
-
-int main(){
-    return 0;
 }

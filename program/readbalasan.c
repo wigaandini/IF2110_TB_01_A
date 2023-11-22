@@ -5,9 +5,6 @@
 #include "../adt/header/listdinkicauan.h"
 #include "../adt/header/treebalasan.h"
 
-char currentChar = '.';
-boolean EOP = false;
-
 void readOneNum(int *num, Word bacaan){
     int iteru;
     int n = 0;
@@ -194,6 +191,5 @@ void readbalasan(ListStatikUser *lsu, ListKicauan *lk){
 }
 
 int main(){
-    readbalasan();
     return 0;
 }
