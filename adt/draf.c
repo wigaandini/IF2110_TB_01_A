@@ -66,7 +66,3 @@ void EditDraf(DrafStack * S,Word word){
 void DeleteDraf(DrafStack *S,Draf *Out){
     Pop(S,Out);
 }
-
-void PostDraf(){
-
-}
