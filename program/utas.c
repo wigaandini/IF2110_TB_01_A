@@ -48,19 +48,17 @@ boolean isIdUtasValid(ListKicauan listKicau, int idUtas){
 }
 
 void DisplayUtasPers(ListStatikUser l, ListLinierUtas u, int idUser, int idUtas, ListKicauan listKicau){
-    int idAuthor;
-    AddressUtas p = FIRSTUtas(u);
     int idKicau = searchIdKicau(idUtas, listKicau);
-    idAuthor = IDAUTHOR(ELMTLISTKICAU(listKicau, idKicau-1));
-    DisplaySatuKicau(l, ELMTLISTKICAU(listKicau, idKicau-1));
-    int countUtas = countTypeUtas(listKicau);
+    int idAuthor = IDAUTHOR(ELMTLISTKICAU(listKicau, idKicau-1));
+    AddressUtas p = FIRSTUtas(u);
     for (int i = 0; i < length(u); i++) {
         if (idAuthor == idUser) {
-            DisplaySatuUtas(INFOUtas(p), l, idxUtas(INFOUtas(p)) + 1);
+            DisplaySatuUtas(INFOUtas(p), l, idxUtas(INFOUtas(p)));
             p = NEXTUtas(p);
-        } else {
+        } 
+        else {
             if(UserTipe(l, idAuthor-1) == PUBLIK){
-                DisplaySatuUtas(INFOUtas(p), l, idxUtas(INFOUtas(p)) + 1);
+                DisplaySatuUtas(INFOUtas(p), l, idxUtas(INFOUtas(p)));
                 p = NEXTUtas(p);
             }
         } 
@@ -72,7 +70,7 @@ void BIKIN_UTAS(int idKicau, ListKicauan *listKicau, ListLinierUtas *listUtasPer
     Word text;
     DATETIME waktu;
     CreateListUtasPers(listUtasPers);
-    if(isIdKicauanValid(*listKicau, ID(ELMTLISTKICAU(*listKicau, idKicau-1)))){
+    if(isIdKicauanValid(*listKicau, ID(ELMTLISTKICAU(*listKicau, idKicau-1))) && ADDRESSUTAS(ELMTLISTKICAU(*listKicau, idKicau-1)) == NULL){
         if(IDAUTHOR(ELMTLISTKICAU(*listKicau, idKicau-1)) == idAuthor){
             printf("Utas berhasil dibuat!\n\n");
             printf("Masukkan kicauan:\n");
@@ -119,6 +117,9 @@ void BIKIN_UTAS(int idKicau, ListKicauan *listKicau, ListLinierUtas *listUtasPer
         else{
             printf("Utas ini bukan milik anda!\n");
         }
+    }
+    else if(ADDRESSUTAS(ELMTLISTKICAU(*listKicau, idKicau-1)) != NULL){
+        printf("Kicauan ini sudah dijadikan utas\n");
     }
     else{
         printf("Kicauan tidak ditemukan!\n");
@@ -171,18 +172,17 @@ void HAPUS_UTAS(int idUtas, int indexUtas, ListLinierUtas *listUtasPers, int idA
     Word text;
     DATETIME waktu;
     int idKicau = searchIdKicau(idUtas, listKicau);
-    AddressUtas p = FIRSTUtas(*listUtasPers);
     if(isIdUtasValid(listKicau, idUtas)){
         if(IDAUTHOR(ELMTLISTKICAU(listKicau, idKicau-1)) == idAuthor){
             if(indexUtas == 0){
                 printf("Anda tidak bisa menghapus kicauan utama!\n");
             }
             else if (isIdxUtasPersValid(*listUtasPers, indexUtas)){
+                deleteAtPers(listUtasPers, searchPositionIndex(*listUtasPers, indexUtas), u);
                 printf("Kicauan sambungan berhasil dihapus!\n\n");
-                deleteAtPers(listUtasPers, indexUtas, u);
             }
             else{
-                printf("Kicauan sambungan dengan index 3 tidak ditemukan pada utas!\n\n");
+                printf("Kicauan sambungan dengan index %d tidak ditemukan pada utas!\n\n", indexUtas);
             }
         }
         else{
@@ -195,21 +195,32 @@ void HAPUS_UTAS(int idUtas, int indexUtas, ListLinierUtas *listUtasPers, int idA
 }
 
 void CETAK_UTAS(ListStatikUser l, ListLinierUtas listUtasPers, int idUser, int idUtas, ListKicauan listKicau){
-    int idKicau = searchIdKicau(idUtas, listKicau);
-    if(IDAUTHOR(ELMTLISTKICAU(listKicau, idKicau-1)) == idUser){
-        DisplayUtasPers(l, listUtasPers, idUser, idUtas, listKicau);
-    }
-    else{
-        if(isIdUtasValid(listKicau, idUtas)){
-            if(UserTipe(l, idUser - 1) == PUBLIK){
-                printf("Akun yang membuat utas ini adalah akun privat! Ikuti dahulu akun ini untuk melihat utasnya!\n\n");
-            }
-            else{
-                DisplayUtasPers(l, listUtasPers, idUser, idUtas, listKicau);
+    int idKicau = searchIdKicau(idUtas, listKicau), i;
+    AddressUtas p;
+    if(isIdUtasValid(listKicau, idUtas)){
+        if(IDAUTHOR(ELMTLISTKICAU(listKicau, idKicau-1)) == idUser){
+            DisplaySatuKicau(l, ELMTLISTKICAU(listKicau, idKicau-1));
+            p = FIRSTUtas(listUtasPers);
+            for (i = 0; i < length(listUtasPers); i++) {
+                DisplaySatuUtas(INFOUtas(p), l, idxUtas(INFOUtas(p)));
+                p = NEXTUtas(p);
             }
         }
         else{
-            printf("Utas tidak ditemukan!\n\n");
+            if(UserTipe(l, idUser - 1) == PRIVAT){
+                printf("Akun yang membuat utas ini adalah akun privat! Ikuti dahulu akun ini untuk melihat utasnya!\n\n");
+            }
+            else{
+                DisplaySatuKicau(l, ELMTLISTKICAU(listKicau, idKicau-1));
+                p = FIRSTUtas(listUtasPers);
+                for (i = 0; i < length(listUtasPers); i++) {
+                    DisplaySatuUtas(INFOUtas(p), l, idxUtas(INFOUtas(p)));
+                    p = NEXTUtas(p);
+                }
+            }
         }
+    }
+    else{
+        printf("Utas tidak ditemukan!\n\n");
     }
 }

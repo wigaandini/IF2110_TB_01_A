@@ -1,32 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
-#include "header/listdinkicauan.h"
-#include "header/liststatikuser.h"
+#include "../adt/header/listdinkicauan.h"
+#include "../adt/header/liststatikuser.h"
 
-const char* namaFilePengguna = "/pengguna.config";
-
-char *inputNamaFolder(FILE *stream){
-    char *str;
-    char ch;
-    int len = 0, size = 1;
-    str = realloc(NULL, sizeof(*str));
-    if(str == NULL){
-        return str;
-    }
-    while((scanf("%c", &ch)) && ch != '\n'){
-        str[len++] = ch;
-        if(len == size){
-            str = realloc(str, sizeof(*str) * (size + 10));
-            size += 10;
-            if(str == NULL){
-                return str;
-            }
-        }
-    }
-    str[len++] = '\0';
-    return realloc(str, sizeof(*str) * len);
-}
+char* namaFilePengguna = "/pengguna.config";
 
 char* wetonDecider(int x){
     switch(x){
@@ -66,15 +44,25 @@ char* tipeAkunDecider(int x){
     }
 }
 
-void simpanpengguna(ListStatikUser lsu, FriendMatrix fm){
-    char *namaFolder = inputNamaFolder(stdin);
-    int ch = mkdir(namaFolder);
-    if(ch == -1){
-        printf("Failed creating new directory\n");
-        return;
+void concatString(char *ans, char *p1, char *p2){
+    while(*p1){
+        *ans = *p1;
+        p1++;
+        ans++;
     }
-    strcat(namaFolder, namaFilePengguna);
-    FILE* fptr = fopen(namaFolder, "ab+");
+    while (*p2){
+       *ans = *p2;
+       p2++;
+       ans++;
+    }
+    *ans = '\0';
+}
+
+void simpanpengguna(ListStatikUser lsu, FriendMatrix fm, char *namaFolder){
+    int ch = mkdir(namaFolder);
+    char namaFile[1000];
+    concatString(namaFile, namaFolder, namaFilePengguna);
+    FILE* fptr = fopen(namaFile, "ab+");
     if(fptr == NULL){
         printf("Failed making new file\n");
         return;
@@ -86,22 +74,22 @@ void simpanpengguna(ListStatikUser lsu, FriendMatrix fm){
         for(j = 0; lsu.data[i].nama[j] != '\0'; ++j){
             fprintf(fptr, "%c", lsu.data[i].nama[j]);
         }
-        fprintf(fptr, '\n');
+        fprintf(fptr, "\n");
         for(j = 0; lsu.data[i].sandi[j] != '\0'; ++j){
             fprintf(fptr, "%c", lsu.data[i].sandi[j]);
         }
-        fprintf(fptr, '\n');
+        fprintf(fptr, "\n");
         for(j = 0; lsu.data[i].bio[j] != '\0'; ++j){
             fprintf(fptr, "%c", lsu.data[i].bio[j]);
         }
-        fprintf(fptr, '\n');
+        fprintf(fptr, "\n");
         for(j = 0; j < listLength(lsu.data[i].noHP); ++j){
             fprintf(fptr, "%c", lsu.data[i].noHP.buffer[j]);
         }
-        fprintf(fptr, '\n');
+        fprintf(fptr, "\n");
         char *weton = wetonDecider(lsu.data[i].weton);
         fprintf(fptr, "%s\n", weton);
-        fprintf(fptr, '\n');
+        fprintf(fptr, "\n");
         char *tipeAkun = tipeAkunDecider(lsu.data[i].tipe);
         fprintf(fptr, "%s\n", tipeAkun);
         int p, q;
@@ -110,10 +98,10 @@ void simpanpengguna(ListStatikUser lsu, FriendMatrix fm){
                 fprintf(fptr, "%c", lsu.data[i].warnaFoto.mem[p][q]);
                 fprintf(fptr, "%c", lsu.data[i].foto.mem[p][q]);
                 if(q != 4){
-                    fprintf(fptr, ' ');
+                    fprintf(fptr, " ");
                 }
             }
-            fprintf(fptr, '\n');
+            fprintf(fptr, "\n");
         }
     }
     int p, q;
@@ -121,10 +109,10 @@ void simpanpengguna(ListStatikUser lsu, FriendMatrix fm){
         for(q = 0; q < COL_EFFFRIEND(fm); ++q){
             fprintf(fptr, "%d", ELMTFRIEND(fm, p, q));
             if(q != COL_EFFFRIEND(fm)){
-                fprintf(fptr, ' ');
+                fprintf(fptr, " ");
             }
         }
-        fprintf(fptr, '\n');
+        fprintf(fptr, "\n");
     }
     for(i = 0; i < banyakUser(lsu); ++i){
         Address cur = lsu.data[i].userReq.addrHead;
@@ -136,6 +124,3 @@ void simpanpengguna(ListStatikUser lsu, FriendMatrix fm){
     fclose(fptr);
 }
 
-int main(){
-    return 0;
-}

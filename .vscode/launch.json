@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "d:/Kuliah/TubesDSA/IF2110_TB_01_A",
-      "program": "d:/Kuliah/TubesDSA/IF2110_TB_01_A/build/Debug/outDebug",
+      "cwd": "c:/Users/anton/Favorites/IF2110_TB_01_A",
+      "program": "c:/Users/anton/Favorites/IF2110_TB_01_A/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

@@ -1,33 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
-#include "header/treebalasan.h"
-#include "header/listdinkicauan.h"
-#include "header/liststatikuser.h"
+#include "../adt/header/treebalasan.h"
+#include "../adt/header/listdinkicauan.h"
+#include "../adt/header/liststatikuser.h"
 
-const char* namaFileBalasan = "/balasan.config";
-
-char *inputNamaFolder(FILE *stream){
-    char *str;
-    char ch;
-    int len = 0, size = 1;
-    str = realloc(NULL, sizeof(*str));
-    if(str == NULL){
-        return str;
-    }
-    while((scanf("%c", &ch)) && ch != '\n'){
-        str[len++] = ch;
-        if(len == size){
-            str = realloc(str, sizeof(*str) * (size + 10));
-            size += 10;
-            if(str == NULL){
-                return str;
-            }
-        }
-    }
-    str[len++] = '\0';
-    return realloc(str, sizeof(*str) * len);
-}
+char* namaFileBalasan = "/balasan.config";
 
 void writeRecursion(FILE* fptr, int par, AddressBalasan adr, ListStatikUser lsu){
     if(adr == NULL){
@@ -38,26 +16,36 @@ void writeRecursion(FILE* fptr, int par, AddressBalasan adr, ListStatikUser lsu)
     for(i = 0; i < adr->teks.Length; ++i){
         fprintf(fptr, "%c", adr->teks.TabWord[i]);
     }
-    fprintf(fptr, '\n');
+    fprintf(fptr, "\n");
     for(i = 0; lsu.data[adr->idPenulis - 1].nama[i] != '\0'; ++i){
         fprintf(fptr, "%c", lsu.data[adr->idPenulis - 1].nama[i]);
     }
-    fprintf(fptr, '\n');
+    fprintf(fptr, "\n");
     fprintf(fptr, "%d/%d/%d %02d:%02d:%02d", adr->waktu.DD, adr->waktu.MM, adr->waktu.YYYY, adr->waktu.T.HH, adr->waktu.T.MM, adr->waktu.T.SS);
-    fprintf(fptr, '\n');
+    fprintf(fptr, "\n");
     writeRecursion(fptr, par, SIBLINGBALASAN(*adr), lsu);
     writeRecursion(fptr, IDBALASAN(*adr), CHILDBALASAN(*adr), lsu);
 }
 
-void simpanbalasan(ListKicauan l, ListStatikUser lsu){
-    char *namaFolder = inputNamaFolder(stdin);
-    int ch = mkdir(namaFolder);
-    if(ch == -1){
-        printf("Failed creating new directory\n");
-        return;
+void concatString(char *ans, char *p1, char *p2){
+    while(*p1){
+        *ans = *p1;
+        p1++;
+        ans++;
     }
-    strcat(namaFolder, namaFileBalasan);
-    FILE* fptr = fopen(namaFolder, "ab+");
+    while (*p2){
+       *ans = *p2;
+       p2++;
+       ans++;
+    }
+    *ans = '\0';
+}
+
+void simpanbalasan(ListKicauan l, ListStatikUser lsu, char *namaFolder){
+    int ch = mkdir(namaFolder);
+    char namaFile[1000];
+    concatString(namaFile, namaFolder, namaFileBalasan);
+    FILE* fptr = fopen(namaFile, "ab+");
     if(fptr == NULL){
         printf("Failed making new file\n");
         return;
@@ -77,8 +65,4 @@ void simpanbalasan(ListKicauan l, ListStatikUser lsu){
         }
     }
     fclose(fptr);
-}
-
-int main(){
-    return 0;
 }

@@ -8,6 +8,8 @@
 #include "../adt/header/datetime.h"
 #include "../adt/header/listdinkicauan.h"
 #include "../adt/header/friendmatrix.h"
+#include "../adt/header/treebalasan.h"
+#include "../adt/header/listlinierutas.h"
 
 void Berkicau(ListStatikUser U, ListKicauan *l, Kicauan *k, int idauthor){
     char c;

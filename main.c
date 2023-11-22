@@ -6,6 +6,9 @@
 #include "program/readutas.c"
 #include "program/user.c"
 #include "program/profil.c"
+#include "program/utas.c"
+#include "program/drafprogram.c"
+#include "program/kicauan.c"
 #include <sys/stat.h>
 
 // gcc main.c adt/configmachine.c adt/charmachine.c adt/liststatikuser.c adt/listdin.c adt/Matrix.c adt/friendmatrix.c adt/pcolor.c adt/prioreqfollinked.c adt/listdinkicauan.c adt/datetime.c adt/time.c adt/wordmachine.c -o tes
@@ -20,8 +23,10 @@ boolean is_directory(const char *path) {
 
 int main(){
     ListStatikUser l;
-    ListKicauan k;
+    ListKicauan listKicau;
     FriendMatrix F;
+    Kicauan tweet;
+    DrafStack S;
 
     system("clear");
     printf(".______    __    __  .______      .______    __  .______\n");
@@ -38,6 +43,9 @@ int main(){
     boolean jalan=false;
     char fullPath[200];
     char *dirName;
+
+    CreateListGlobalKicauan(&listKicau, CAPACITYMAXLISTKICAUAN);
+
     do
     {
         printf("Silahkan masukan folder konfigurasi untuk dimuat: ");
@@ -51,12 +59,12 @@ int main(){
             printf("\nFolder config dengan nama '%s' tidak ditemukan\n\n", dirName);
         } else{
             ReadUser(&l,&F,fullPath);
-            ReadKicauan(&k,l,F,fullPath);
+            ReadKicauan(&listKicau,l,F,fullPath);
             ReadDraf(&l,fullPath);
-            ReadUtas(&k,l,fullPath);
+            ReadUtas(&listKicau,l,fullPath);
 
             // printListofUser(l);
-            // DisplayAllKicauan(l,k);
+            // DisplayAllKicauan(l,listKicau);
             printf("\n");
             printf("File konfigurasi berhasil dimuat! Selamat berkicau!\n");
             jalan=true; 
@@ -72,6 +80,9 @@ int main(){
         boolean selesai=false, isLoggedIn=false;
         int id_login=-1;        // id_login = -1 berarti belum login. id_login yang digunakan [1..banyakUser]
         Word w, command, kata;
+        int idKicauan, idUtas, indexUtas;
+        ListLinierUtas listUtas;
+        UtasType u;
         while (!selesai){
             printf("\n>> ");
             STARTSENTENCE();
@@ -145,18 +156,20 @@ int main(){
 
         // BAGIAN PERINTAH (KICAUAN)
         else if (compareString(kata,"KICAU")){ //KICAU
-            printf("\nKICAU\n");
+            Berkicau(l, &listKicau, &tweet, id_login);
         }
 
         else if (compareString(kata,"KICAUAN")){ //KICAUAN
-            printf("\nKICAUAN\n");
+            DisplayKicauan(l, listKicau, id_login, F);
         }
 
         else if (compareString(kata,"SUKA_KICAUAN")){ //SUKA_KICAUAN
-            printf("\nSUKAKICAU\n");
+            idKicauan = WordToInt(splitCommand(&w, command, 2));
+            SUKA_KICAUAN(l, &listKicau, idKicauan, id_login, F);
         }
         else if (compareString(kata,"UBAH_KICAUAN")){ //UBAH_KICAUAN
-            printf("\nUBAHKICAU\n");
+            idKicauan = WordToInt(splitCommand(&w, command, 2));
+            UBAH_KICAUAN(l, &listKicau, idKicauan, id_login);
         }
 
         // BAGIAN PERINTAH (BALASAN)
@@ -174,27 +187,33 @@ int main(){
 
         // BAGIAN PERINTAH (DRAF KICAUAN)
         else if (compareString(kata,"BUAT_DRAF")){ //BUAT_DRAF
-            printf("\nBUATDRAF\n");
+            BUAT_DRAF(S, l, listKicau, id_login);
         }
         else if (compareString(kata,"LIHAT_DRAF")){ //LIHAT_DRAF
-            printf("\nLIHATDRAF\n");
+            LIHAT_DRAF(S, l, listKicau, id_login);
         }
 
         // BAGIAN PERINTAH (UTAS)
         else if (compareString(kata,"UTAS")){ //UTAS
-            printf("\nUTAS\n");
+            idKicauan = WordToInt(splitCommand(&w, command, 2));
+            BIKIN_UTAS(idKicauan, &listKicau, &listUtas, id_login, &u);
         }
 
         else if (compareString(kata,"SAMBUNG_UTAS")){ //SAMBUNG_UTAS
-            printf("\nSAMBUNGUTAS\n");
+            idUtas = WordToInt(splitCommand(&w, command, 2));
+            indexUtas = WordToInt(splitCommand(&w, command, 3));
+            SAMBUNG_UTAS(idUtas, indexUtas, &listUtas, id_login, &u, listKicau);
         }
 
         else if (compareString(kata,"HAPUS_UTAS")){ //HAPUS_UTAS
-            printf("\nHAPUSUTAS\n");
+            idUtas = WordToInt(splitCommand(&w, command, 2));
+            indexUtas = WordToInt(splitCommand(&w, command, 3));
+            HAPUS_UTAS(idUtas, indexUtas, &listUtas, id_login, &u, listKicau);
         }
 
         else if (compareString(kata,"CETAK_UTAS")){ //CETAK_UTAS
-            printf("\nCETAKUTAS\n");
+            idUtas = WordToInt(splitCommand(&w, command, 2));
+            CETAK_UTAS(l, listUtas, id_login, idUtas, listKicau);
         }
 
         // BAGIAN PERINTAH (SIMPAN & MUAT)

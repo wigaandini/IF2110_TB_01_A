@@ -56,7 +56,7 @@ void BALAS(ListKicauan *l, FriendMatrix *fh, ListStatikUser *lsu, Word textBalas
     }
     printf("Selamat! balasan telah diterbitkan!\nDetil balasan:\n");
     AddressBalasan resBalasan = searchAddressBalasan(ELMTLISTKICAU(*l, idKicau).balasan, (*curIdBalasan));
-    assert(resBalasan != NULL);
+    // assert(resBalasan != NULL);
     displayUnitBalasan(resBalasan, lsu, true);
 }
 
