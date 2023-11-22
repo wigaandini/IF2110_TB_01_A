@@ -12,7 +12,6 @@
 #include "../adt/header/listlinierutas.h"
 
 void Berkicau(ListStatikUser U, ListKicauan *l, Kicauan *k, int idauthor){
-    char c;
     int id;
     DATETIME waktu;
     Word text;
