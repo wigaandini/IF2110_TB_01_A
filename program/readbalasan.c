@@ -83,8 +83,10 @@ void copyWord(Word *w1, Word w2){
     w1->TabWord[w2.Length + 1] = '\0';
 }
 
-void readbalasan(ListStatikUser *lsu, ListKicauan *lk){
-    STARTconfig("config/balasan.config");
+void readbalasan(ListStatikUser *lsu, ListKicauan *lk,char *path){
+    char realpath[200];
+    concatenate(realpath, path, "/balasan.config");
+    STARTconfig(realpath);
     Word bacaanStart;
     bacaanStart.Length = 0;
     int iterStart = 0;

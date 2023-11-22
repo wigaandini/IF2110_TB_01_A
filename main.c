@@ -7,7 +7,7 @@
 #include "program/user.c"
 #include "program/profil.c"
 #include "program/utas.c"
-#include "program/drafprogram.c"
+#include "program/draf_fitur.c"
 #include "program/kicauan.c"
 #include <sys/stat.h>
 
@@ -25,8 +25,6 @@ int main(){
     ListStatikUser l;
     ListKicauan listKicau;
     FriendMatrix F;
-    Kicauan tweet;
-    DrafStack S;
 
     system("clear");
     printf(".______    __    __  .______      .______    __  .______\n");
@@ -83,6 +81,7 @@ int main(){
         int idKicauan, idUtas, indexUtas;
         ListLinierUtas listUtas;
         UtasType u;
+        Kicauan tweet;
         while (!selesai){
             printf("\n>> ");
             STARTSENTENCE();
@@ -197,10 +196,10 @@ int main(){
 
         // BAGIAN PERINTAH (DRAF KICAUAN)
         else if (compareString(kata,"BUAT_DRAF")){ //BUAT_DRAF
-            BUAT_DRAF(S, l, listKicau, id_login);
+            BUAT_DRAF(&l,&listKicau,id_login);
         }
         else if (compareString(kata,"LIHAT_DRAF")){ //LIHAT_DRAF
-            LIHAT_DRAF(S, l, listKicau, id_login);
+            LIHAT_DRAF(&l,&listKicau,id_login);
         }
 
         // BAGIAN PERINTAH (UTAS)
