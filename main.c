@@ -132,8 +132,6 @@ int main(){
             for (int i=0; i<nama.Length; i++) {
                 nama.TabWord[i] = command.TabWord[firstIDX+i];
             }
-            displayWord(nama);          // Ini masih belom jadi yak
-            printf("\n");
             lihat_profil(l, nama, isLoggedIn);
         }
 
