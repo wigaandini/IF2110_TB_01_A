@@ -25,6 +25,8 @@ void CreateListStatikUser(ListStatikUser *l){
         UserWeton(*l, i) = EMPTYWETON;
 
         UserTipe(*l, i) = PUBLIK;
+        
+        CreateEmptyStack(&(l->data[i].drafuser));
 
         Matrix foto;
         createMatrix(5, 5, &foto);
@@ -85,7 +87,8 @@ void printListofUser(ListStatikUser l){
         for(i=0; i<banyakUser(l); i++){         // iterasi tiap user
             printf("ID\t: %d\n", UserId(l, i));
 
-            printf("Name\t: %s\n", l.data[i].nama);
+            printf("Name\t: ");
+            displayString(l.data[i].nama); printf("\n");
             
             printf("Pass\t: %s\n", l.data[i].sandi);
             
@@ -93,7 +96,7 @@ void printListofUser(ListStatikUser l){
 
             printf("No. HP\t: ");
             for (int j=0; j<UserNoHPNeff(l, i); j++) {
-                printf("%d", UserNoHP(l, i, j));
+                printf("%c", UserNoHP(l, i, j));
             }
             printf("\n");
 
@@ -236,7 +239,7 @@ boolean checkPass(ListStatikUser l, Word name, Word pass){
 }
 
 
-// Mengembalikan Id dari user dengan username bernilai name. Mengembalikan 0 jika tidak ada
+// Mengembalikan Id dari user dengan username bernilai name. Mengembalikan -1 jika tidak ada
 int getIdOfName(ListStatikUser l, Word name){
     int i = 0;
     boolean found = false;
@@ -246,6 +249,8 @@ int getIdOfName(ListStatikUser l, Word name){
         }
         i++;
     }
-    printf("\nhasil getIdOfName = %d\n", i);
+    if (!found) {
+        return -1;
+    }
     return i;
 }

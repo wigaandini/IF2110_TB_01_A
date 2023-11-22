@@ -6,14 +6,14 @@
 
 // Prosedur print nama, bio, noHP, dan weton
 void print_profil(ListStatikUser UserData, int id_login) {
-    printf("| Nama\t: %s\n", UserData.data[id_login-1].nama);
+    printf("\n| Nama\t\t: %s\n", UserData.data[id_login-1].nama);
     printf("| Bio Akun\t: %s\n", UserData.data[id_login-1].bio);
-    printf("| No HP\t: ");
+    printf("| No HP\t\t: ");
     for (int i = 0; i < UserNoHPNeff(UserData, id_login-1); i++) {
         printf("%c", UserNoHP(UserData, id_login-1, i));
     }
     printf("\n");
-    printf("| Weton\t: ");
+    printf("| Weton\t\t: ");
     switch (UserWeton(UserData, id_login-1)) 
     {
     case EMPTYWETON:
@@ -41,11 +41,15 @@ void print_profil(ListStatikUser UserData, int id_login) {
 
 // Perintah GANTI_PROFIL
 void ganti_profil(ListStatikUser *UserData, int id_login) {
+    if (id_login == -1) {    // Jika belum login
+        printf("\nAnda belum masuk. Masuk dulu yuk!\n\n");
+        return;
+    }
     // Print nama, bio, noHP, dan weton
     print_profil(*UserData, id_login);
 
     // Meminta masukkan Bio Akun
-    printf("Masukkan Bio Akun: \n");
+    printf("\nMasukkan Bio Akun: \n");
     STARTSENTENCE();
     while (currentWord.Length > 135)
     {
@@ -67,39 +71,41 @@ void ganti_profil(ListStatikUser *UserData, int id_login) {
     printf("Masukkan No HP: \n");
     STARTSENTENCE();
     boolean valid = true;
-    for (int i = 0; i<currentWord.Length; i++) {
+    for (int i = 0; i<currentWord.Length; i++) {        // Cek valid
         if (currentWord.TabWord[i] < '0' || currentWord.TabWord[i] > '9') {
             valid = false;
         }
     }
     while (!valid) {
-        printf("\nNo HP hanya boleh berisi angka!\n\n");
+        printf("\nNo HP tidak valid. Masukkan lagi yuk!\n\n");
         printf("Masukkan No HP: \n");
         STARTSENTENCE();
         valid = true;
-        for (int i = 0; i<currentWord.Length; i++) {
+        for (int i = 0; i<currentWord.Length; i++) {        // Cek valid
             if (currentWord.TabWord[i] < '0' || currentWord.TabWord[i] > '9') {
                 valid = false;
             }
         }
     }
-    printf("\n");
+    
     // Mengosongkan data noHP sebelumnya
-    int buang;
-    while (!isEmpty(UserData->data->noHP)) {
-        deleteLast(&UserData->data->noHP, &buang);
+    char buang;
+    while (!isEmpty((*UserData).data[id_login-1].noHP)) {
+        deleteLast(&(*UserData).data[id_login-1].noHP, &buang);
     }
 
     // Perbarui No HP
     for (int i = 0; i < currentWord.Length; i++) {
-        insertLast(&UserData->data->noHP, currentWord.TabWord[i]);
+        insertLast(&(*UserData).data[id_login-1].noHP, currentWord.TabWord[i]);
     }
 
     // Meminta masukkan Weton
-    printf("Masukkan Weton: \n");
+    printf("\nMasukkan Weton: \n");
     STARTSENTENCE();
     LowerCase();        // Ini fungsinya udah bisa dipake belom???
-    while (!compareString(currentWord, "pahing") && !compareString(currentWord, "kliwon") && !compareString(currentWord, "wage") && !compareString(currentWord, "pon") && !compareString(currentWord, "legi") && !compareString(currentWord, "")) {
+    while (!compareString(currentWord, "pahing") && !compareString(currentWord, "kliwon") 
+    && !compareString(currentWord, "wage") && !compareString(currentWord, "pon") 
+    && !compareString(currentWord, "legi") && !compareString(currentWord, "")) {
         printf("\nWeton yang dimasukkan tidak valid!\n\n");
         printf("Masukkan Weton: \n");
         STARTSENTENCE();
@@ -122,37 +128,24 @@ void ganti_profil(ListStatikUser *UserData, int id_login) {
     }
 
     // Akhirnya selese
-    printf("Profil Anda sudah berhasil diperbarui!\n");
+    printf("\nProfil Anda sudah berhasil diperbarui!\n");
 }
 
 
 // Perintah LIHAT_PROFIL [NAMA]
-void lihat_profil(ListStatikUser DataUser, char nama[]) {       // Masukkan nya dalam bentuk list of char atau apa nih
-    // Mengetahui panjang array of char nama[]
-    int namaLength = 0;
-    for (int i = 0; i < 20; i++) {
-        if (nama[i] != '\0') {
-            namaLength++;
-        }
+void lihat_profil(ListStatikUser DataUser, Word nama, boolean isLoggedin) {       // Masukkan nya dalam bentuk list of char atau apa nih
+    
+    if (nama.Length > 20) {  // Jika nama lebih dari 20 karakter
+        printf("\nNama yang Anda masukkan melebihi 20 karakter. Silakan ulangi dan masukkan nama lain!\n\n");
+        return;
+    }
+    else if (!isLoggedin) { // Jika belum login
+        printf("\nAnda belum masuk. Masuk dulu yuk!\n\n");
+        return;
     }
 
     // Cari ID dari nama
-    int id = 0;
-    for (int i = 0; i < 20; i++) {
-        for (int j = 0; j < 20; j++) {
-            if (j < namaLength) {
-                if (nama[j] != UserName(DataUser, i, j)) {
-                    break;
-                }
-            }
-            if (j > namaLength-1 && UserName(DataUser, i, j) != '\0') {
-                break;
-            }
-            if (j == 19) {
-                id = i+1;
-            }
-        }
-    }
+    int id = getIdOfName(DataUser, nama);
 
     if (id == 0) {  // Jika nama tidak ditemukan
         printf("\nNama tidak ditemukan!\n\n");
@@ -160,7 +153,11 @@ void lihat_profil(ListStatikUser DataUser, char nama[]) {       // Masukkan nya 
     }
 
     if (UserTipe(DataUser, id-1) != PUBLIK) {   // Jika akun privat
-        printf("Wah, akun %s diprivat nih. Ikuti dulu yuk untuk bisa melihat profil %s!\n\n", nama, nama);
+        printf("\nWah, akun ");
+        displayWord(nama);
+        printf(" diprivat nih. Ikuti dulu yuk untuk bisa melihat profil ");
+        displayWord(nama);
+        printf("!\n\n");
         return;
     }
 
@@ -168,57 +165,74 @@ void lihat_profil(ListStatikUser DataUser, char nama[]) {       // Masukkan nya 
     print_profil(DataUser, id);
 
     // Print foto profil
-    printf("Foto profil akun %s\n", nama);
+    printf("Foto profil akun ");
+    displayWord(nama);
+    printf("\n");
     displayMatrixFoto(UserFoto(DataUser, id-1), UserWarnaFoto(DataUser, id-1));
     printf("\n");
 }
 
 
 // Perintah ATUR_JENIS_AKUN
-void atur_jenis_akun(ListStatikUser DataUser, int id_login) {
+void atur_jenis_akun(ListStatikUser *DataUser, int id_login, boolean isLoggedin) {
+
+    if (!isLoggedin) {  // Jika belum login
+        printf("\nAnda belum masuk. Masuk dulu yuk!\n\n");
+        return;
+    }
     // Print nama, bio, noHP, dan weton
-    print_profil(DataUser, id_login);
+    print_profil(*DataUser, id_login);
 
     // Print jenis akun saat ini
-    if (UserTipe(DataUser, id_login-1) == PUBLIK) {
-        printf("Saat ini, akun Anda adalah akun Publik.\nIngin mengubah ke akun Privat?\n(YA/TIDAK) ");
+    if (UserTipe(*DataUser, id_login-1) == PUBLIK) {
+        printf("\nSaat ini, akun Anda adalah akun Publik.\nIngin mengubah ke akun Privat?\n(YA/TIDAK) ");
     } else {
-        printf("Saat ini, akun Anda adalah akun Privat.\nIngin mengubah ke akun Publik?\n(YA/TIDAK) ");
+        printf("\nSaat ini, akun Anda adalah akun Privat.\nIngin mengubah ke akun Publik?\n(YA/TIDAK) ");
     }
     STARTSENTENCE();
-    printf("\n\n");
+    printf("\n");
+    // Handle masukkan ga sesuai YA/TIDAK
+    while (!compareString(currentWord, "YA") && !compareString(currentWord, "TIDAK")) {
+        printf("Masukkan tidak valid! Silakan masukkan YA atau TIDAK.\n");
+        printf("(YA/TIDAK) ");
+        STARTSENTENCE();
+        printf("\n");
+    }
+
     // Memperbarui jenis akun jika YA
-    if (compareString(currentWord, "YA") && UserTipe(DataUser, id_login-1) == PUBLIK) {
+    if (compareString(currentWord, "YA") && UserTipe(*DataUser, id_login-1) == PUBLIK) {
         printf("Akun anda sudah diubah menjadi akun Privat.\n");
-        UserTipe(DataUser, id_login-1) = PRIVAT;
-    } else if (compareString(currentWord, "YA") && UserTipe(DataUser, id_login-1) == PRIVAT) {
+        UserTipe(*DataUser, id_login-1) = PRIVAT;
+    } else if (compareString(currentWord, "YA") && UserTipe(*DataUser, id_login-1) == PRIVAT) {
         printf("Akun anda sudah diubah menjadi akun Publik.\n");
-        UserTipe(DataUser, id_login-1) = PUBLIK;
+        UserTipe(*DataUser, id_login-1) = PUBLIK;
     }
     printf("\n");
 }
 
 
 // Perintah UBAH_FOTO_PROFIL
-void ubah_foto_profil(ListStatikUser DataUser, int id_login) {
+void ubah_foto_profil(ListStatikUser *DataUser, int id_login) {
+    if (id_login == -1) {    // Jika belum login
+        printf("\nAnda belum masuk. Masuk dulu yuk!\n\n");
+        return;
+    }
     // Print foto profil saat ini
     printf("Foto profil Anda saat ini adalah\n");
-    displayMatrixFoto(UserFoto(DataUser, id_login-1), UserWarnaFoto(DataUser, id_login-1));
+    displayMatrixFoto(UserFoto(*DataUser, id_login-1), UserWarnaFoto(*DataUser, id_login-1));
     printf("\n");
 
     // Meminta masukkan foto profil
     printf("Masukkan foto profil yang baru\n");
-    STARTSENTENCE();                            // Masukkan diasumsikan selalu valid
+    STARTSENTENCE();                            // Masukkan diasumsikan selalu valid den
     printf("\n");
 
-    // Perbarui foto profil (i : baris, j : kolom)
-    int kolom = 0, baris = 0;         // kolom : sebagai idx
+    // Perbarui foto profil
+    int kolom = 0, baris = 0;         
     for (int j = 0; j < currentWord.Length; j++) {  // Masih salah // Length sudah pasti 99
         if (currentWord.TabWord[j] == 'R' || currentWord.TabWord[j] == 'G' || currentWord.TabWord[j] == 'B') {
-            UserWarnaFoto(DataUser, id_login-1).mem[baris][kolom] = currentWord.TabWord[j];
-        }
-        else if (currentWord.TabWord[j] != ' ' && currentWord.TabWord[j] != '\n') {
-            UserFoto(DataUser, id_login-1).mem[baris][kolom] = currentWord.TabWord[j];
+            UserWarnaFoto(*DataUser, id_login-1).mem[baris][kolom] = currentWord.TabWord[j];
+            UserFoto(*DataUser, id_login-1).mem[baris][kolom] = currentWord.TabWord[j+2];
             kolom++;
         }
         if (kolom == 5) {

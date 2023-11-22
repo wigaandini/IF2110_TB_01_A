@@ -91,7 +91,7 @@ void IgnoreEnter(){
 
 void CopySpace(){
     int i = 0;
-    while (currentChar != LineMARK){
+    while (currentChar != MARK){
         currentWord.TabWord[i] = currentChar;
         ADV();
         i++;
@@ -106,6 +106,8 @@ void CopySpace(){
 
 void STARTSENTENCE(){
     START();
+    IgnoreEnter();
+    IgnoreBlanks();
     if(currentChar == MARK){
         EndWord = true;
     }
@@ -133,7 +135,6 @@ int WordToInt(Word str){
         if (str.TabWord[i] >= '0' && str.TabWord[i] <= '9') {
             result = result * 10 + (str.TabWord[i] - '0');
         } else {
-            // Handle non-numeric characters
             return 0;
         }
     }
@@ -150,7 +151,6 @@ int WordToInt(Word str){
 }
 
 boolean compareWord(Word str1, Word str2){
-    int idx;
     int i;
     if (str1.Length != str2.Length){
         return false;
@@ -318,15 +318,12 @@ void LowerCase(){
 
 int countWords(Word w) {
     int count = 0;
-    int isWord = 0;  // Flag to track if the current character is part of a word
+    int isWord = 0; 
 
     for (int i = 0; i < w.Length; i++) {
-        // If the current character is a space or tab, set the flag to 0
         if (w.TabWord[i] == ' ' || w.TabWord[i] == '\t') {
             isWord = 0;
         }
-        // If the current character is not a space or tab and the flag is 0,
-        // it means we've encountered the beginning of a new word. Increment the count.
         else if (isWord == 0) {
             isWord = 1;
             count++;
@@ -335,3 +332,22 @@ int countWords(Word w) {
     return count;
 }
 /* Menghitung jumlah kata di suatu kalimat */
+
+int lengthString(char *str) {
+    int length = 0;
+    while (str[length] != '\0') {
+        length++;
+    }
+    return length;
+}
+/* Menghitung panjang string */
+
+void concatenate(char *str,char *str2,char *str3) {
+    while (*str2) {
+        *str++ = *str2++;
+    }
+    while (*str3) {
+        *str++ = *str3++;
+    }
+    *str = '\0';
+}

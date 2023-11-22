@@ -221,6 +221,9 @@ boolean isMatrixEqual(Matrix m1, Matrix m2){
         }
         return true;
     }
+    else{
+        return false;
+    }
 }
 /* Mengirimkan true jika m1 = m2, yaitu count(m1) = count(m2) dan */
 /* untuk setiap i,j yang merupakan Index baris dan kolom m1(i,j) = m2(i,j) */

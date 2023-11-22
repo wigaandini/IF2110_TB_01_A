@@ -84,6 +84,10 @@ void MASUK(ListStatikUser *l, boolean *isLoggedIn, int *id_login){      // belum
         }
         *isLoggedIn = true;
         *id_login = getIdOfName(*l, nama);
+
+        printf("\nAnda telah berhasil masuk dengan nama pengguna ");
+        displayWord(nama);
+        printf(". Mari menjelajahi BurBir bersama Ande-Ande Lumut!\n\n");
     }
 }
 
@@ -94,7 +98,7 @@ void KELUAR(ListStatikUser *l, boolean *isLoggedIn, int *id_login){
     else{
         // Update status login dan id login
         *isLoggedIn = false;
-        *id_login = 0;
+        *id_login = -1;
         printf("\nAnda berhasil logout. Sampai jumpa di pertemuan berikutnya!\n\n");
     }
 }

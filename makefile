@@ -1,44 +1,45 @@
-CC = gcc
-CFLAGS = -Wall -Werror -std=c11
+# Compiler to use
+CC=gcc
 
-SRC_MAIN = main.c
-OBJ_MAIN = $(SRC_MAIN:.c=.o)
+# Compiler flags
+CFLAGS=-Wall -g
 
-.PHONY: all clean test
+# Target executable name
+TARGET=tes
 
-all: main_program mfoo
+# Source files
+SRCS=main.c \
+     adt/configmachine.c \
+     adt/charmachine.c \
+     adt/liststatikuser.c \
+     adt/listdin.c \
+     adt/matrix.c \
+     adt/friendmatrix.c \
+     adt/pcolor.c \
+     adt/prioreqfollinked.c \
+     adt/listdinkicauan.c \
+     adt/datetime.c \
+     adt/time.c \
+     adt/wordmachine.c \
+     adt/stack.c \
+     adt/draf.c \
+     adt/listlinierutas.c \
+     adt/prioqueuetime.c \
 
-main_program: $(OBJ_MAIN) $(OBJ_FOO)
-	$(CC) $(CFLAGS) -o $@ $^
+# Object files
+OBJECTS=$(SRCS:.c=.o)
 
+# Build target executable
+$(TARGET): $(OBJECTS)
+	$(CC) $(CFLAGS) -o $(TARGET) $(OBJECTS)
+
+# Generic rule for building object files
 %.o: %.c
-	$(CC) $(CFLAGS) -c -o $@ $<
+	$(CC) $(CFLAGS) -c $< -o $@
 
+# Clean rule
 clean:
-	rm -f main_program mfoo $(OBJ_MAIN) $(OBJ_FOO) $(OBJ_TEST) $(TEST_RESULTS)
+	rm -f $(TARGET) $(OBJECTS)
 
-# UNIT TESTS
-
-SRC_FOO = ADT/Foo/foo.c
-SRC_TEST = ADT/Foo/tests/mfoo.c
-OBJ_FOO = $(SRC_FOO:.c=.o)
-OBJ_TEST = $(SRC_TEST:.c=.o)
-
-TESTS_DIR = ADT/Foo/tests
-TEST_CASES = $(wildcard $(TESTS_DIR)/*.in)
-TEST_OUTPUTS = $(TEST_CASES:.in=.out)
-TEST_RESULTS = $(TEST_CASES:.in=.result)
-
-mfoo: $(OBJ_FOO) $(OBJ_TEST)
-	$(CC) $(CFLAGS) -o $@ $^
-
-test_foo: mfoo $(TEST_RESULTS)
-	@cat $(TEST_RESULTS)
-
-$(TEST_RESULTS): $(TESTS_DIR)/%.result: $(TESTS_DIR)/%.in $(TESTS_DIR)/%.out mfoo
-	@if ./mfoo < $< | diff - $(word 2,$^) > /dev/null; then \
-		echo "$< $(word 2,$^): TRUE"; \
-	else \
-		echo "$< $(word 2,$^): WRONG"; \
-	fi > $@
-
+# Rule for rebuilding
+rebuild: clean $(TARGET)

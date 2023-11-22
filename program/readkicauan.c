@@ -2,11 +2,12 @@
 #include "../adt/header/listdinkicauan.h"
 #include "../adt/header/liststatikuser.h"
 
-void ReadKicauan(ListKicauan *k, ListStatikUser l,FriendMatrix F){ 
-    STARTconfig("config/kicauan.config");
-    int temp=0;
+void ReadKicauan(ListKicauan *k, ListStatikUser l,FriendMatrix F, char* path){ 
+    char realpath[200];
+    concatenate(realpath, path, "/kicauan.config");
+    STARTconfig(realpath);
     int count=0;
-    int user=0;
+    // int user=0;
 
     boolean first=true;
     while (!EOP) {
@@ -34,8 +35,9 @@ void ReadKicauan(ListKicauan *k, ListStatikUser l,FriendMatrix F){
             }
             // printf("\n");
             // printf("tot:%d\n",tot);
-            CreateListGlobalKicauan(k,tot);
-            temp=tot*4;
+            
+            CreateListGlobalKicauan(k,1000);
+            // temp=tot*4;
 
             while (currentChar == '\n') {
                 ADVconfig();
@@ -62,8 +64,9 @@ void ReadKicauan(ListKicauan *k, ListStatikUser l,FriendMatrix F){
                         theid=theid*10+charToInt(bacaan.TabWord[i]);
                     }
                 }
-                ELMTLISTKICAU(*k,user).id=theid;
-                // printf("%d\n",ELMTLISTKICAU(*k,user).id);
+                ELMTLISTKICAU(*k,NEFFLISTKICAU(*k)).id=theid;
+                // printf("neff:%d\n",NEFFLISTKICAU(*k));
+                // printf("%d\n",ELMTLISTKICAU(*k,NEFFLISTKICAU(*k)).id);
 
                 while (currentChar == '\n') {
                     ADVconfig();
@@ -83,12 +86,12 @@ void ReadKicauan(ListKicauan *k, ListStatikUser l,FriendMatrix F){
                 bacaan.TabWord[i] = '\0';
 
                 for (int i = 0; bacaan.TabWord[i] != '\0'; i++) {
-                    ELMTLISTKICAU(*k,user).text.TabWord[i]=bacaan.TabWord[i];
-                    ELMTLISTKICAU(*k,user).text.Length++;
+                    ELMTLISTKICAU(*k,NEFFLISTKICAU(*k)).text.TabWord[i]=bacaan.TabWord[i];
+                    ELMTLISTKICAU(*k,NEFFLISTKICAU(*k)).text.Length++;
                 }
                 // printf("\n");
 
-                // printf("%s\n",ELMTLISTKICAU(*k,user).text.TabWord);
+                // printf("%s\n",ELMTLISTKICAU(*k,NEFFLISTKICAU(*k)).text.TabWord);
 
                 while (currentChar == '\n') {
                     ADVconfig();
@@ -115,8 +118,8 @@ void ReadKicauan(ListKicauan *k, ListStatikUser l,FriendMatrix F){
                     }
                 }
 
-                ELMTLISTKICAU(*k,user).like=like;
-                // printf("%d\n",ELMTLISTKICAU(*k,user).like);
+                ELMTLISTKICAU(*k,NEFFLISTKICAU(*k)).like=like;
+                // printf("%d\n",ELMTLISTKICAU(*k,NEFFLISTKICAU(*k)).like);
 
                 while (currentChar == '\n') {
                     ADVconfig();
@@ -141,19 +144,26 @@ void ReadKicauan(ListKicauan *k, ListStatikUser l,FriendMatrix F){
                     boolean betul=true;
                     for (int i = 0; bacaan.TabWord[i] != '\0'; i++) {
                         // printf("banding: %c,%c\n",bacaan.TabWord[i],l.data[user_now].nama[i]);
-                        if (bacaan.TabWord[i]!=l.data[user_now].nama[i] && betul)
-                        {
+                        if (bacaan.TabWord[i]!=l.data[user_now].nama[i] && betul){
                             betul=false;
                         }
                     }
                     user_now++;
-                    if (betul)
-                    {
+                    if (betul){
+                        // printf("%s\n",bacaan.TabWord);
                         found=true;
                     }
                 }
-                ELMTLISTKICAU(*k,user).idauthor=user_now;
-                // printf("%d\n",ELMTLISTKICAU(*k,user).idauthor);
+                // printf("usernow:%d\n",user_now);
+
+                if (found)
+                {
+                    ELMTLISTKICAU(*k,NEFFLISTKICAU(*k)).idauthor=user_now;
+                }
+                
+                // ELMTLISTKICAU(*k,NEFFLISTKICAU(*k)).idauthor=user_now;
+                // user_now=0;
+                // printf("%d\n",ELMTLISTKICAU(*k,NEFFLISTKICAU(*k)).idauthor);
 
                 while (currentChar == '\n') {
                     ADVconfig();
@@ -178,40 +188,40 @@ void ReadKicauan(ListKicauan *k, ListStatikUser l,FriendMatrix F){
                         tot=tot*10+charToInt(bacaan.TabWord[i]);
                         
                     } else if (i==2){
-                        ELMTLISTKICAU(*k,user).waktu.DD=tot;
+                        ELMTLISTKICAU(*k,NEFFLISTKICAU(*k)).waktu.DD=tot;
                         tot=0;
                     } else if (i<5){                    
                         tot=tot*10+charToInt(bacaan.TabWord[i]);
                     } else if (i==5){
-                        ELMTLISTKICAU(*k,user).waktu.MM=tot;
+                        ELMTLISTKICAU(*k,NEFFLISTKICAU(*k)).waktu.MM=tot;
                         tot=0;
                     } else if (i<10){                         
                         tot=tot*10+charToInt(bacaan.TabWord[i]);
                     } else if (i==10){
-                        ELMTLISTKICAU(*k,user).waktu.YYYY=tot;
+                        ELMTLISTKICAU(*k,NEFFLISTKICAU(*k)).waktu.YYYY=tot;
                         tot=0;
                     } else if (i<13){
                         tot=tot*10+charToInt(bacaan.TabWord[i]);
                     } else if (i==13){
-                        ELMTLISTKICAU(*k,user).waktu.T.HH=tot;
+                        ELMTLISTKICAU(*k,NEFFLISTKICAU(*k)).waktu.T.HH=tot;
                         tot=0;
                     } else if (i<16){
                         tot=tot*10+charToInt(bacaan.TabWord[i]);
                     } else if (i==16){
-                        ELMTLISTKICAU(*k,user).waktu.T.MM=tot;
+                        ELMTLISTKICAU(*k,NEFFLISTKICAU(*k)).waktu.T.MM=tot;
                         tot=0;
                     } else if (i<18){
                         tot=tot*10+charToInt(bacaan.TabWord[i]);
                     } else if (i==18){
-                        ELMTLISTKICAU(*k,user).waktu.T.SS=tot;
+                        ELMTLISTKICAU(*k,NEFFLISTKICAU(*k)).waktu.T.SS=tot;
                         tot=0;
                     }
                 }
-                // TulisDATETIME(ELMTLISTKICAU(*k,user).waktu);
+                // TulisDATETIME(ELMTLISTKICAU(*k,NEFFLISTKICAU(*k)).waktu);
                 // printf("\n");
 
                 if (count%5==4){
-                    user++;
+                    NEFFLISTKICAU(*k)++;
                 }
 
                 while (currentChar == '\n') {

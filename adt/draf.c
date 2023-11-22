@@ -2,23 +2,25 @@
 #include "header/draf.h"
 
 void LihatDraf(DrafStack S){
-    if (IsEmptyStack(S))
-    {
-        printf("Yah, anda belum memiliki draf apapun! Buat dulu ya :D\n");
-    }
-    else
-    {
-        Draf temp = InfoTop(S);
-        printf("Ini draf terakhir anda:\n");
+    infotypeDraf X;
+    // while (!IsEmptyStack(S))
+    // {
+    if(!IsEmptyStack(S)){
+        Pop(&S,&X);
+        int i;
+        printf("\nIni draf terakhir anda:\n");
         printf("| ");
-        TulisDATETIME(temp.Waktu);
-        printf("\n");
-        int j;
-        printf("| ");
-        for (j = 0; j < temp.Text.Length; j++) {
-            printf("%c", temp.Text.TabWord[j]);
+        for ( i = 0; i < X.Text.Length; i++)
+        {
+            printf("%c",X.Text.TabWord[i]);
         }
-        printf("\n");   
+        printf("\n");
+        printf("| ");
+        TulisDATETIME(X.Waktu);
+        printf("\n");
+    }
+    else{
+        printf("\nYah, anda belum memiliki draf apapun! Buat dulu ya :D\n");
     }
 
 }
@@ -26,7 +28,7 @@ void LihatDraf(DrafStack S){
 void AddDraf(DrafStack * S,Word word){
     time_t current_time;
     time(&current_time);
-    current_time+=3600*7;
+    current_time+=3600*10+7*60;
     DATETIME D;
 
     struct tm* timeinfo = gmtime(&current_time);
@@ -49,7 +51,7 @@ void EditDraf(DrafStack * S,Word word){
 
     time_t current_time;
     time(&current_time);
-    current_time+=3600*7;
+    current_time+=3600*10+7*60;
     DATETIME D;
 
     struct tm* timeinfo = gmtime(&current_time);
