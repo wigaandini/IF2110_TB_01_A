@@ -6,28 +6,6 @@
 
 const char* namaFilePengguna = "/pengguna.config";
 
-char *inputNamaFolder(FILE *stream){
-    char *str;
-    char ch;
-    int len = 0, size = 1;
-    str = realloc(NULL, sizeof(*str));
-    if(str == NULL){
-        return str;
-    }
-    while((scanf("%c", &ch)) && ch != '\n'){
-        str[len++] = ch;
-        if(len == size){
-            str = realloc(str, sizeof(*str) * (size + 10));
-            size += 10;
-            if(str == NULL){
-                return str;
-            }
-        }
-    }
-    str[len++] = '\0';
-    return realloc(str, sizeof(*str) * len);
-}
-
 char* wetonDecider(int x){
     switch(x){
         case 0:
@@ -66,8 +44,7 @@ char* tipeAkunDecider(int x){
     }
 }
 
-void simpanpengguna(ListStatikUser lsu, FriendMatrix fm){
-    char *namaFolder = inputNamaFolder(stdin);
+void simpanpengguna(ListStatikUser lsu, FriendMatrix fm, char *namaFolder){
     int ch = mkdir(namaFolder);
     if(ch == -1){
         printf("Failed creating new directory\n");

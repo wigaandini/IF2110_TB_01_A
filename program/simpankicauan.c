@@ -28,8 +28,7 @@ char *inputNamaFolder(FILE *stream){
     return realloc(str, sizeof(*str) * len);
 }
 
-void simpankicauan(ListKicauan l, ListStatikUser lsu){
-    char *namaFolder = inputNamaFolder(stdin);
+void simpankicauan(ListKicauan l, ListStatikUser lsu, char *namaFolder){
     int ch = mkdir(namaFolder);
     if(ch == -1){
         printf("Failed creating new directory\n");
