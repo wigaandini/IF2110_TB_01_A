@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "header/treebalasan.h"
-#include "header/liststatikuser.h"
-#include "header/friendmatrix.h"
-#include "header/wordmachine.h"
-#include "header/listdinkicauan.h"
+#include "../adt/header/treebalasan.h"
+#include "../adt/header/liststatikuser.h"
+#include "../adt/header/friendmatrix.h"
+#include "../adt/header/wordmachine.h"
+#include "../adt/header/listdinkicauan.h"
 
 void langsungAddBalasan(ListKicauan *l, Word textBalasan, DATETIME curTime, int idKicau, int idBalasan, int curUserId, int *curIdBalasan){
     if(idBalasan == -1){

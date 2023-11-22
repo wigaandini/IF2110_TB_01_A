@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "program/readpengguna.c"
+#include "program/readbalasan.c"
 #include "program/readkicauan.c"
 #include "program/readdraf.c"
 #include "program/readutas.c"
@@ -58,6 +59,7 @@ int main(){
         } else{
             ReadUser(&l,&F,fullPath);
             ReadKicauan(&listKicau,l,F,fullPath);
+            readbalasan(&l,&listKicau,fullPath);
             ReadDraf(&l,fullPath);
             ReadUtas(&listKicau,l,fullPath);
 

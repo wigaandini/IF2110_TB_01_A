@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include "../adt/header/listdinkicauan.h"
 #include "../adt/header/treebalasan.h"
+#include "balasan.c"
 
 void readOneNum(int *num, Word bacaan){
     int iteru;
@@ -190,8 +191,4 @@ void readbalasan(ListStatikUser *lsu, ListKicauan *lk,char *path){
             langsungAddBalasan(lk, textInput, d, idKicau, idPar, userId, &idCur);
         }
     }
-}
-
-int main(){
-    return 0;
 }
