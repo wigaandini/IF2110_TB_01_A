@@ -172,7 +172,6 @@ void HAPUS_UTAS(int idUtas, int indexUtas, ListLinierUtas *listUtasPers, int idA
     Word text;
     DATETIME waktu;
     int idKicau = searchIdKicau(idUtas, listKicau);
-    AddressUtas p = FIRSTUtas(*listUtasPers);
     if(isIdUtasValid(listKicau, idUtas)){
         if(IDAUTHOR(ELMTLISTKICAU(listKicau, idKicau-1)) == idAuthor){
             if(indexUtas == 0){

@@ -6,6 +6,7 @@
 #include "program/readutas.c"
 #include "program/user.c"
 #include "program/profil.c"
+#include "program/utas.c"
 #include <sys/stat.h>
 
 // gcc main.c adt/configmachine.c adt/charmachine.c adt/liststatikuser.c adt/listdin.c adt/Matrix.c adt/friendmatrix.c adt/pcolor.c adt/prioreqfollinked.c adt/listdinkicauan.c adt/datetime.c adt/time.c adt/wordmachine.c -o tes
