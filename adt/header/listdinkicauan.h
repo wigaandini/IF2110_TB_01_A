@@ -105,4 +105,5 @@ void DisplaySatuKicau(ListStatikUser l, Kicauan k);
 void DisplayAllKicauan(ListStatikUser l, ListKicauan k);
 /* Untuk konfigurasi, jadi bisa liat semua isi list din kicauan*/
 
+int countTypeUtas(ListKicauan l);
 #endif
