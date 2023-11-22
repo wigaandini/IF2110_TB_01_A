@@ -63,7 +63,7 @@ void daftarPermintaan(Prioreqfol q){
 }
 
 /*** Primitif Enqueue/Dequeue ***/
-void SendReqFol(Prioreqfol *qfol, FriendMatrix m, ElTypeReq idus, ElTypeReq ifol){
+void sendReqFol(Prioreqfol *qfol, FriendMatrix m, ElTypeReq idus, ElTypeReq ifol){
 /* qfol adallah queue yang dimiliki orang yang ingin difollow
 Idus adalah orang yang merequest
 Ifol adalah orang yang direquest
