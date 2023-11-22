@@ -119,8 +119,20 @@ int main(){
         }
 
         else if (compareString(kata,"LIHAT_PROFIL")){ //LIHAT_PROFIL
-            Word nama = splitCommand(&w, command, 2);
-            displayWord(nama);
+            // Ambil Word nama dari command dan asumsikan masukkan command selalu benar sesuai struktur: LIHAT_PROFIL <nama>
+            Word nama;
+            int firstIDX = 0;
+            for (int i=13; i<command.Length; i++){      // Mencari indeks command pertama dari nama. Misal LIHAT_PROFIL Farel, maka firstIDX = 13
+                if (command.TabWord[i] != ' '){
+                    firstIDX = i;
+                    break;
+                }
+            }
+            nama.Length = command.Length - firstIDX;
+            for (int i=0; i<nama.Length; i++) {
+                nama.TabWord[i] = command.TabWord[firstIDX+i];
+            }
+            displayWord(nama);          // Ini masih belom jadi yak
             printf("\n");
             lihat_profil(l, nama, isLoggedIn);
         }
