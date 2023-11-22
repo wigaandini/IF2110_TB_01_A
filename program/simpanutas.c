@@ -58,14 +58,14 @@ void simpanutas(ListKicauan l, ListStatikUser lsu){
                 for(j = 0; j < cur->info.text.Length; ++j){
                     fprintf(fptr, "%c", cur->info.text.TabWord[j]);
                 }
-                fprintf(fptr, '\n');
+                fprintf(fptr, "\n");
                 for(j = 0; lsu.data[l.buffer[i].idauthor - 1].nama[j] != '\0'; ++j){
                     fprintf(fptr, "%c", lsu.data[l.buffer[i].idauthor - 1].nama[j]);
                 }
-                fprintf(fptr, '\n');
+                fprintf(fptr, "\n");
                 DATETIME curWaktu = cur->info.waktu;
                 fprintf(fptr, "%d/%d/%d %02d:%02d:%02d", curWaktu.DD, curWaktu.MM, curWaktu.YYYY, curWaktu.T.HH, curWaktu.T.MM, curWaktu.T.SS);
-                fprintf(fptr, '\n');
+                fprintf(fptr, "\n");
                 cur = cur->next;
             }
         }        

@@ -66,7 +66,7 @@ void simpandraf(ListStatikUser lsu){
                 }
                 DATETIME curWaktu = topelem.Waktu;
                 fprintf(fptr, "%d/%d/%d %02d:%02d:%02d", curWaktu.DD, curWaktu.MM, curWaktu.YYYY, curWaktu.T.HH, curWaktu.T.MM, curWaktu.T.SS);
-                fprintf(fptr, '\n');
+                fprintf(fptr, "\n");
             }
 
         }

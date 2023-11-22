@@ -38,13 +38,13 @@ void writeRecursion(FILE* fptr, int par, AddressBalasan adr, ListStatikUser lsu)
     for(i = 0; i < adr->teks.Length; ++i){
         fprintf(fptr, "%c", adr->teks.TabWord[i]);
     }
-    fprintf(fptr, '\n');
+    fprintf(fptr, "\n");
     for(i = 0; lsu.data[adr->idPenulis - 1].nama[i] != '\0'; ++i){
         fprintf(fptr, "%c", lsu.data[adr->idPenulis - 1].nama[i]);
     }
-    fprintf(fptr, '\n');
+    fprintf(fptr, "\n");
     fprintf(fptr, "%d/%d/%d %02d:%02d:%02d", adr->waktu.DD, adr->waktu.MM, adr->waktu.YYYY, adr->waktu.T.HH, adr->waktu.T.MM, adr->waktu.T.SS);
-    fprintf(fptr, '\n');
+    fprintf(fptr, "\n");
     writeRecursion(fptr, par, SIBLINGBALASAN(*adr), lsu);
     writeRecursion(fptr, IDBALASAN(*adr), CHILDBALASAN(*adr), lsu);
 }

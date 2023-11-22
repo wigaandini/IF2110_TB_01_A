@@ -86,22 +86,22 @@ void simpanpengguna(ListStatikUser lsu, FriendMatrix fm){
         for(j = 0; lsu.data[i].nama[j] != '\0'; ++j){
             fprintf(fptr, "%c", lsu.data[i].nama[j]);
         }
-        fprintf(fptr, '\n');
+        fprintf(fptr, "\n");
         for(j = 0; lsu.data[i].sandi[j] != '\0'; ++j){
             fprintf(fptr, "%c", lsu.data[i].sandi[j]);
         }
-        fprintf(fptr, '\n');
+        fprintf(fptr, "\n");
         for(j = 0; lsu.data[i].bio[j] != '\0'; ++j){
             fprintf(fptr, "%c", lsu.data[i].bio[j]);
         }
-        fprintf(fptr, '\n');
+        fprintf(fptr, "\n");
         for(j = 0; j < listLength(lsu.data[i].noHP); ++j){
             fprintf(fptr, "%c", lsu.data[i].noHP.buffer[j]);
         }
-        fprintf(fptr, '\n');
+        fprintf(fptr, "\n");
         char *weton = wetonDecider(lsu.data[i].weton);
         fprintf(fptr, "%s\n", weton);
-        fprintf(fptr, '\n');
+        fprintf(fptr, "\n");
         char *tipeAkun = tipeAkunDecider(lsu.data[i].tipe);
         fprintf(fptr, "%s\n", tipeAkun);
         int p, q;
@@ -110,10 +110,10 @@ void simpanpengguna(ListStatikUser lsu, FriendMatrix fm){
                 fprintf(fptr, "%c", lsu.data[i].warnaFoto.mem[p][q]);
                 fprintf(fptr, "%c", lsu.data[i].foto.mem[p][q]);
                 if(q != 4){
-                    fprintf(fptr, ' ');
+                    fprintf(fptr, " ");
                 }
             }
-            fprintf(fptr, '\n');
+            fprintf(fptr, "\n");
         }
     }
     int p, q;
@@ -121,10 +121,10 @@ void simpanpengguna(ListStatikUser lsu, FriendMatrix fm){
         for(q = 0; q < COL_EFFFRIEND(fm); ++q){
             fprintf(fptr, "%d", ELMTFRIEND(fm, p, q));
             if(q != COL_EFFFRIEND(fm)){
-                fprintf(fptr, ' ');
+                fprintf(fptr, " ");
             }
         }
-        fprintf(fptr, '\n');
+        fprintf(fptr, "\n");
     }
     for(i = 0; i < banyakUser(lsu); ++i){
         Address cur = lsu.data[i].userReq.addrHead;
