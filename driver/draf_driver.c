@@ -125,7 +125,7 @@ int main() {
                 } else if (compareString(action,"HAPUS")) {
                     DeleteDraf(&S, &poppedDraf);
                     printf("Draf telah berhasil dihapus!\n");
-                } else if (compareString(action2,"KEMBALI")) {
+                } else if (compareString(action,"KEMBALI")) {
                     break;
                 }
             } else {
