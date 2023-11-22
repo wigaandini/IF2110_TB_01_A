@@ -7,12 +7,13 @@ void LihatDraf(DrafStack S){
     {
         Pop(&S,&X);
         int i;
+        printf("| ");
         for ( i = 0; i < X.Text.Length; i++)
         {
             printf("%c",X.Text.TabWord[i]);
         }
         printf("\n");
-
+        printf("| ");
         TulisDATETIME(X.Waktu);
         printf("\n");
     }
