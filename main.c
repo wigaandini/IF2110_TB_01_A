@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "program/readpengguna.c"
+#include "program/readbalasan.c"
 #include "program/readkicauan.c"
 #include "program/readdraf.c"
 #include "program/readutas.c"
 #include "program/user.c"
 #include "program/profil.c"
 #include "program/utas.c"
-#include "program/drafprogram.c"
+#include "program/draf_fitur.c"
 #include "program/kicauan.c"
 #include <sys/stat.h>
 
@@ -25,8 +26,6 @@ int main(){
     ListStatikUser l;
     ListKicauan listKicau;
     FriendMatrix F;
-    Kicauan tweet;
-    DrafStack S;
 
     system("clear");
     printf(".______    __    __  .______      .______    __  .______\n");
@@ -60,6 +59,7 @@ int main(){
         } else{
             ReadUser(&l,&F,fullPath);
             ReadKicauan(&listKicau,l,F,fullPath);
+            readbalasan(&l,&listKicau,fullPath);
             ReadDraf(&l,fullPath);
             ReadUtas(&listKicau,l,fullPath);
 
@@ -83,6 +83,7 @@ int main(){
         int idKicauan, idUtas, indexUtas;
         ListLinierUtas listUtas;
         UtasType u;
+        Kicauan tweet;
         while (!selesai){
             printf("\n>> ");
             STARTSENTENCE();
@@ -132,8 +133,6 @@ int main(){
             for (int i=0; i<nama.Length; i++) {
                 nama.TabWord[i] = command.TabWord[firstIDX+i];
             }
-            displayWord(nama);          // Ini masih belom jadi yak
-            printf("\n");
             lihat_profil(l, nama, isLoggedIn);
         }
 
@@ -199,10 +198,10 @@ int main(){
 
         // BAGIAN PERINTAH (DRAF KICAUAN)
         else if (compareString(kata,"BUAT_DRAF")){ //BUAT_DRAF
-            BUAT_DRAF(S, l, listKicau, id_login);
+            BUAT_DRAF(&l,&listKicau,id_login);
         }
         else if (compareString(kata,"LIHAT_DRAF")){ //LIHAT_DRAF
-            LIHAT_DRAF(S, l, listKicau, id_login);
+            LIHAT_DRAF(&l,&listKicau,id_login);
         }
 
         // BAGIAN PERINTAH (UTAS)
