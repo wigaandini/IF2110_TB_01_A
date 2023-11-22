@@ -29,6 +29,9 @@ int searchIdKicau(int idUtas, ListKicauan l){
     if(found){
         return ID(ELMTLISTKICAU(l, i));
     }
+    else{
+        return -1;
+    }
 }
 
 void DisplaySatuUtas(UtasType u, ListStatikUser l, int index){
@@ -169,8 +172,6 @@ void SAMBUNG_UTAS(int idUtas, int indexUtas, ListLinierUtas *listUtasPers, int i
 }
 
 void HAPUS_UTAS(int idUtas, int indexUtas, ListLinierUtas *listUtasPers, int idAuthor, UtasType *u, ListKicauan listKicau){
-    Word text;
-    DATETIME waktu;
     int idKicau = searchIdKicau(idUtas, listKicau);
     if(isIdUtasValid(listKicau, idUtas)){
         if(IDAUTHOR(ELMTLISTKICAU(listKicau, idKicau-1)) == idAuthor){
