@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
-#include "header/listdinkicauan.h"
-#include "header/liststatikuser.h"
+#include "../adt/header/listdinkicauan.h"
+#include "../adt/header/liststatikuser.h"
 
 const char* namaFilePengguna = "/pengguna.config";
 
@@ -44,14 +44,25 @@ char* tipeAkunDecider(int x){
     }
 }
 
+void concatString(char *ans, char *p1, char *p2){
+    while(*p1){
+        *ans = *p1;
+        p1++;
+        ans++;
+    }
+    while (*p2){
+       *ans = *p2;
+       p2++;
+       ans++;
+    }
+    *ans = '\0';
+}
+
 void simpanpengguna(ListStatikUser lsu, FriendMatrix fm, char *namaFolder){
     int ch = mkdir(namaFolder);
-    if(ch == -1){
-        printf("Failed creating new directory\n");
-        return;
-    }
-    strcat(namaFolder, namaFilePengguna);
-    FILE* fptr = fopen(namaFolder, "ab+");
+    char namaFile[1000];
+    concatString(namaFile, namaFolder, namaFilePengguna);
+    FILE* fptr = fopen(namaFile, "ab+");
     if(fptr == NULL){
         printf("Failed making new file\n");
         return;
@@ -113,6 +124,3 @@ void simpanpengguna(ListStatikUser lsu, FriendMatrix fm, char *namaFolder){
     fclose(fptr);
 }
 
-int main(){
-    return 0;
-}

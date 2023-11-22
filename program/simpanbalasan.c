@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
-#include "header/treebalasan.h"
-#include "header/listdinkicauan.h"
-#include "header/liststatikuser.h"
+#include "../adt/header/treebalasan.h"
+#include "../adt/header/listdinkicauan.h"
+#include "../adt/header/liststatikuser.h"
 
 const char* namaFileBalasan = "/balasan.config";
 
@@ -27,14 +27,25 @@ void writeRecursion(FILE* fptr, int par, AddressBalasan adr, ListStatikUser lsu)
     writeRecursion(fptr, IDBALASAN(*adr), CHILDBALASAN(*adr), lsu);
 }
 
+void concatString(char *ans, char *p1, char *p2){
+    while(*p1){
+        *ans = *p1;
+        p1++;
+        ans++;
+    }
+    while (*p2){
+       *ans = *p2;
+       p2++;
+       ans++;
+    }
+    *ans = '\0';
+}
+
 void simpanbalasan(ListKicauan l, ListStatikUser lsu, char *namaFolder){
     int ch = mkdir(namaFolder);
-    if(ch == -1){
-        printf("Failed creating new directory\n");
-        return;
-    }
-    strcat(namaFolder, namaFileBalasan);
-    FILE* fptr = fopen(namaFolder, "ab+");
+    char namaFile[1000];
+    concatString(namaFile, namaFolder, namaFileBalasan);
+    FILE* fptr = fopen(namaFile, "ab+");
     if(fptr == NULL){
         printf("Failed making new file\n");
         return;
@@ -54,8 +65,4 @@ void simpanbalasan(ListKicauan l, ListStatikUser lsu, char *namaFolder){
         }
     }
     fclose(fptr);
-}
-
-int main(){
-    return 0;
 }
