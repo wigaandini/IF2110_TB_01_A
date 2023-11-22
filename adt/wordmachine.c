@@ -341,3 +341,13 @@ int lengthString(char *str) {
     return length;
 }
 /* Menghitung panjang string */
+
+void concatenate(char *str,char *str2,char *str3) {
+    while (*str2) {
+        *str++ = *str2++;
+    }
+    while (*str3) {
+        *str++ = *str3++;
+    }
+    *str = '\0';
+}

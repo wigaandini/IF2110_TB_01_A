@@ -4,16 +4,18 @@
 #include "program/readkicauan.c"
 #include "program/readdraf.c"
 #include "program/readutas.c"
+#include "program/user.c"
+#include "program/profil.c"
 #include <sys/stat.h>
 
 // gcc main.c adt/configmachine.c adt/charmachine.c adt/liststatikuser.c adt/listdin.c adt/Matrix.c adt/friendmatrix.c adt/pcolor.c adt/prioreqfollinked.c adt/listdinkicauan.c adt/datetime.c adt/time.c adt/wordmachine.c -o tes
 
-// int is_directory(Word namadir) {
-//     struct stat statbuf;
-//     if (stat(path, &statbuf) != 0)
-//         return 0;
-//     return S_ISDIR(statbuf.st_mode);
-// }
+boolean is_directory(const char *path) {
+    struct stat statbuf;
+    if (stat(path, &statbuf) != 0)
+        return 0;
+    return S_ISDIR(statbuf.st_mode);
+}
 
 
 int main(){
@@ -21,13 +23,6 @@ int main(){
     ListKicauan k;
     FriendMatrix F;
 
-    ReadUser(&l,&F);
-    ReadKicauan(&k,l,F);
-    ReadDraf(&l);
-    ReadUtas(&k,l);
-
-    printListofUser(l);
-    DisplayAllKicauan(l,k);
     system("clear");
     printf(".______    __    __  .______      .______    __  .______\n");
     printf("|   _  \\  |  |  |  | |   _  \\     |   _  \\  |  | |   _  \\\n");
@@ -39,29 +34,48 @@ int main(){
 
     printf("Selamat datang di BurBir.\n");
     printf("Aplikasi untuk studi kualitatif mengenai perilaku manusia dengan menggunakan metode (pengambilan data berupa) Focused Group Discussion kedua di zamannya.\n");
-    printf("Silahkan masukan folder konfigurasi untuk dimuat: ");
-    // Word Load;
-    // STARTWORD();
-    // while (!EndWord){
-    //     ADVWORD();
-    //     if (compareString())
-    //     {
-    //         /* code */
-    //     }
+
+    boolean jalan=false;
+    char fullPath[200];
+    char *dirName;
+    do
+    {
+        printf("Silahkan masukan folder konfigurasi untuk dimuat: ");
+        Word config;
+        STARTSENTENCE();
+
+        config = currentWord;
+        dirName = WordToString(config);
+        concatenate(fullPath, "config/", dirName);
+        if (!is_directory(fullPath)){
+            printf("\nFolder config dengan nama '%s' tidak ditemukan\n\n", dirName);
+        } else{
+            ReadUser(&l,&F,fullPath);
+            ReadKicauan(&k,l,F,fullPath);
+            ReadDraf(&l,fullPath);
+            ReadUtas(&k,l,fullPath);
+
+            // printListofUser(l);
+            // DisplayAllKicauan(l,k);
+            printf("\n");
+            printf("File konfigurasi berhasil dimuat! Selamat berkicau!\n");
+            jalan=true; 
+        }
         
-    // }
-    printf("\n");
-    printf("File konfigurasi berhasil dimuat! Selamat berkicau!\n");
+    } while (!is_directory(fullPath));
+    free(dirName);
 
     // int currentuser=0;
 
-    boolean selesai=false;
-    Word w, command, kata;
-    while (!selesai)
+    if (jalan)
     {
-        printf("\n>> ");
-        STARTSENTENCE();
-        command = currentWord;
+        boolean selesai=false, isLoggedIn=false;
+        int id_login=-1;        // id_login = -1 berarti belum login. id_login yang digunakan [1..banyakUser]
+        Word w, command, kata;
+        while (!selesai){
+            printf("\n>> ");
+            STARTSENTENCE();
+            command = currentWord;
 
         if (countWords(command) == 1) {
             kata = command;
@@ -71,37 +85,41 @@ int main(){
         // BAGIAN PERINTAH (PENGGUNA)
         
         if (compareString(kata,"DAFTAR")){ //DAFTAR
-            printf("\nYADAFTAR\n");
+            DAFTAR(&l, isLoggedIn);
         }
 
         else if (compareString(kata,"MASUK")){ //MASUK
-            printf("\nYAMASUK\n");
+            MASUK(&l, &isLoggedIn, &id_login);
         }
 
         else if (compareString(kata,"KELUAR")){ //KELUAR
-            printf("\nYAKELUAR\n");
+            KELUAR(&l, &isLoggedIn, &id_login);
         }
 
         else if (compareString(kata,"TUTUP_PROGRAM")){ //TUTUP
-            printf("\nAnda telah keluar dari program BurBir.\nSampai jumpa di penjelajahan berikutnya.\n");
-            selesai=true;
+            // printf("\nAnda telah keluar dari program BurBir.\nSampai jumpa di penjelajahan berikutnya.\n");
+            // selesai=true;
+            TUTUP_PROGRAM();
         }
 
         // BAGIAN PERINTAH (PROFIL)
         else if (compareString(kata,"GANTI_PROFIL")){ //GANTI_PROFIL
-            printf("\ngantiprofil\n");
+            ganti_profil(&l, id_login);
         }
 
         else if (compareString(kata,"LIHAT_PROFIL")){ //LIHAT_PROFIL
-            printf("\nlihatprofil\n");
+            Word nama = splitCommand(&w, command, 2);
+            displayWord(nama);
+            printf("\n");
+            lihat_profil(l, nama, isLoggedIn);
         }
 
         else if (compareString(kata,"ATUR_JENIS_AKUN")){ //ATUR_JENIS_AKUN
-            printf("\njenisakun\n");
+            atur_jenis_akun(&l, id_login, isLoggedIn);
         }
 
         else if (compareString(kata,"UBAH_FOTO_PROFIL")){ //UBAH_FOTO_PROFIL
-            printf("\nUBAHPROFIL\n");
+            ubah_foto_profil(&l, id_login);
         }
 
         // BAGIAN PERINTAH (TEMAN)
@@ -193,7 +211,7 @@ int main(){
         // printf("ter:%s\n",Terminal.TabWord);
         // printf("cr:%s\n",currentWord.TabWord);
     }
-
-    return 0;
+    }
     
+    return 0;
 }
