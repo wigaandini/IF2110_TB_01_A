@@ -7,7 +7,7 @@
 #include "program/user.c"
 #include "program/profil.c"
 #include "program/utas.c"
-#include "program/draf.c"
+#include "program/drafprogram.c"
 #include "program/kicauan.c"
 #include <sys/stat.h>
 
