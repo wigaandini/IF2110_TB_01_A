@@ -4,7 +4,7 @@
 #include "../adt/header/listdinkicauan.h"
 #include "../adt/header/liststatikuser.h"
 
-const char* namaFileUtas = "/utas.config";
+char* namaFileUtas = "/utas.config";
 
 void concatString(char *ans, char *p1, char *p2){
     while(*p1){

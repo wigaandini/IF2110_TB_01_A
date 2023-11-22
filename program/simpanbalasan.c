@@ -5,7 +5,7 @@
 #include "../adt/header/listdinkicauan.h"
 #include "../adt/header/liststatikuser.h"
 
-const char* namaFileBalasan = "/balasan.config";
+char* namaFileBalasan = "/balasan.config";
 
 void writeRecursion(FILE* fptr, int par, AddressBalasan adr, ListStatikUser lsu){
     if(adr == NULL){

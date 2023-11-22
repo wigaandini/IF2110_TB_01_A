@@ -4,7 +4,7 @@
 #include "../adt/header/listdinkicauan.h"
 #include "../adt/header/liststatikuser.h"
 
-const char* namaFilePengguna = "/pengguna.config";
+char* namaFilePengguna = "/pengguna.config";
 
 char* wetonDecider(int x){
     switch(x){
