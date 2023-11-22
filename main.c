@@ -20,7 +20,7 @@ boolean is_directory(const char *path) {
 
 int main(){
     ListStatikUser l;
-    ListKicauan k;
+    ListKicauan listKicau;
     FriendMatrix F;
 
     system("clear");
@@ -51,12 +51,12 @@ int main(){
             printf("\nFolder config dengan nama '%s' tidak ditemukan\n\n", dirName);
         } else{
             ReadUser(&l,&F,fullPath);
-            ReadKicauan(&k,l,F,fullPath);
+            ReadKicauan(&listKicau,l,F,fullPath);
             ReadDraf(&l,fullPath);
-            ReadUtas(&k,l,fullPath);
+            ReadUtas(&listKicau,l,fullPath);
 
             // printListofUser(l);
-            // DisplayAllKicauan(l,k);
+            // DisplayAllKicauan(l,listKicau);
             printf("\n");
             printf("File konfigurasi berhasil dimuat! Selamat berkicau!\n");
             jalan=true; 
@@ -72,6 +72,9 @@ int main(){
         boolean selesai=false, isLoggedIn=false;
         int id_login=-1;        // id_login = -1 berarti belum login. id_login yang digunakan [1..banyakUser]
         Word w, command, kata;
+        int idKicauan, idUtas, indexUtas;
+        ListLinierUtas listUtas;
+        UtasType u;
         while (!selesai){
             printf("\n>> ");
             STARTSENTENCE();
@@ -182,19 +185,25 @@ int main(){
 
         // BAGIAN PERINTAH (UTAS)
         else if (compareString(kata,"UTAS")){ //UTAS
-            printf("\nUTAS\n");
+            idKicauan = WordToInt(splitCommand(&w, command, 2));
+            BIKIN_UTAS(idKicauan, &listKicau, &listUtas, id_login, &u);
         }
 
         else if (compareString(kata,"SAMBUNG_UTAS")){ //SAMBUNG_UTAS
-            printf("\nSAMBUNGUTAS\n");
+            idUtas = WordToInt(splitCommand(&w, command, 2));
+            indexUtas = WordToInt(splitCommand(&w, command, 3));
+            SAMBUNG_UTAS(idUtas, indexUtas, &listUtas, id_login, &u, listKicau);
         }
 
         else if (compareString(kata,"HAPUS_UTAS")){ //HAPUS_UTAS
-            printf("\nHAPUSUTAS\n");
+            idUtas = WordToInt(splitCommand(&w, command, 2));
+            indexUtas = WordToInt(splitCommand(&w, command, 3));
+            HAPUS_UTAS(idUtas, indexUtas, &listUtas, id_login, &u, listKicau);
         }
 
         else if (compareString(kata,"CETAK_UTAS")){ //CETAK_UTAS
-            printf("\nCETAKUTAS\n");
+            idUtas = WordToInt(splitCommand(&w, command, 2));
+            CETAK_UTAS(l, listUtas, id_login, idUtas, listKicau);
         }
 
         // BAGIAN PERINTAH (SIMPAN & MUAT)
