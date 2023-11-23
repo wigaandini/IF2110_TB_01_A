@@ -124,7 +124,7 @@ int main(){
         // BAGIAN PERINTAH (PENGGUNA)
         
         if (compareString(kata,"DAFTAR")){ //DAFTAR
-            DAFTAR(&l, isLoggedIn);
+            DAFTAR(&l,&F ,isLoggedIn);
         }
 
         else if (compareString(kata,"MASUK")){ //MASUK

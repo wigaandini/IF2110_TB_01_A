@@ -9,7 +9,7 @@
 #include "../adt/header/matrix.h"
 #include "../adt/header/listdin.h"
 
-void DAFTAR(ListStatikUser *l, boolean isLoggedIn){
+void DAFTAR(ListStatikUser *l,FriendMatrix *F, boolean isLoggedIn){
     Word nama, pass;
     if(!isLoggedIn){
         if(!isUserDataFull(*l)){
@@ -39,7 +39,7 @@ void DAFTAR(ListStatikUser *l, boolean isLoggedIn){
             pass = currentWord;
 
             // Menambahkan user baru ke dalam list
-            addUser(l, nama, pass);
+            addUser(l, F,nama, pass);
             printf("\nPengguna telah berhasil terdaftar. Masuk untuk menikmati fitur-fitur BurBir.\n\n");
         }
         else {      // Kondisi User Data telah full oleh 20 user
