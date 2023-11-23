@@ -40,10 +40,10 @@ char* tipeAkunDecider(int x){
     char *ans;
     switch (x){
     case 0:
-        char *ans = "PUBLIK";
+        ans = "PUBLIK";
         return ans;
     case 1:
-        char *ans = "PRIVAT";
+        ans = "PRIVAT";
         return ans;
     default:
         printf("Error, tipe akun di luar scope??\n");

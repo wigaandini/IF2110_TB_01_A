@@ -51,7 +51,6 @@ void CreateListStatikUser(ListStatikUser *l){
 int banyakUser(ListStatikUser l){
 /* Mengirimkan banyaknya user yang terdaftar */
 /* Mengirimkan nol jika List kosong */  
-    printf("aa\n");
     int i;
     int cnt = 0;
     for(i=0; i<20; i++){
@@ -59,8 +58,6 @@ int banyakUser(ListStatikUser l){
             cnt++;
         }
     }
-    printf("ee\n");
-    printf("%d\n", cnt);
     return cnt;
 }
 
@@ -69,10 +66,7 @@ int banyakUser(ListStatikUser l){
 /* *** Test List kosong *** */
 boolean isUserDataEmpty(ListStatikUser l){
 /* Mengirimkan true jika List l kosong, mengirimkan false jika tidak */
-    here
-    banyakUser(l);
-    printf("ac\n");
-    return false;
+    return (banyakUser(l) == 0);
 }
 
 /* *** Test List penuh *** */
@@ -89,7 +83,6 @@ void printListofUser(ListStatikUser l){
         printf("Belum ada User yang terdaftar\n");
     }
     else{
-        printf("eef");
         for(i=0; i<banyakUser(l); i++){         // iterasi tiap user
             printf("ID\t: %d\n", UserId(l, i));
 
@@ -154,7 +147,6 @@ void printListofUser(ListStatikUser l){
             printf("--------------------\n");            
         }
     }
-    printf("here\n");
 }
 
 

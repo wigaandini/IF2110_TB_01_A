@@ -18,6 +18,12 @@ void DAFTAR_TEMAN(int idlogin, ListStatikUser l,FriendMatrix m){
     i = 0;    
     int nfriend = howMuchFriend(m, idlogin-1);
     if(nfriend!=0){
+        int u = 0;
+        for(u = 0; u < 21; ++u){
+            printf("%d ", namafriend[u]);
+        }
+        namafriend[8] = '\0';
+        printf("\n");
         printf("%s memiliki %d\n", namafriend, nfriend);
         printf("Daftar teman %s", namafriend);
         while((i<nfriend)&&(ifriend<20)){
@@ -127,6 +133,7 @@ void TAMBAH_TEMAN(int idlogin, ListStatikUser l, FriendMatrix m, Prioreqfol q){
 
 void DAFTAR_PERMINTAAN_PERTEMANAN(int idlogin ,FriendMatrix m, Prioreqfol myQ, ListStatikUser l){
     int nfriend = howMuchFriend(m, idlogin);
+    printf("%d\n", nfriend);
     Address p = ADDR_HEAD(myQ);
     if(isEmptyReqFol(myQ)){
         printf("Tidak ada permintaan pertemanan.\n");       
