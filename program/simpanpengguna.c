@@ -36,19 +36,17 @@ char* wetonDecider(int x) {
     return ans;
 }
 
-char* tipeAkunDecider(int x) {
+char* tipeAkunDecider(int x){
     char *ans;
-    switch (x) {
-        case 0:
-            ans = "PUBLIK";
-            break;
-        case 1:
-            ans = "PRIVAT";
-            break;
-        default:
-            printf("Error, tipe akun di luar scope??\n");
-            ans = NULL;
-            break;
+    switch (x){
+    case 0:
+        char *ans = "PUBLIK";
+        return ans;
+    case 1:
+        char *ans = "PRIVAT";
+        return ans;
+    default:
+        printf("Error, tipe akun di luar scope??\n");
     }
     return ans;
 }
@@ -104,7 +102,7 @@ void simpanpengguna(ListStatikUser lsu, FriendMatrix fm, char *namaFolder){
         int p, q;
         for(p = 0; p < 5; ++p){
             for(q = 0; q < 5; ++q){
-                fprintf(fptr, "%c", lsu.data[i].warnaFoto.mem[p][q]);
+                fprintf(fptr, "%c ", lsu.data[i].warnaFoto.mem[p][q]);
                 fprintf(fptr, "%c", lsu.data[i].foto.mem[p][q]);
                 if(q != 4){
                     fprintf(fptr, " ");

@@ -24,7 +24,7 @@ void BALASAN(ListKicauan *l, FriendMatrix *fh, ListStatikUser *lsu, int idKicau,
         printf("Tidak terdapat kicauan dengan id tersebut!\n");
         return;
     }
-    if(UserTipe(*lsu, ELMTLISTKICAU(*l, idKicau - 1).idauthor - 1) == PRIVAT && !isFriend(*fh, curUserId, ELMTLISTKICAU(*l, idKicau - 1).idauthor - 1)){ // isFriend masih belum ada (4/11)
+    if(UserTipe(*lsu, ELMTLISTKICAU(*l, idKicau - 1).idauthor - 1) == PRIVAT && !isFriend(*fh, curUserId - 1, ELMTLISTKICAU(*l, idKicau - 1).idauthor - 1)){ // isFriend masih belum ada (4/11)
         printf("Wah, kicauan tersebut dibuat oleh pengguna dengan akun privat!\n");
         return;
     }
@@ -36,15 +36,25 @@ void BALASAN(ListKicauan *l, FriendMatrix *fh, ListStatikUser *lsu, int idKicau,
 }
 
 void BALAS(ListKicauan *l, FriendMatrix *fh, ListStatikUser *lsu, int idKicau, int idBalasan, int curUserId, int *curIdBalasan){
+    printf("%d %d\n", idKicau, idBalasan);
     if(idKicau > NEFFLISTKICAU(*l)){ // banyakKicau belum terdefinisi
         printf("Wah, tidak terdapat kicauan yang ingin Anda balas!\n");
         return;
     }
-    if(UserTipe(*lsu, ELMTLISTKICAU(*l, idKicau - 1).idauthor - 1) == PRIVAT && !isFriend(*fh, curUserId, ELMTLISTKICAU(*l, idKicau - 1).idauthor - 1)){ // isFriend masih belum ada (4/11)
+    AddressBalasan checkBalasan = searchAddressBalasan(ELMTLISTKICAU(*l, idKicau - 1).balasan, idBalasan);
+    if(idBalasan != -1 && checkBalasan == NULL){
+        printf("Wah, tidak terdapat balasan yang ingin Anda balas!\n");
+        return;
+    }
+    if(idBalasan != -1 && UserTipe(*lsu, checkBalasan->idPenulis - 1) == PRIVAT && !isFriend(*fh, curUserId - 1, checkBalasan->idPenulis - 1)){ // isFriend masih belum ada (4/11)
         printf("Wah, akun tersebut merupakan akun privat dan anda belum berteman akun tersebut!\n");
         return;
     }
     if(idBalasan == -1){
+        if(UserTipe(*lsu, ELMTLISTKICAU(*l, idKicau - 1).idauthor - 1) == PRIVAT && !isFriend(*fh, curUserId - 1, ELMTLISTKICAU(*l, idKicau - 1).idauthor - 1)){
+            printf("Wah, akun tersebut merupakan akun privat dan anda belum berteman akun tersebut!\n");
+            return;
+        }
         Word textBalasan;
         printf("Masukkan balasan:\n");
         STARTSENTENCE();
@@ -63,10 +73,6 @@ void BALAS(ListKicauan *l, FriendMatrix *fh, ListStatikUser *lsu, int idKicau, i
         ELMTLISTKICAU(*l, idKicau - 1).balasan = insertBalasan(ELMTLISTKICAU(*l, idKicau - 1).balasan, textBalasan, ++(*curIdBalasan), curUserId, curTime);
     }else{
         AddressBalasan curBalasan = searchAddressBalasan(ELMTLISTKICAU(*l, idKicau - 1).balasan, idBalasan);
-        if(curBalasan == NIL){
-            printf("Wah, tidak terdapat balasan yang ingin Anda balas!\n");
-            return;
-        }
         Word textBalasan;
         printf("Masukkan balasan:\n");
         STARTSENTENCE();

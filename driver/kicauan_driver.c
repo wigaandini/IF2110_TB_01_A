@@ -9,6 +9,7 @@
 #include "../adt/listdinkicauan.c"
 #include "../adt/friendmatrix.c"
 #include "../program/kicauan.c"
+#include "../program/simpankicauan.c"
 
 // gcc -o main driver/kicauan_driver.c program/kicauan.c adt/wordmachine.c adt/charmachine.c adt/datetime.c adt/listdinkicauan.c adt/time.c adt/friendmatrix.c 
 
@@ -48,5 +49,6 @@ int main() {
         }
         
     } while (!compareString(currentWord, "EXIT"));
-    
+    char *nama = "TESJALAN";
+    simpankicauan(k, l, nama);    
 }

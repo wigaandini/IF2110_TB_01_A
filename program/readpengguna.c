@@ -84,7 +84,7 @@ void ReadUser(ListStatikUser *l,FriendMatrix *F, char *path) {
                 bacaan.TabWord[i] = '\0';
                 // printf("%s\n", bacaan.TabWord);
                 
-                for (int i = 0; bacaan.TabWord[i] != '\0'; i++) {
+                for (int i = 0; bacaan.TabWord[i] != '\0' && bacaan.TabWord[i] != '\r'; i++) {
                     // printf("%c", bacaan.TabWord[i]);
                     UserName(*l,user,i)=bacaan.TabWord[i];
                 }
@@ -367,17 +367,24 @@ void ReadUser(ListStatikUser *l,FriendMatrix *F, char *path) {
                     
                     if (space==0 && bacaan.TabWord[i]!=' '){
                         // printf("idus:%c\n",bacaan.TabWord[i]);
-                        idus=idus*10+charToInt(bacaan.TabWord[i]);
+                        if(bacaan.TabWord[i] >= '0' && bacaan.TabWord[i] <= '9'){
+                            idus=idus*10+charToInt(bacaan.TabWord[i]);
+                        }
                     } else if (space==1 && bacaan.TabWord[i]!=' '){
                         // printf("ifol:%c\n",bacaan.TabWord[i]);
-                        ifol=ifol*10+charToInt(bacaan.TabWord[i]);
+                        if(bacaan.TabWord[i] >= '0' && bacaan.TabWord[i] <= '9'){
+                            ifol=ifol*10+charToInt(bacaan.TabWord[i]);
+                        }
                     }else if(space==2 && bacaan.TabWord[i]!=' '){
-                        nfus = nfus*10+charToInt(bacaan.TabWord[i]);
+                        if(bacaan.TabWord[i] >= '0' && bacaan.TabWord[i] <= '9'){
+                            nfus = nfus*10+charToInt(bacaan.TabWord[i]);
+                        }
                     }
                     // printf("idus:%d\n",idus);
                     // printf("ifol:%d\n",ifol);
                     
                 }
+            
                 sendReqFol(&(l->data[ifol-1].userReq),*F,idus,ifol, nfus);
                         
 

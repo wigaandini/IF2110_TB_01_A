@@ -6,22 +6,23 @@
 
 char* namaFileUtas = "/utas.config";
 
-// void concatString(char *ans, char *p1, char *p2){
-//     while(*p1){
-//         *ans = *p1;
-//         p1++;
-//         ans++;
-//     }
-//     while (*p2){
-//        *ans = *p2;
-//        p2++;
-//        ans++;
-//     }
-//     *ans = '\0';
-// }
+// // void concatString(char *ans, char *p1, char *p2){
+// //     while(*p1){
+// //         *ans = *p1;
+// //         p1++;
+// //         ans++;
+// //     }
+// //     while (*p2){
+// //        *ans = *p2;
+// //        p2++;
+// //        ans++;
+// //     }
+// //     *ans = '\0';
+// // }
 
 void simpanutas(ListKicauan l, ListStatikUser lsu, char *namaFolder){
-    int ch = mkdir(namaFolder,0777);
+    
+    int ch = mkdir(namaFolder);
     char namaFile[1000];
     concatString(namaFile, namaFolder, namaFileUtas);
     FILE* fptr = fopen(namaFile, "ab+");

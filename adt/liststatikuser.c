@@ -29,23 +29,19 @@ void CreateListStatikUser(ListStatikUser *l){
         CreateReqFol(&(l->data[i].userReq));
         CreateEmptyStack(&(l->data[i].drafuser));
 
-        Matrix foto;
-        createMatrix(5, 5, &foto);
-        for (int i=0; i<5; i++) {
-            for (int j=0; j<5; j++) {
-                ELMT(foto, i, j) = '*';
+        int p = 0;
+        int q = 0;
+        for (p=0; p<5; p++) {
+            for (q=0; q<5; q++) {
+                ELMT(UserFoto(*l,i), p, q) = '*';
             }
         }
-        UserFoto(*l, i) = foto;
 
-        Matrix warnaFoto;
-        createMatrix(5, 5, &warnaFoto);
-        for (int i=0; i<5; i++) {
-            for (int j=0; j<5; j++) {
-                ELMT(warnaFoto, i, j) = 'R';
+        for (p=0; p<5; p++) {
+            for (q=0; q<5; q++) {
+                ELMT(UserWarnaFoto(*l,i), p, q) = '*';
             }
         }
-        UserWarnaFoto(*l, i) = warnaFoto;
     }
 }
 
@@ -55,13 +51,17 @@ void CreateListStatikUser(ListStatikUser *l){
 int banyakUser(ListStatikUser l){
 /* Mengirimkan banyaknya user yang terdaftar */
 /* Mengirimkan nol jika List kosong */  
-    IdxType i, count=0;
-    for(i=0; i<CAPACITYUSER; i++){
-        if (UserName(l, i, 0) != '\0'){
-            count ++;
+    printf("aa\n");
+    int i;
+    int cnt = 0;
+    for(i=0; i<20; i++){
+        if (true){
+            cnt++;
         }
     }
-    return count;
+    printf("ee\n");
+    printf("%d\n", cnt);
+    return cnt;
 }
 
 
@@ -69,7 +69,10 @@ int banyakUser(ListStatikUser l){
 /* *** Test List kosong *** */
 boolean isUserDataEmpty(ListStatikUser l){
 /* Mengirimkan true jika List l kosong, mengirimkan false jika tidak */
-    return banyakUser(l) == 0;
+    here
+    banyakUser(l);
+    printf("ac\n");
+    return false;
 }
 
 /* *** Test List penuh *** */
@@ -80,11 +83,13 @@ boolean isUserDataFull(ListStatikUser l){
 
    
 void printListofUser(ListStatikUser l){
-    IdxType i;
-    if (isUserDataEmpty(l)){
+    int i;
+    boolean y = isUserDataEmpty(l);
+    if (y){
         printf("Belum ada User yang terdaftar\n");
     }
     else{
+        printf("eef");
         for(i=0; i<banyakUser(l); i++){         // iterasi tiap user
             printf("ID\t: %d\n", UserId(l, i));
 
@@ -149,6 +154,7 @@ void printListofUser(ListStatikUser l){
             printf("--------------------\n");            
         }
     }
+    printf("here\n");
 }
 
 

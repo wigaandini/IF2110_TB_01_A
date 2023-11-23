@@ -12,7 +12,7 @@
 #include "../program/kicauan.c"
 #include "../program/utas.c"
 #include "../adt/header/listlinierutas.h"
-
+#include "../program/simpanutas.c"
 
 // gcc -o main driver/kicauan_utas_driver.c adt/wordmachine.c adt/charmachine.c adt/datetime.c adt/listdinkicauan.c adt/time.c adt/friendmatrix.c adt/listlinierutas.c 
 
@@ -87,4 +87,5 @@ int main() {
         }
 
     } while (!compareString(currentWord, "TUTUP_PROGRAM"));
+    simpanutas(k, l, "TESUTAS");
 }

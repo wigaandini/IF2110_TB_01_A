@@ -89,7 +89,7 @@ void displaySemuaBalasan(AddressBalasan a, FriendMatrix *fh, ListStatikUser *lsu
         printf(" ");
     }
     printf("\n");
-    boolean fren = (UserTipe(*lsu, IDPENULISBALASAN(*a) - 1) == PRIVAT) && isFriend(*fh, curUserId, IDPENULISBALASAN(*a) - 1);
+    boolean fren = (UserTipe(*lsu, IDPENULISBALASAN(*a) - 1) == PRIVAT) && isFriend(*fh, curUserId - 1, IDPENULISBALASAN(*a) - 1);
     fren = !fren;
     displayUnitBalasan(a, lsu, fren, indent);
     displaySemuaBalasan(CHILDBALASAN(*a), fh, lsu, curUserId, indent + 3);

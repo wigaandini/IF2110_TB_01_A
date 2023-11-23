@@ -7,19 +7,19 @@
 
 char* namaFileDraf = "/draf.config";
 
-// void concatString(char *ans, char *p1, char *p2){
-//     while(*p1){
-//         *ans = *p1;
-//         p1++;
-//         ans++;
-//     }
-//     while (*p2){
-//        *ans = *p2;
-//        p2++;
-//        ans++;
-//     }
-//     *ans = '\0';
-// }
+// // void concatString(char *ans, char *p1, char *p2){
+// //     while(*p1){
+// //         *ans = *p1;
+// //         p1++;
+// //         ans++;
+// //     }
+// //     while (*p2){
+// //        *ans = *p2;
+// //        p2++;
+// //        ans++;
+// //     }
+// //     *ans = '\0';
+// // }
 
 void simpandraf(ListStatikUser lsu, char *namaFolder){
     int ch = mkdir(namaFolder,0777);
