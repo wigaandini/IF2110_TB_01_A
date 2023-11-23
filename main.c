@@ -73,8 +73,6 @@ int main(){
     } while (!is_directory(fullPath));
     free(dirName);
 
-    // int currentuser=0;
-
     if (jalan)
     {
         boolean selesai=false, isLoggedIn=false;
@@ -112,6 +110,7 @@ int main(){
             // printf("\nAnda telah keluar dari program BurBir.\nSampai jumpa di penjelajahan berikutnya.\n");
             // selesai=true;
             TUTUP_PROGRAM();
+            selesai=true;
         }
 
         // BAGIAN PERINTAH (PROFIL)
@@ -229,11 +228,19 @@ int main(){
 
         // BAGIAN PERINTAH (SIMPAN & MUAT)
         else if (compareString(kata,"SIMPAN")){ //SIMPAN
-            printf("\nSIMPAN\n");
+            if (!isLoggedIn){
+                printf("\nSIMPAN\n");
+            } else{
+                printf("\nAnda harus keluar terlebih dahulu untuk melakukan pemuatan.\n");
+            }
         }
 
         else if (compareString(kata,"MUAT")){ //MUAT
-            printf("\nMUAT\n");
+            if (!isLoggedIn){
+                printf("\nMUAT\n");
+            } else{
+                printf("\nAnda harus keluar terlebih dahulu untuk melakukan pemuatan.\n");
+            }
         }
 
         ADVWORD();
