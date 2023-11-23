@@ -24,7 +24,6 @@ SRCS=main.c \
      adt/stack.c \
      adt/draf.c \
      adt/listlinierutas.c \
-     adt/prioqueuetime.c \
 
 # Object files
 OBJECTS=$(SRCS:.c=.o)
