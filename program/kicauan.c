@@ -24,7 +24,7 @@ void Berkicau(ListStatikUser U, ListKicauan *l, Kicauan *k, int idauthor){
 
         time_t current_time;
         time(&current_time);
-        current_time+=3600*10+7*60;
+        current_time+=3600*7;
         struct tm* timeinfo = gmtime(&current_time);
         Year(waktu) = 1900 + timeinfo->tm_year;
         Month(waktu) = timeinfo->tm_mon + 1;
