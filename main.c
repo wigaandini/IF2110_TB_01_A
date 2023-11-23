@@ -17,6 +17,8 @@ int main(){
     ListKicauan listKicau;
     FriendMatrix F;
 
+    int curIdBalasan = 0;
+
     system("clear");
     printf(".______    __    __  .______      .______    __  .______\n");
     printf("|   _  \\  |  |  |  | |   _  \\     |   _  \\  |  | |   _  \\\n");
@@ -49,13 +51,14 @@ int main(){
         } else{
             ReadUser(&l,&F,fullPath);
             ReadKicauan(&listKicau,l,F,fullPath);
-            readbalasan(&l,&listKicau,fullPath);
+            readbalasan(&l,&listKicau,fullPath, &curIdBalasan);
             ReadDraf(&l,fullPath);
             ReadUtas(&listKicau,l,fullPath);
 
-            // printListofUser(l);
-            // DisplayAllKicauan(l,listKicau);
-            printf("\n");
+            //printListofUser(l);
+            //DisplayAllKicauan(l,listKicau);
+            //displaySemuaBalasan(listKicau.buffer[3].balasan, &F, &l, 3, 0);
+            //printf("\n");
             printf("File konfigurasi berhasil dimuat! Selamat berkicau!\n");
             jalan=true; 
         }
@@ -114,7 +117,7 @@ int main(){
         compareString(kata,"BUAT_DRAF")||compareString(kata,"LIHAT_DRAF")||
         compareString(kata,"UTAS")||compareString(kata,"SAMBUNG_UTAS")||
         compareString(kata,"HAPUS_UTAS")||compareString(kata,"CETAK_UTAS")||
-        compareString(kata,"FYB"))&&
+        compareString(kata,"FYB")) && 
         !isLoggedIn){
             printf("\nAnda belum login! Masuk terlebih dahulu untuk menikmati layanan Burbir.\n\n");
         }
@@ -190,15 +193,26 @@ int main(){
 
         // BAGIAN PERINTAH (BALASAN)
         else if (compareString(kata,"BALAS")&&isLoggedIn){ //BALAS
-            printf("\nBALAS\n");
+            int idKicauanBalas = WordToInt(splitCommand(&w, command, 2));
+            int idBalasanBalas;
+            readOneNum(&idBalasanBalas, splitCommand(&w, command, 3));
+
+            BALAS(&listKicau, &F, &l, idKicauanBalas, idBalasanBalas, id_login, &curIdBalasan);
+            //printf("\nBALAS\n");
         }
 
         else if (compareString(kata,"BALASAN")&&isLoggedIn){ //BALASAN
-            printf("\nBALASAN\n");
+            int idBalasanBalas = WordToInt(splitCommand(&w, command, 2));
+            
+            BALASAN(&listKicau, &F, &l, idBalasanBalas, id_login);
         }
 
         else if (compareString(kata,"HAPUS_BALASAN")&&isLoggedIn){ //HAPUSBALAS
-            printf("\nHAPUSBALASAN\n");
+            int idKicauanBalas = WordToInt(splitCommand(&w, command, 2));
+            int idBalasanBalas = WordToInt(splitCommand(&w, command, 3));
+
+            HAPUS_BALASAN(&listKicau, id_login, idKicauanBalas, idBalasanBalas);
+            //printf("\nHAPUSBALASAN\n");
         }
 
         // BAGIAN PERINTAH (DRAF KICAUAN)
@@ -234,7 +248,11 @@ int main(){
 
         // BAGIAN PERINTAH (SIMPAN & MUAT)
         else if (compareString(kata,"SIMPAN")){ //SIMPAN
-            printf("\nSIMPAN\n");
+            if (!isLoggedIn){
+                printf("\nSIMPAN\n");
+            } else{
+                printf("\nAnda harus keluar terlebih dahulu untuk melakukan pemuatan.\n");
+            }
         }
 
         else if (compareString(kata,"MUAT")){ //MUAT
