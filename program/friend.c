@@ -11,14 +11,14 @@ void DAFTAR_TEMAN(int idlogin, ListStatikUser l){
     FriendMatrix m; 
     int ifriend = 0; 
     int i = 0;
-    char namafriend = l.data[idlogin-1].nama;
+    char namafriend[21] = l.data[idlogin-1].nama;
     int nfriend = howMuchFriend(m, idlogin-1);
     if(nfriend!=0){
         printf("%s memiliki %d\n", namafriend, nfriend);
         printf("Daftar teman %s", namafriend);
-        while(i<nfriend){
-            if(isFriend(m, idlogin-1, ifriend-1)){
-                printf("| %s\n", l.data[ifriend-1].nama);
+        while((i<nfriend)&&(ifriend<20)){
+            if(isFriend(m, idlogin-1, ifriend)){
+                printf("| %s\n", l.data[ifriend].nama);
                 i++;
             }
             ifriend ++;
@@ -133,7 +133,7 @@ void SETUJUI_PERTEMANAN(int idlogin, FriendMatrix m, Prioreqfol myQ, ListStatikU
         printf("Tidak ada permintaan pertemanan untuk Anda saat ini.\n");
     }
     else{
-        char* friendname = l.data[IDUSER(p)].nama;
+        char friendname[21] = l.data[IDUSER(p)].nama;
         printf("Apakah anda yakin ingin menghapus %s dari daftar teman anda:\n", friendname);
         STARTSENTENCE();
         keputusan = currentWord;
