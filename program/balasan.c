@@ -8,7 +8,7 @@
 
 void langsungAddBalasan(ListKicauan *l, Word textBalasan, DATETIME curTime, int idKicau, int idBalasan, int curUserId, int *curIdBalasan){
     if(idBalasan == -1){
-        ELMTLISTKICAU(*l, idKicau - 1).balasan = insertBalasan(ELMTLISTKICAU(*l, idKicau - 1).balasan, textBalasan, ++(*curIdBalasan), -1, curTime);
+        ELMTLISTKICAU(*l, idKicau - 1).balasan = insertBalasan(ELMTLISTKICAU(*l, idKicau - 1).balasan, textBalasan, ++(*curIdBalasan), curUserId, curTime);
     }else{
         AddressBalasan curBalasan = searchAddressBalasan(ELMTLISTKICAU(*l, idKicau - 1).balasan, idBalasan);
         if(curBalasan == NIL){
@@ -20,7 +20,7 @@ void langsungAddBalasan(ListKicauan *l, Word textBalasan, DATETIME curTime, int 
 }
 
 void BALASAN(ListKicauan *l, FriendMatrix *fh, ListStatikUser *lsu, int idKicau, int curUserId){
-    if(idKicau >= NEFFLISTKICAU(*l)){
+    if(idKicau > NEFFLISTKICAU(*l)){
         printf("Tidak terdapat kicauan dengan id tersebut!\n");
         return;
     }
@@ -36,7 +36,7 @@ void BALASAN(ListKicauan *l, FriendMatrix *fh, ListStatikUser *lsu, int idKicau,
 }
 
 void BALAS(ListKicauan *l, FriendMatrix *fh, ListStatikUser *lsu, int idKicau, int idBalasan, int curUserId, int *curIdBalasan){
-    if(idKicau >= NEFFLISTKICAU(*l)){ // banyakKicau belum terdefinisi
+    if(idKicau > NEFFLISTKICAU(*l)){ // banyakKicau belum terdefinisi
         printf("Wah, tidak terdapat kicauan yang ingin Anda balas!\n");
         return;
     }
@@ -93,7 +93,7 @@ void BALAS(ListKicauan *l, FriendMatrix *fh, ListStatikUser *lsu, int idKicau, i
 }
 
 void HAPUS_BALASAN(ListKicauan *l, int curUserId, int idKicau, int idBalasan){
-    if(idKicau >= NEFFLISTKICAU(*l)){ // banyakKicau belum terdefinisi
+    if(idKicau > NEFFLISTKICAU(*l)){ // banyakKicau belum terdefinisi
         printf("Wah, tidak terdapat kicauan yang ingin Anda hapus!\n");
         return;
     }
@@ -116,4 +116,5 @@ void HAPUS_BALASAN(ListKicauan *l, int curUserId, int idKicau, int idBalasan){
     }else{
         SIBLINGBALASAN(*prev) = nxt;
     }
+    printf("\nBALASAN BERHASIL DIHAPUS\n");
 }
