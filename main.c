@@ -60,7 +60,7 @@ int main(){
             //DisplayAllKicauan(l,listKicau);
             //displaySemuaBalasan(listKicau.buffer[3].balasan, &F, &l, 3, 0);
             //printf("\n");
-            printf("File konfigurasi berhasil dimuat! Selamat berkicau!\n");
+            printf("\nFile konfigurasi berhasil dimuat! Selamat berkicau!\n");
             jalan=true; 
         }
         

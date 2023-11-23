@@ -18,11 +18,12 @@ void DAFTAR_TEMAN(int idlogin, ListStatikUser l,FriendMatrix m){
     int nfriend = howMuchFriend(m, idlogin-1);
     i=0;
     if(nfriend!=0){
-        printf("\n%s memiliki %d\n", namafriend, nfriend);
+        printf("\n%s memiliki %d teman\n", namafriend, nfriend);
         printf("Daftar teman %s\n", namafriend);
         while((i<nfriend)&&(ifriend<20)){
-            if(isFriend(m, idlogin-1, ifriend)){
-                printf("| %s\n", l.data[ifriend].nama);
+            if(isFriend(m, idlogin-1, ifriend-1)){
+                
+                printf("| %s\n", l.data[ifriend-1].nama);
                 i++;
             }
             ifriend ++;
@@ -109,7 +110,7 @@ void TAMBAH_TEMAN(int idlogin, ListStatikUser *l, FriendMatrix m, Prioreqfol q){
             displayWord(friendname);
             printf(".\n");
         }
-        else if(isXRequestToY((*l).data[idfriend-1].userReq, idlogin-1)){
+        else if(isXRequestToY((*l).data[idfriend-1].userReq, idlogin)){
             printf("\nAnda sudah mengirimkan permintaan pertemanan kepada ");
             displayWord(friendname);
             printf(". Silakan tunggu hingga permintaan Anda disetujui.\n");
