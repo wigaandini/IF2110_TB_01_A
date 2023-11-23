@@ -248,11 +248,7 @@ int main(){
 
         // BAGIAN PERINTAH (SIMPAN & MUAT)
         else if (compareString(kata,"SIMPAN")){ //SIMPAN
-            if (!isLoggedIn){
-                printf("\nSIMPAN\n");
-            } else{
-                printf("\nAnda harus keluar terlebih dahulu untuk melakukan pemuatan.\n");
-            }
+            SIMPAN(l,listKicau,F);
         }
 
         else if (compareString(kata,"MUAT")){ //MUAT

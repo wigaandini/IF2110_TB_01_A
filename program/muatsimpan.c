@@ -3,6 +3,11 @@
 #include "readdraf.c"
 #include "readbalasan.c"
 #include "readutas.c"
+#include "simpanpengguna.c"
+#include "simpankicauan.c"
+#include "simpandraf.c"
+#include "simpanbalasan.c"
+#include "simpanutas.c"
 #include <time.h>
 #include <stdlib.h>
 #include <sys/stat.h>
@@ -63,6 +68,42 @@ void MUAT(ListStatikUser *l,ListKicauan *k,FriendMatrix *F, int *curIdBalasan){
         delay(1);
         printf("3...\n\n");
         delay(1);
+        printf("Pemuatan selesai !\n\n");
+    }
+    free(dirName);
+}
+
+void SIMPAN(ListStatikUser l,ListKicauan k,FriendMatrix F){
+    char fullPath[200];
+    char *dirName;
+
+    printf("\nMasukkan nama folder yang hendak dimuat.\n");
+    Word config;
+    STARTSENTENCE();
+
+    config = currentWord;
+    dirName = WordToString(config);
+    concatenate(fullPath, "config/", dirName);
+    if (!is_directory(fullPath)){
+        printf("\nBelum terdapat Folder1. Akan dilakukan pembuatan Folder1 terlebih dahulu.\n\n");
+        delay(0.4);
+        printf("Mohon tunggu...\n");
+        delay(0.4);
+        printf("1...\n");
+        delay(0.5);
+        printf("2...\n");
+        delay(0.5);
+        printf("3...\n\n");
+        delay(0.5);
+        printf("\n%s sudah berhasil dibuat.\n\n",dirName);
+
+        simpanpengguna(l,F,fullPath);
+        simpandraf(l,fullPath);
+        simpankicauan(k,l,fullPath);
+        simpanbalasan(k,l,fullPath);
+        simpanutas(k,l,fullPath);
+
+    } else{
         printf("Pemuatan selesai !\n\n");
     }
     free(dirName);
