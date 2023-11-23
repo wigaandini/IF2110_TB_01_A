@@ -256,7 +256,7 @@ int main(){
 
         else if (compareString(kata,"MUAT")){ //MUAT
             if (!isLoggedIn){
-                MUAT(&l,&listKicau,&F);
+                MUAT(&l,&listKicau,&F, &curIdBalasan);
             } else{
                 printf("\nAnda harus keluar terlebih dahulu untuk melakukan pemuatan.\n");
             }

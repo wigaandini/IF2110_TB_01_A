@@ -20,7 +20,7 @@ boolean is_directory(const char *path) {
     return S_ISDIR(statbuf.st_mode);
 }
 
-void MUAT(ListStatikUser *l,ListKicauan *k,FriendMatrix *F){
+void MUAT(ListStatikUser *l,ListKicauan *k,FriendMatrix *F, int *curIdBalasan){
     char fullPath[200];
     char *dirName;
 
@@ -46,7 +46,7 @@ void MUAT(ListStatikUser *l,ListKicauan *k,FriendMatrix *F){
     } else{
         ReadUser(l,F,fullPath);
         ReadKicauan(k,*l,*F,fullPath);
-        readbalasan(l,k,fullPath);
+        readbalasan(l,k,fullPath, curIdBalasan);
         ReadDraf(l,fullPath);
         ReadUtas(k,*l,fullPath);
 
