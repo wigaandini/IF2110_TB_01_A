@@ -11,7 +11,12 @@ void DAFTAR_TEMAN(int idlogin, ListStatikUser l){
     FriendMatrix m; 
     int ifriend = 0; 
     int i = 0;
-    char namafriend[21] = l.data[idlogin-1].nama;
+    char namafriend[21];
+    for(i = 0; i<21; i++){
+        namafriend[i] = l.data[idlogin-1].nama[i];
+    
+    }
+    i = 0;    
     int nfriend = howMuchFriend(m, idlogin-1);
     if(nfriend!=0){
         printf("%s memiliki %d\n", namafriend, nfriend);
@@ -31,7 +36,6 @@ void DAFTAR_TEMAN(int idlogin, ListStatikUser l){
 
 void HAPUS_TEMAN(int idlogin, ListStatikUser l, FriendMatrix *m){
     Word friendname, keputusan;
-    int ifol; 
     printf("Masukkan nama pengguna:\n");
     STARTSENTENCE();
     friendname = currentWord;
@@ -44,26 +48,33 @@ void HAPUS_TEMAN(int idlogin, ListStatikUser l, FriendMatrix *m){
     }
 
     if(!isFriend(*m, idlogin-1, getIdOfName(l, friendname)-1)){
-        printf("%s bukan teman Anda.\n", friendname);
+        displayWord(friendname);
+        printf(" bukan teman Anda.\n");
     }
     else{
-        printf("Apakah anda yakin ingin menghapus %s dari daftar teman anda:\n", friendname);
+        printf("Apakah anda yakin ingin menghapus ");
+        displayWord(friendname);
+        printf(" dari daftar teman anda:\n");
         STARTSENTENCE();
         keputusan = currentWord;
 
         while((compareString(keputusan, "YA"))&&(compareString(keputusan, "TIDAK"))){
             printf("Masukan anda tidak valid:\n");
-            printf("Apakah anda yakin ingin menghapus %s dari daftar teman anda:\n");
+            printf("Apakah anda yakin ingin menghapus ");
+            displayWord(friendname);
+            printf(" dari daftar teman anda:\n");
             STARTSENTENCE();
             keputusan = currentWord;
         }
 
         if(compareString(keputusan, "YA")){
-            deleteFriend(&m, idlogin-1, getIdOfName(l, friendname) - 1);
-            printf("%s berhasil dihapus dari daftar teman anda\n", friendname);
+            deleteFriend(m, idlogin-1, getIdOfName(l, friendname) - 1);
+            displayWord(friendname);
+            printf(" berhasil dihapus dari daftar teman anda\n");
         }
         else{
-            printf("%s tidak jadi dihapus dari daftar teman anda\n", friendname);    
+            displayWord(friendname);
+            printf(" tidak jadi dihapus dari daftar teman anda\n");    
         }
     }
 }
@@ -81,7 +92,9 @@ void TAMBAH_TEMAN(int idlogin, ListStatikUser l, FriendMatrix m, Prioreqfol q){
         STARTSENTENCE();
         friendname = currentWord;
         while(!checkUserExist(l,friendname)){
-            printf("Pengguna bernama %s tidak ditemukan\n", friendname);
+            printf("Pengguna bernama ");
+            displayWord(friendname);
+            printf(" tidak ditemukan\n");
             printf("Masukkan nama:\n");
             STARTSENTENCE();
             friendname = currentWord;
@@ -91,14 +104,20 @@ void TAMBAH_TEMAN(int idlogin, ListStatikUser l, FriendMatrix m, Prioreqfol q){
         idfriend = getIdOfName(l, friendname);
         //Nama sudah valid
         if(isFriend(m, idlogin-1, idfriend-1)){
-            printf("Anda sudah berteman dengan %s!\n", friendname);
+            printf("Anda sudah berteman dengan ");
+            displayWord(friendname);
+            printf(".\n");
         }
         else if(isXRequestToY(l.data[idfriend-1].userReq, idlogin-1)){
-            printf("Anda sudah mengirimkan permintaan pertemanan kepada %s. Silakan tunggu hingga permintaan Anda disetujui.\n", friendname);
+            printf("Anda sudah mengirimkan permintaan pertemanan kepada ");
+            displayWord(friendname);
+            printf(". Silakan tunggu hingga permintaan Anda disetujui.\n");
         }
         else{
             sendReqFol(&(l.data[idfriend-1].userReq), m, idlogin-1, idfriend-1);
-            printf("Permintaan pertemanan kepada %s telah dikirim. Tunggu beberapa saat hingga permintaan anda disetujui.", friendname);
+            printf("Permintaan pertemanan kepada ");
+            displayWord(friendname);
+            printf(" telah dikirim. Tunggu beberapa saat hingga permintaan anda disetujui.");
         }
     }
     else{ //Prioreqfol masih ada isinya
@@ -118,29 +137,43 @@ void DAFTAR_PERMINTAAN_PERTEMANAN(int idlogin ,FriendMatrix m, Prioreqfol myQ, L
         printf("\n");
 
         while(p!=NULL){
-            printf("| %s\n", l.data[IDUSER(p)].nama);
+            printf("| ");
+            char friendname[21];
+            int i = 0;
+            for(i = 0; i<21; i++){
+                friendname[i] = l.data[IDUSER(p)].nama[i];
+            }
+            i = 0;  
+            printf("%s \n", friendname);
             printf("Jumlah teman: %d\n", NFRIENDUSER(p));
             printf("\n");
-            NEXT(p);
+            p = NEXT(p);
         }
         
     }
 }
 
-void SETUJUI_PERTEMANAN(int idlogin, FriendMatrix m, Prioreqfol myQ, ListStatikUser l){    Word friendname, keputusan;
+void SETUJUI_PERTEMANAN(int idlogin, FriendMatrix m, Prioreqfol myQ, ListStatikUser l){    
+    char friendname[21];
+    Word keputusan;
     Address p = ADDR_HEAD(myQ);
     if(isEmptyReqFol(myQ)){
         printf("Tidak ada permintaan pertemanan untuk Anda saat ini.\n");
     }
     else{
-        char friendname[21] = l.data[IDUSER(p)].nama;
+        
+        int i = 0;
+        for(i = 0; i<21; i++){
+            friendname[i] = l.data[IDUSER(p)].nama[i];
+        }
+        i = 0;   
         printf("Apakah anda yakin ingin menghapus %s dari daftar teman anda:\n", friendname);
         STARTSENTENCE();
         keputusan = currentWord;
 
         while((compareString(keputusan, "YA"))&&(compareString(keputusan, "TIDAK"))){
             printf("Masukan anda tidak valid:\n");
-            printf("Apakah anda yakin ingin menghapus %s dari daftar teman anda:\n");
+            printf("Apakah anda yakin ingin menghapus %s dari daftar teman anda:\n", friendname);
             STARTSENTENCE();
             keputusan = currentWord;
         }

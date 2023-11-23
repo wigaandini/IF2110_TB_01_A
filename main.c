@@ -7,6 +7,7 @@
 #include "program/kicauan.c"
 #include "program/fyb.c"
 #include "program/muatsimpan.c"
+#include "program/friend.c"
 #include <sys/stat.h>
 
 // gcc main.c adt/configmachine.c adt/charmachine.c adt/liststatikuser.c adt/listdin.c adt/Matrix.c adt/friendmatrix.c adt/pcolor.c adt/prioreqfollinked.c adt/listdinkicauan.c adt/datetime.c adt/time.c adt/wordmachine.c -o tes
@@ -153,23 +154,23 @@ int main(){
 
         // BAGIAN PERINTAH (TEMAN)
         else if (compareString(kata,"DAFTAR_TEMAN")&&isLoggedIn){ //DAFTAR_TEMAN
-            printf("\ndaftarteman\n");
+            DAFTAR_TEMAN(id_login, l);
         }
 
         else if (compareString(kata,"HAPUS_TEMAN")&&isLoggedIn){ //HAPUS_TEMAN
-            printf("\nHAPUSteman\n");
+            HAPUS_TEMAN(id_login, l, &F);
         }
 
         // BAGIAN PERINTAH (PERMINTAAN TEMAN)
         else if (compareString(kata,"TAMBAH_TEMAN")&&isLoggedIn){ //TAMBAH_TEMAN
-            printf("\nTAMBAHTEMAN\n");
+            TAMBAH_TEMAN(id_login, l, F, l.data[id_login-1].userReq);
         }
 
         else if (compareString(kata,"DAFTAR_PERMINTAAN_TEMAN")&&isLoggedIn){ //DAFTAR_PERMINTAAN
-            printf("\nLISTteman\n");
+            DAFTAR_PERMINTAAN_PERTEMANAN(id_login, F, l.data[id_login-1].userReq, l);
         }
         else if (compareString(kata,"SETUJUI_PERTEMANAN")&&isLoggedIn){ //SETUJUI_PERTEMANAN
-            printf("\nSETUJUteman\n");
+            SETUJUI_PERTEMANAN(id_login, F, l.data[id_login-1].userReq, l);
         }
 
         // BAGIAN PERINTAH (KICAUAN)
