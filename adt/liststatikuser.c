@@ -54,7 +54,7 @@ int banyakUser(ListStatikUser l){
     int i;
     int cnt = 0;
     for(i=0; i<20; i++){
-        if (true){
+        if (UserName(l, i, 0) != '\0'){
             cnt++;
         }
     }
