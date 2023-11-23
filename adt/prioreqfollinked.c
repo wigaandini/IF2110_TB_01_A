@@ -130,3 +130,18 @@ void setujuiReqFol(Prioreqfol *q, FriendMatrix *m){
 }
 
 
+boolean isXRequestToY(Prioreqfol Y, int idX){
+    //Jika terdapat x pada priority queue follow yang menempel pada adt user yang dimiliki y
+    // maka return true
+    boolean requested = false;
+    Address p = ADDR_HEAD(Y);
+    while((!requested)||(p!=NIL)){
+        if(IDUSER(p)== idX){
+            requested = true;
+        }
+        else{
+            p = NEXT(p);
+        }
+    }
+    return requested;
+}
