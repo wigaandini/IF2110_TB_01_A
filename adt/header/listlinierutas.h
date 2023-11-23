@@ -49,6 +49,8 @@ typedef AddressUtas ListLinierUtas;
 #define IDXUNDEF (-1)
 #define FIRSTUtas(l) (l)
 
+AddressUtas newUtas(int idAuthor, int indexUtas, Word text, DATETIME waktu, int idUtas);
+
 AddressUtas newNodeUtas(UtasType val);
 /* Definisi List : */
 /* List kosong : FIRSTUtas(l) = NULL */

@@ -7,6 +7,19 @@
 #include <stdlib.h>
 #include "header/listlinierutas.h"
 
+AddressUtas newUtas(int idAuthor, int indexUtas, Word text, DATETIME waktu, int idUtas){
+    AddressUtas p = (AddressUtas) malloc(sizeof(NodeUtas));
+    if(p != NULL){
+        idUtas(INFOUtas(p)) = idUtas;
+        idAuthor(INFOUtas(p)) = idAuthor;
+        idxUtas(INFOUtas(p)) = indexUtas;
+        Text(INFOUtas(p)) = text;
+        Waktu(INFOUtas(p)) = waktu;
+        NEXTUtas(p) = NULL;
+    }
+    return p;
+}
+
 AddressUtas newNodeUtas(UtasType val){
     AddressUtas p = (AddressUtas) malloc(sizeof(NodeUtas));
     if(p != NULL){

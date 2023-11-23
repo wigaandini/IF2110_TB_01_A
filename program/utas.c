@@ -10,8 +10,8 @@
 #include "../adt/header/datetime.h"
 #include "../adt/header/friendmatrix.h"
 
-void addUtas(ListKicauan *listKicau, int idAuthor, int indexUtas, Word text, DATETIME waktu, int idUtas){
-    
+void addUtas(ListKicauan *listKicau, int idAuthor, int indexUtas, Word text, DATETIME waktu, int idUtas, int idKicau){
+    ELMTLISTKICAU(*listKicau, idUtas-1).sambunganUtas = newUtas(idAuthor, indexUtas, text, waktu, idUtas);
 }
 
 int searchIdKicau(int idUtas, ListKicauan l){
@@ -27,6 +27,7 @@ int searchIdKicau(int idUtas, ListKicauan l){
         }
         else{
             found = false;
+            i++;
         }
     }
     if(found){
@@ -76,56 +77,59 @@ void BIKIN_UTAS(int idKicau, ListKicauan *listKicau, ListLinierUtas *listUtasPer
     Word text;
     DATETIME waktu;
     CreateListUtasPers(listUtasPers);
-    if(isIdKicauanValid(*listKicau, ID(ELMTLISTKICAU(*listKicau, idKicau-1))) && ADDRESSUTAS(ELMTLISTKICAU(*listKicau, idKicau-1)) == NULL){
-        if(IDAUTHOR(ELMTLISTKICAU(*listKicau, idKicau-1)) == idAuthor){
-            printf("Utas berhasil dibuat!\n\n");
-            printf("Masukkan kicauan:\n");
-            STARTSENTENCE();
-            printf("\n");
-
-            text = currentWord;
-            indexUtas = length(*listUtasPers) + 1;
-
-            time_t current_time;
-            time(&current_time);
-            current_time += 3600*7;
-
-            struct tm* timeinfo = gmtime(&current_time);
-
-            Year(waktu) = 1900 + timeinfo->tm_year;
-            Month(waktu) = timeinfo->tm_mon + 1;
-            Day(waktu) = timeinfo->tm_mday;
-            Time(waktu) = DetikToTIME(current_time);
-            
-            int idUtas = countTypeUtas(*listKicau) + 1;
-            CreateUtas(u, idAuthor, indexUtas, text, waktu, idUtas);
-            insertLastPers(listUtasPers, *u);
-            ADDRESSUTAS(ELMTLISTKICAU(*listKicau, idKicau-1)) = newNodeUtas(*u);
-            printf("Apakah Anda ingin melanjutkan utas ini? (YA/TIDAK) ");
-            STARTSENTENCE();
-            while(compareString(currentWord, "YA")){
-                printf("\nMasukkan kicauan:\n");
+    if(isIdKicauanValid(*listKicau, ID(ELMTLISTKICAU(*listKicau, idKicau-1)))){
+        if(ADDRESSUTAS(ELMTLISTKICAU(*listKicau, idKicau-1)) == NULL){
+            if(IDAUTHOR(ELMTLISTKICAU(*listKicau, idKicau-1)) == idAuthor){
+                printf("Utas berhasil dibuat!\n\n");
+                printf("Masukkan kicauan:\n");
                 STARTSENTENCE();
                 printf("\n");
-                text = currentWord;
-                indexUtas ++;
 
+                text = currentWord;
+                indexUtas = length(*listUtasPers) + 1;
+
+                time_t current_time;
+                time(&current_time);
+                current_time += 3600*7;
+
+                struct tm* timeinfo = gmtime(&current_time);
+
+                Year(waktu) = 1900 + timeinfo->tm_year;
+                Month(waktu) = timeinfo->tm_mon + 1;
+                Day(waktu) = timeinfo->tm_mday;
+                Time(waktu) = DetikToTIME(current_time);
+                
+                int idUtas = countTypeUtas(*listKicau)+1;
                 CreateUtas(u, idAuthor, indexUtas, text, waktu, idUtas);
                 insertLastPers(listUtasPers, *u);
-
+                ADDRESSUTAS(ELMTLISTKICAU(*listKicau, idKicau-1)) = newNodeUtas(*u);
+                printf("id utas: %d\n", idUtas(INFOUtas(ADDRESSUTAS(ELMTLISTKICAU(*listKicau, idKicau-1)))));
                 printf("Apakah Anda ingin melanjutkan utas ini? (YA/TIDAK) ");
                 STARTSENTENCE();
-                if(compareString(currentWord, "TIDAK")){
-                    printf("Utas selesai!\n\n");
+                while(compareString(currentWord, "YA")){
+                    printf("\nMasukkan kicauan:\n");
+                    STARTSENTENCE();
+                    printf("\n");
+                    text = currentWord;
+                    indexUtas ++;
+
+                    CreateUtas(u, idAuthor, indexUtas, text, waktu, idUtas);
+                    insertLastPers(listUtasPers, *u);
+
+                    printf("Apakah Anda ingin melanjutkan utas ini? (YA/TIDAK) ");
+                    STARTSENTENCE();
+                    if(compareString(currentWord, "TIDAK")){
+                        printf("Utas selesai!\n\n");
+                    }
                 }
+            }
+            else{
+                printf("Utas ini bukan milik anda!\n");
             }
         }
         else{
-            printf("Utas ini bukan milik anda!\n");
+            printf("Kicauan ini sudah dijadikan utas\n");
         }
-    }
-    else if(ADDRESSUTAS(ELMTLISTKICAU(*listKicau, idKicau-1)) != NULL){
-        printf("Kicauan ini sudah dijadikan utas\n");
     }
     else{
         printf("Kicauan tidak ditemukan!\n");

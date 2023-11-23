@@ -59,6 +59,7 @@ int main() {
             printf("\n");
             printf("idKicauan: %d\n", idKicauan);
             BIKIN_UTAS(idKicauan, &k, &listUtas, idUser, &u);
+            printf("count utas : %d\n", countTypeUtas(k));
         } else if (compareString(kata, "SAMBUNG_UTAS")) {
             idUtas = WordToInt(splitCommand(&w, command, 2));
             index = WordToInt(splitCommand(&w, command, 3));

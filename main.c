@@ -77,6 +77,7 @@ int main(){
         UtasType u;
         Kicauan tweet;
         while (!selesai){
+            printf("count utas awal : %d\n", countTypeUtas(listKicau));
             printf("\n>> ");
             STARTSENTENCE();
             command = currentWord;
@@ -264,9 +265,9 @@ int main(){
             printf("count utas : %d\n", countTypeUtas(listKicau));
             idKicauan = WordToInt(splitCommand(&w, command, 2));
             BIKIN_UTAS(idKicauan, &listKicau, &listUtas, id_login, &u);
-            idUtas = idUtas(INFOUtas(ADDRESSUTAS(ELMTLISTKICAU(listKicau, idKicauan-1))));
-            printf("id utas : %d\n", idUtas);
-            printf("count utas : %d\n", countTypeUtas(listKicau));
+            // idUtas = idUtas(INFOUtas(ADDRESSUTAS(ELMTLISTKICAU(listKicau, idKicauan-1))));
+            // printf("id utas : %d\n", idUtas);
+            // printf("count utas : %d\n", countTypeUtas(listKicau));
             // idUtas ++;
         }
 
@@ -285,7 +286,7 @@ int main(){
         else if (compareString(kata,"CETAK_UTAS")&&isLoggedIn){ //CETAK_UTAS
             idUtas = WordToInt(splitCommand(&w, command, 2));
             printf("id utas : %d\n", idUtas);
-            printf("id kicau %d\n", searchIdKicau(idUtas, listKicau));
+            // printf("id kicau %d\n", searchIdKicau(idUtas, listKicau));
             CETAK_UTAS(l, listUtas, id_login, idUtas, listKicau);
         }
 
