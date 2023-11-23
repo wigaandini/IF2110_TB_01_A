@@ -7,22 +7,22 @@
 
 char* namaFileDraf = "/draf.config";
 
-void concatString(char *ans, char *p1, char *p2){
-    while(*p1){
-        *ans = *p1;
-        p1++;
-        ans++;
-    }
-    while (*p2){
-       *ans = *p2;
-       p2++;
-       ans++;
-    }
-    *ans = '\0';
-}
+// void concatString(char *ans, char *p1, char *p2){
+//     while(*p1){
+//         *ans = *p1;
+//         p1++;
+//         ans++;
+//     }
+//     while (*p2){
+//        *ans = *p2;
+//        p2++;
+//        ans++;
+//     }
+//     *ans = '\0';
+// }
 
 void simpandraf(ListStatikUser lsu, char *namaFolder){
-    int ch = mkdir(namaFolder);
+    int ch = mkdir(namaFolder,0777);
     char namaFile[1000];
     concatString(namaFile, namaFolder, namaFileDraf);
     FILE* fptr = fopen(namaFile, "ab+");
@@ -40,7 +40,7 @@ void simpandraf(ListStatikUser lsu, char *namaFolder){
     for(i = 0; i < banyakUser(lsu); ++i){
         if(lsu.data[i].drafuser.TOP != -1){
             int j;
-            for(j = 0; j < lsu.data[i].nama[j] != '\0'; ++j){
+            for(j = 0; lsu.data[i].nama[j] != '\0'; ++j){
                 fprintf(fptr, "%c", lsu.data[i].nama[j]);
             }
             fprintf(fptr, " ");

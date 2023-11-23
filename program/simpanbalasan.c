@@ -27,22 +27,22 @@ void writeRecursion(FILE* fptr, int par, AddressBalasan adr, ListStatikUser lsu)
     writeRecursion(fptr, IDBALASAN(*adr), CHILDBALASAN(*adr), lsu);
 }
 
-void concatString(char *ans, char *p1, char *p2){
-    while(*p1){
-        *ans = *p1;
-        p1++;
-        ans++;
-    }
-    while (*p2){
-       *ans = *p2;
-       p2++;
-       ans++;
-    }
-    *ans = '\0';
-}
+// void concatString(char *ans, char *p1, char *p2){
+//     while(*p1){
+//         *ans = *p1;
+//         p1++;
+//         ans++;
+//     }
+//     while (*p2){
+//        *ans = *p2;
+//        p2++;
+//        ans++;
+//     }
+//     *ans = '\0';
+// }
 
 void simpanbalasan(ListKicauan l, ListStatikUser lsu, char *namaFolder){
-    int ch = mkdir(namaFolder);
+    int ch = mkdir(namaFolder,0777);
     char namaFile[1000];
     concatString(namaFile, namaFolder, namaFileBalasan);
     FILE* fptr = fopen(namaFile, "ab+");

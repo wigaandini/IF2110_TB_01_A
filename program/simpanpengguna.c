@@ -6,42 +6,51 @@
 
 char* namaFilePengguna = "/pengguna.config";
 
-char* wetonDecider(int x){
-    switch(x){
+char* wetonDecider(int x) {
+    char *ans; // Declare ans once, outside of the switch
+
+    switch(x) {
         case 0:
-        char *ans = "";
-        return ans;
+            ans = "";
+            break;
         case 1:
-        char *ans = "PAHING";
-        return ans;
+            ans = "PAHING";
+            break;
         case 2:
-        char *ans = "KLIWON";
-        return ans;
+            ans = "KLIWON";
+            break;
         case 3:
-        char *ans = "WAGE";
-        return ans;
+            ans = "WAGE";
+            break;
         case 4:
-        char *ans = "PON";
-        return ans;
+            ans = "PON";
+            break;
         case 5:
-        char *ans = "LEGI";
-        return ans;
+            ans = "LEGI";
+            break;
         default:
-        printf("Error, weton di luar scope??\n");
+            printf("Error, weton di luar scope??\n");
+            ans = "EMPTYWETON"; // Return NULL or some error indicator
+            break;
     }
+    return ans;
 }
 
-char* tipeAkunDecider(int x){
-    switch (x){
-    case 0:
-        char *ans = "PUBLIK";
-        return ans;
-    case 1:
-        char *ans = "PRIVAT";
-        return ans;
-    default:
-        printf("Error, tipe akun di luar scope??\n");
+char* tipeAkunDecider(int x) {
+    char *ans;
+    switch (x) {
+        case 0:
+            ans = "PUBLIK";
+            break;
+        case 1:
+            ans = "PRIVAT";
+            break;
+        default:
+            printf("Error, tipe akun di luar scope??\n");
+            ans = NULL;
+            break;
     }
+    return ans;
 }
 
 void concatString(char *ans, char *p1, char *p2){
@@ -59,7 +68,7 @@ void concatString(char *ans, char *p1, char *p2){
 }
 
 void simpanpengguna(ListStatikUser lsu, FriendMatrix fm, char *namaFolder){
-    int ch = mkdir(namaFolder);
+    int ch = mkdir(namaFolder,0777);
     char namaFile[1000];
     concatString(namaFile, namaFolder, namaFilePengguna);
     FILE* fptr = fopen(namaFile, "ab+");
@@ -105,6 +114,7 @@ void simpanpengguna(ListStatikUser lsu, FriendMatrix fm, char *namaFolder){
         }
     }
     int p, q;
+    printf("%d %d\n", ROW_EFFFRIEND(fm), COL_EFFFRIEND(fm));
     for(p = 0; p < ROW_EFFFRIEND(fm); ++p){
         for(q = 0; q < COL_EFFFRIEND(fm); ++q){
             fprintf(fptr, "%d", ELMTFRIEND(fm, p, q));
@@ -117,7 +127,7 @@ void simpanpengguna(ListStatikUser lsu, FriendMatrix fm, char *namaFolder){
     for(i = 0; i < banyakUser(lsu); ++i){
         Address cur = lsu.data[i].userReq.addrHead;
         while(cur != NULL){
-            fprintf(fptr, "%d %d %d\n", cur->iduser, cur->idfollow, cur->nfrienduser);
+            fprintf(fptr, "%d %d %d\n", cur->iduser, cur->idfollow, cur->nfriendfollow);
             cur = cur->next;
         }
     }
