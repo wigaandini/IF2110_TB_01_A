@@ -1,32 +1,24 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "program/readpengguna.c"
-#include "program/readbalasan.c"
-#include "program/readkicauan.c"
-#include "program/readdraf.c"
-#include "program/readutas.c"
 #include "program/user.c"
 #include "program/profil.c"
 #include "program/utas.c"
 #include "program/draf_fitur.c"
 #include "program/kicauan.c"
+#include "program/fyb.c"
+#include "program/muatsimpan.c"
+#include "program/friend.c"
 #include <sys/stat.h>
 
 // gcc main.c adt/configmachine.c adt/charmachine.c adt/liststatikuser.c adt/listdin.c adt/Matrix.c adt/friendmatrix.c adt/pcolor.c adt/prioreqfollinked.c adt/listdinkicauan.c adt/datetime.c adt/time.c adt/wordmachine.c -o tes
-
-boolean is_directory(const char *path) {
-    struct stat statbuf;
-    if (stat(path, &statbuf) != 0)
-        return 0;
-    return S_ISDIR(statbuf.st_mode);
-}
-
 
 int main(){
     ListStatikUser l;
     ListKicauan listKicau;
     FriendMatrix F;
     int idUtas;
+
+    int curIdBalasan = 0;
 
     system("clear");
     printf(".______    __    __  .______      .______    __  .______\n");
@@ -60,13 +52,14 @@ int main(){
         } else{
             ReadUser(&l,&F,fullPath);
             ReadKicauan(&listKicau,l,F,fullPath);
-            readbalasan(&l,&listKicau,fullPath);
+            readbalasan(&l,&listKicau,fullPath, &curIdBalasan);
             ReadDraf(&l,fullPath);
             ReadUtas(&listKicau,l,fullPath);
 
-            // printListofUser(l);
-            // DisplayAllKicauan(l,listKicau);
-            printf("\n");
+            //printListofUser(l);
+            //DisplayAllKicauan(l,listKicau);
+            //displaySemuaBalasan(listKicau.buffer[3].balasan, &F, &l, 3, 0);
+            //printf("\n");
             printf("File konfigurasi berhasil dimuat! Selamat berkicau!\n");
             jalan=true; 
         }
@@ -159,7 +152,8 @@ int main(){
         compareString(kata,"BALASAN")||compareString(kata,"HAPUS_BALASAN")||
         compareString(kata,"BUAT_DRAF")||compareString(kata,"LIHAT_DRAF")||
         compareString(kata,"UTAS")||compareString(kata,"SAMBUNG_UTAS")||
-        compareString(kata,"HAPUS_UTAS")||compareString(kata,"CETAK_UTAS"))&&
+        compareString(kata,"HAPUS_UTAS")||compareString(kata,"CETAK_UTAS")||
+        compareString(kata,"FYB")) && 
         !isLoggedIn){
             printf("\nAnda belum login! Masuk terlebih dahulu untuk menikmati layanan Burbir.\n\n");
         }
@@ -196,23 +190,23 @@ int main(){
 
         // BAGIAN PERINTAH (TEMAN)
         else if (compareString(kata,"DAFTAR_TEMAN")&&isLoggedIn){ //DAFTAR_TEMAN
-            printf("\ndaftarteman\n");
+            DAFTAR_TEMAN(id_login, l);
         }
 
         else if (compareString(kata,"HAPUS_TEMAN")&&isLoggedIn){ //HAPUS_TEMAN
-            printf("\nHAPUSteman\n");
+            HAPUS_TEMAN(id_login, l, &F);
         }
 
         // BAGIAN PERINTAH (PERMINTAAN TEMAN)
         else if (compareString(kata,"TAMBAH_TEMAN")&&isLoggedIn){ //TAMBAH_TEMAN
-            printf("\nTAMBAHTEMAN\n");
+            TAMBAH_TEMAN(id_login, l, F, l.data[id_login-1].userReq);
         }
 
         else if (compareString(kata,"DAFTAR_PERMINTAAN_TEMAN")&&isLoggedIn){ //DAFTAR_PERMINTAAN
-            printf("\nLISTteman\n");
+            DAFTAR_PERMINTAAN_PERTEMANAN(id_login, F, l.data[id_login-1].userReq, l);
         }
         else if (compareString(kata,"SETUJUI_PERTEMANAN")&&isLoggedIn){ //SETUJUI_PERTEMANAN
-            printf("\nSETUJUteman\n");
+            SETUJUI_PERTEMANAN(id_login, F, l.data[id_login-1].userReq, l);
         }
 
         // BAGIAN PERINTAH (KICAUAN)
@@ -235,15 +229,26 @@ int main(){
 
         // BAGIAN PERINTAH (BALASAN)
         else if (compareString(kata,"BALAS")&&isLoggedIn){ //BALAS
-            printf("\nBALAS\n");
+            int idKicauanBalas = WordToInt(splitCommand(&w, command, 2));
+            int idBalasanBalas;
+            readOneNum(&idBalasanBalas, splitCommand(&w, command, 3));
+
+            BALAS(&listKicau, &F, &l, idKicauanBalas, idBalasanBalas, id_login, &curIdBalasan);
+            //printf("\nBALAS\n");
         }
 
         else if (compareString(kata,"BALASAN")&&isLoggedIn){ //BALASAN
-            printf("\nBALASAN\n");
+            int idBalasanBalas = WordToInt(splitCommand(&w, command, 2));
+            
+            BALASAN(&listKicau, &F, &l, idBalasanBalas, id_login);
         }
 
         else if (compareString(kata,"HAPUS_BALASAN")&&isLoggedIn){ //HAPUSBALAS
-            printf("\nHAPUSBALASAN\n");
+            int idKicauanBalas = WordToInt(splitCommand(&w, command, 2));
+            int idBalasanBalas = WordToInt(splitCommand(&w, command, 3));
+
+            HAPUS_BALASAN(&listKicau, id_login, idKicauanBalas, idBalasanBalas);
+            //printf("\nHAPUSBALASAN\n");
         }
 
         // BAGIAN PERINTAH (DRAF KICAUAN)
@@ -286,19 +291,20 @@ int main(){
 
         // BAGIAN PERINTAH (SIMPAN & MUAT)
         else if (compareString(kata,"SIMPAN")){ //SIMPAN
+            SIMPAN(l,listKicau,F);
+        }
+
+        else if (compareString(kata,"MUAT")){ //MUAT
             if (!isLoggedIn){
-                printf("\nSIMPAN\n");
+                MUAT(&l,&listKicau,&F, &curIdBalasan);
             } else{
                 printf("\nAnda harus keluar terlebih dahulu untuk melakukan pemuatan.\n");
             }
         }
 
-        else if (compareString(kata,"MUAT")){ //MUAT
-            if (!isLoggedIn){
-                printf("\nMUAT\n");
-            } else{
-                printf("\nAnda harus keluar terlebih dahulu untuk melakukan pemuatan.\n");
-            }
+        // BAGIAN PERINTAH BONUSSSSS KIW KIW CUKURUKUK
+        else if (compareString(kata,"FYB")) {   // FYB
+            fyb(l, listKicau);
         }
 
         ADVWORD();

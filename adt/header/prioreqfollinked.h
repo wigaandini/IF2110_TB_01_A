@@ -67,5 +67,9 @@ void dequeueReqFol(Prioreqfol *q, ElTypeReq *x);
 /* F.S. x = nilai elemen HEAD pd I.S., HEAD "mundur" */
 
 void setujuiReqFol(Prioreqfol *q, FriendMatrix *m);
-    //Menambahkan pertemanan kepada matriks pertemanan   
+    //Menambahkan pertemanan kepada matriks pertemanan  
+
+boolean isXRequestToY(Prioreqfol Y, int idX);
+    //Jika terdapat x pada priority queue follow yang menempel pada adt user yang dimiliki y
+    // maka return true
 #endif

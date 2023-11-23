@@ -108,6 +108,10 @@ void STARTSENTENCE(){
     START();
     IgnoreEnter();
     IgnoreBlanks();
+    for (int i = 0; i < NMax; i++) {
+        currentWord.TabWord[i] = '\0'; 
+    }
+    currentWord.Length = 0;
     if(currentChar == MARK){
         EndWord = true;
     }
@@ -293,7 +297,7 @@ Word splitCommand(Word *w, Word command, int kataKe){
 int lengthWord(Word w){
     int length = 0;
     for(int i = 0; i<w.Length; i++){
-        if(w.TabWord[i] != ' '){
+        if(w.TabWord[i] != BLANK && i != w.Length){
             length++;
         }
     }

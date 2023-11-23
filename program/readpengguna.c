@@ -370,7 +370,7 @@ void ReadUser(ListStatikUser *l,FriendMatrix *F, char *path) {
                         // printf("ifol:%c\n",bacaan.TabWord[i]);
                         ifol=ifol*10+charToInt(bacaan.TabWord[i]);
                     }else if(space==2 && bacaan.TabWord[i]!=' '){
-                        sendReqFol(&(l->data[idus-1].userReq),*F,idus,ifol);
+                        sendReqFol(&(l->data[ifol-1].userReq),*F,idus,ifol);
                     }
                     // printf("idus:%d\n",idus);
                     // printf("ifol:%d\n",ifol);

@@ -9,9 +9,17 @@
 void readOneNum(int *num, Word bacaan){
     int iteru;
     int n = 0;
+    int sign = 1;
     for(iteru = 0; iteru < bacaan.Length; ++iteru){
-        n = n * 10 + bacaan.TabWord[iteru] - '0';
+        if(bacaan.TabWord[iteru] == '-'){
+            sign = -1;
+        }else{
+            if(bacaan.TabWord[iteru] >= '0' && bacaan.TabWord[iteru] <= '9'){
+                n = n * 10 + bacaan.TabWord[iteru] - '0';
+            }
+        }
     }
+    n *= sign;
     *num = n;
 }
 
@@ -23,14 +31,18 @@ void readTwoNum(int *num1, int *num2, Word bacaan){
         if(bacaan.TabWord[iter] == '-'){
             sign *= -1;
         }else{
-            n1 = n1 * 10 + bacaan.TabWord[iter] - '0';
+            if(bacaan.TabWord[iter] >= '0' && bacaan.TabWord[iter] <= '9'){
+                n1 = n1 * 10 + bacaan.TabWord[iter] - '0';
+            }
         }
     }
     n1 *= sign;
     iter++;
     int n2 = 0;
     for(; iter < bacaan.Length; ++iter){
-        n2 = n2 * 10 + bacaan.TabWord[iter] - '0';
+        if(bacaan.TabWord[iter] >= '0' && bacaan.TabWord[iter] <= '9'){
+            n2 = n2 * 10 + bacaan.TabWord[iter] - '0';
+        }
     }
     *num1 = n1;
     *num2 = n2;
@@ -45,27 +57,39 @@ void readDateTime(DATETIME *res, Word bacaan){
     int seconds = 0;
     int iter = 0;
     for(; iter < bacaan.Length && bacaan.TabWord[iter] != '/'; ++iter){
-        day = day * 10 + bacaan.TabWord[iter] - '0';
+        if(bacaan.TabWord[iter] >= '0' && bacaan.TabWord[iter] <= '9'){
+            day = day * 10 + bacaan.TabWord[iter] - '0';
+        }
     }
     iter++;
     for(; iter < bacaan.Length && bacaan.TabWord[iter] != '/'; ++iter){
-        month = month * 10 + bacaan.TabWord[iter] - '0';
+        if(bacaan.TabWord[iter] >= '0' && bacaan.TabWord[iter] <= '9'){
+            month = month * 10 + bacaan.TabWord[iter] - '0';
+        }
     }
     iter++;
     for(; iter < bacaan.Length && bacaan.TabWord[iter] != ' '; ++iter){
-        year = year * 10 + bacaan.TabWord[iter] - '0';
+        if(bacaan.TabWord[iter] >= '0' && bacaan.TabWord[iter] <= '9'){
+            year = year * 10 + bacaan.TabWord[iter] - '0';
+        }
     }
     iter++;
     for(; iter < bacaan.Length && bacaan.TabWord[iter] != ':'; ++iter){
-        hour = hour * 10 + bacaan.TabWord[iter] - '0';
+        if(bacaan.TabWord[iter] >= '0' && bacaan.TabWord[iter] <= '9'){
+            hour = hour * 10 + bacaan.TabWord[iter] - '0';
+        }
     }
     iter++;
     for(; iter < bacaan.Length && bacaan.TabWord[iter] != ':'; ++iter){
-        minutes = minutes * 10 + bacaan.TabWord[iter] - '0';
+        if(bacaan.TabWord[iter] >= '0' && bacaan.TabWord[iter] <= '9'){
+            minutes = minutes * 10 + bacaan.TabWord[iter] - '0';
+        }
     }
     iter++;
     for(; iter < bacaan.Length; ++iter){
-        seconds = seconds * 10 + bacaan.TabWord[iter] - '0';
+        if(bacaan.TabWord[iter] >= '0' && bacaan.TabWord[iter] <= '9'){
+            seconds = seconds * 10 + bacaan.TabWord[iter] - '0';
+        }
     }
     res->DD = day;
     res->MM = month;
@@ -84,7 +108,7 @@ void copyWord(Word *w1, Word w2){
     w1->TabWord[w2.Length + 1] = '\0';
 }
 
-void readbalasan(ListStatikUser *lsu, ListKicauan *lk,char *path){
+void readbalasan(ListStatikUser *lsu, ListKicauan *lk, char *path, int *curIdBalasan){
     char realpath[200];
     concatenate(realpath, path, "/balasan.config");
     STARTconfig(realpath);
@@ -186,7 +210,24 @@ void readbalasan(ListStatikUser *lsu, ListKicauan *lk,char *path){
 
             DATETIME d;
             readDateTime(&d, bacaan);
-            int userId = getIdOfName(*lsu, bacaan);
+            
+            int findI = 0; 
+            int userId = -1;
+            for(findI = 0; findI < banyakUser(*lsu) && userId == -1; ++findI){
+                int findJ = 0;
+                boolean notsame = true;
+                for(; findJ < namaWriter.Length && notsame; ++findJ){
+                    if(namaWriter.TabWord[findJ] != lsu->data[findI].nama[findJ]){
+                        notsame = false;
+                    }
+                }
+                if(notsame){
+                    userId = lsu->data[findI].id;
+                }
+            }
+            if(*curIdBalasan < idCur){
+                *curIdBalasan = idCur;
+            }
             idCur--;
             langsungAddBalasan(lk, textInput, d, idKicau, idPar, userId, &idCur);
         }
