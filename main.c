@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "program/readpengguna.c"
+#include "program/readbalasan.c"
 #include "program/readkicauan.c"
 #include "program/readdraf.c"
 #include "program/readutas.c"
 #include "program/user.c"
 #include "program/profil.c"
 #include "program/utas.c"
-#include "program/drafprogram.c"
+#include "program/draf_fitur.c"
 #include "program/kicauan.c"
 #include <sys/stat.h>
 
@@ -25,8 +26,6 @@ int main(){
     ListStatikUser l;
     ListKicauan listKicau;
     FriendMatrix F;
-    Kicauan tweet;
-    DrafStack S;
 
     system("clear");
     printf(".______    __    __  .______      .______    __  .______\n");
@@ -60,6 +59,7 @@ int main(){
         } else{
             ReadUser(&l,&F,fullPath);
             ReadKicauan(&listKicau,l,F,fullPath);
+            readbalasan(&l,&listKicau,fullPath);
             ReadDraf(&l,fullPath);
             ReadUtas(&listKicau,l,fullPath);
 
@@ -73,8 +73,6 @@ int main(){
     } while (!is_directory(fullPath));
     free(dirName);
 
-    // int currentuser=0;
-
     if (jalan)
     {
         boolean selesai=false, isLoggedIn=false;
@@ -83,6 +81,7 @@ int main(){
         int idKicauan, idUtas, indexUtas;
         ListLinierUtas listUtas;
         UtasType u;
+        Kicauan tweet;
         while (!selesai){
             printf("\n>> ");
             STARTSENTENCE();
@@ -111,6 +110,7 @@ int main(){
             // printf("\nAnda telah keluar dari program BurBir.\nSampai jumpa di penjelajahan berikutnya.\n");
             // selesai=true;
             TUTUP_PROGRAM();
+            selesai=true;
         }
 
         // BAGIAN PERINTAH (PROFIL)
@@ -197,10 +197,10 @@ int main(){
 
         // BAGIAN PERINTAH (DRAF KICAUAN)
         else if (compareString(kata,"BUAT_DRAF")){ //BUAT_DRAF
-            BUAT_DRAF(S, l, listKicau, id_login);
+            BUAT_DRAF(&l,&listKicau,id_login);
         }
         else if (compareString(kata,"LIHAT_DRAF")){ //LIHAT_DRAF
-            LIHAT_DRAF(S, l, listKicau, id_login);
+            LIHAT_DRAF(&l,&listKicau,id_login);
         }
 
         // BAGIAN PERINTAH (UTAS)
@@ -228,11 +228,19 @@ int main(){
 
         // BAGIAN PERINTAH (SIMPAN & MUAT)
         else if (compareString(kata,"SIMPAN")){ //SIMPAN
-            printf("\nSIMPAN\n");
+            if (!isLoggedIn){
+                printf("\nSIMPAN\n");
+            } else{
+                printf("\nAnda harus keluar terlebih dahulu untuk melakukan pemuatan.\n");
+            }
         }
 
         else if (compareString(kata,"MUAT")){ //MUAT
-            printf("\nMUAT\n");
+            if (!isLoggedIn){
+                printf("\nMUAT\n");
+            } else{
+                printf("\nAnda harus keluar terlebih dahulu untuk melakukan pemuatan.\n");
+            }
         }
 
         ADVWORD();

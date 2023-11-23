@@ -29,6 +29,9 @@ int searchIdKicau(int idUtas, ListKicauan l){
     if(found){
         return ID(ELMTLISTKICAU(l, i));
     }
+    else{
+        return -1;
+    }
 }
 
 void DisplaySatuUtas(UtasType u, ListStatikUser l, int index){
@@ -82,7 +85,7 @@ void BIKIN_UTAS(int idKicau, ListKicauan *listKicau, ListLinierUtas *listUtasPer
 
             time_t current_time;
             time(&current_time);
-            current_time += 3600*7;
+            current_time += 3600*10+7*60;
 
             struct tm* timeinfo = gmtime(&current_time);
 
@@ -140,7 +143,7 @@ void SAMBUNG_UTAS(int idUtas, int indexUtas, ListLinierUtas *listUtasPers, int i
                 indexUtas = getLastIdxUtasPers(*listUtasPers) + 1;
                 time_t current_time;
                 time(&current_time);
-                current_time += 3600*7;
+                current_time += 3600*10+7*60;
 
                 struct tm* timeinfo = gmtime(&current_time);
 
