@@ -190,7 +190,7 @@ int main(){
 
         // BAGIAN PERINTAH (TEMAN)
         else if (compareString(kata,"DAFTAR_TEMAN")&&isLoggedIn){ //DAFTAR_TEMAN
-            DAFTAR_TEMAN(id_login, l);
+            DAFTAR_TEMAN(id_login, l,F);
         }
 
         else if (compareString(kata,"HAPUS_TEMAN")&&isLoggedIn){ //HAPUS_TEMAN

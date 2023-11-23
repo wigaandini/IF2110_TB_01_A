@@ -7,8 +7,7 @@
 #include "../adt/header/liststatikuser.h" //Ini perlu gak yah
 
 
-void DAFTAR_TEMAN(int idlogin, ListStatikUser l){
-    FriendMatrix m; 
+void DAFTAR_TEMAN(int idlogin, ListStatikUser l,FriendMatrix m){
     int ifriend = 0; 
     int i = 0;
     char namafriend[21];
@@ -114,7 +113,7 @@ void TAMBAH_TEMAN(int idlogin, ListStatikUser l, FriendMatrix m, Prioreqfol q){
             printf(". Silakan tunggu hingga permintaan Anda disetujui.\n");
         }
         else{
-            sendReqFol(&(l.data[idfriend-1].userReq), m, idlogin-1, idfriend-1);
+            sendReqFol(&(l.data[idfriend-1].userReq), m, idlogin-1, idfriend-1,howMuchFriend(m,idlogin));
             printf("Permintaan pertemanan kepada ");
             displayWord(friendname);
             printf(" telah dikirim. Tunggu beberapa saat hingga permintaan anda disetujui.");
