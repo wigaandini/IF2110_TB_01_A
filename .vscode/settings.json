@@ -63,6 +63,7 @@
     "stdlib.h": "c",
     "charmachine.h": "c",
     "treebalasan.h": "c",
-    "configmachine.h": "c"
+    "configmachine.h": "c",
+    "liststatikuser.h": "c"
   }
 }

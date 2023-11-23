@@ -200,14 +200,14 @@ int main(){
 
         // BAGIAN PERINTAH (PERMINTAAN TEMAN)
         else if (compareString(kata,"TAMBAH_TEMAN")&&isLoggedIn){ //TAMBAH_TEMAN
-            TAMBAH_TEMAN(id_login, l, F, l.data[id_login-1].userReq);
+            TAMBAH_TEMAN(id_login, &l, F, l.data[id_login-1].userReq);
         }
 
         else if (compareString(kata,"DAFTAR_PERMINTAAN_TEMAN")&&isLoggedIn){ //DAFTAR_PERMINTAAN
             DAFTAR_PERMINTAAN_PERTEMANAN(id_login, F, l.data[id_login-1].userReq, l);
         }
         else if (compareString(kata,"SETUJUI_PERTEMANAN")&&isLoggedIn){ //SETUJUI_PERTEMANAN
-            SETUJUI_PERTEMANAN(id_login, F, l.data[id_login-1].userReq, l);
+            SETUJUI_PERTEMANAN(id_login, &F, &(l.data[id_login-1].userReq), l);
         }
 
         // BAGIAN PERINTAH (KICAUAN)

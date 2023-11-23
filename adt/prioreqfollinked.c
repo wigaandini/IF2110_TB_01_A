@@ -134,7 +134,7 @@ boolean isXRequestToY(Prioreqfol Y, int idX){
     // maka return true
     boolean requested = false;
     Address p = ADDR_HEAD(Y);
-    while((!requested)||(p!=NIL)){
+    while((!requested)&&(p!=NIL)){
         if(IDUSER(p)== idX){
             requested = true;
         }
