@@ -15,6 +15,7 @@ AddressBalasan newBalasan(int id, Word teks, int idPenulis, DATETIME waktu){
         IDPENULISBALASAN(*p) = idPenulis;
         WAKTUBALASAN(*p) = waktu;
         CHILDBALASAN(*p) = NIL;
+        SIBLINGBALASAN(*p) = NIL;
     }
     return p; 
 }
@@ -41,24 +42,38 @@ AddressBalasan insertBalasan(AddressBalasan a, Word text, int curIdBalasan, int 
     return a;
 }
 
-void displayUnitBalasan(AddressBalasan a, ListStatikUser *lsu, boolean friend){
-    if(!friend){
+void printSpace(int indent){
+    for(; indent; indent--){
+        printf(" ");
+    }
+}
+
+void displayUnitBalasan(AddressBalasan a, ListStatikUser *lsu, boolean fren, int indent){
+    if(!fren){
+        printSpace(indent);
         printf("| %d\n", IDBALASAN(*a));
+        printSpace(indent);
         printf("| PRIVAT\n");
+        printSpace(indent);
         printf("| PRIVAT\n");
+        printSpace(indent);
         printf("| PRIVAT\n");
     }else{
+        printSpace(indent);
         printf("| %d\n", IDBALASAN(*a));
+        printSpace(indent);
         printf("| ");
         int i = 0;
-        while(UserName(*lsu, IDPENULISBALASAN(*a), i) != '\0'){
-            printf("%c", UserName(*lsu, IDPENULISBALASAN(*a), i));
+        while(UserName(*lsu, IDPENULISBALASAN(*a) - 1, i) != '\0'){
+            printf("%c", UserName(*lsu, IDPENULISBALASAN(*a) - 1, i));
             i++;
         }
         printf("\n");
+        printSpace(indent);
         printf("| ");
         TulisDATETIME(WAKTUBALASAN(*a));
         printf("\n");
+        printSpace(indent);
         printf("| ");
         displayWord(TEKSBALASAN(*a));
         printf("\n");
@@ -74,9 +89,9 @@ void displaySemuaBalasan(AddressBalasan a, FriendMatrix *fh, ListStatikUser *lsu
         printf(" ");
     }
     printf("\n");
-    boolean friend = (UserTipe(*lsu, IDPENULISBALASAN(*a)) == PRIVAT) && isFriend(*fh, curUserId, IDPENULISBALASAN(*a));
-    friend = !friend;
-    displayUnitBalasan(a, lsu, friend);
+    boolean fren = (UserTipe(*lsu, IDPENULISBALASAN(*a) - 1) == PRIVAT) && isFriend(*fh, curUserId, IDPENULISBALASAN(*a) - 1);
+    fren = !fren;
+    displayUnitBalasan(a, lsu, fren, indent);
     displaySemuaBalasan(CHILDBALASAN(*a), fh, lsu, curUserId, indent + 3);
     displaySemuaBalasan(SIBLINGBALASAN(*a), fh, lsu, curUserId, indent);
 }
