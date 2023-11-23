@@ -33,7 +33,7 @@ IdxType getLastIdxColFriend(FriendMatrix m){
 IdxType howMuchFriend(FriendMatrix m, IdxType i){
 // Mengeluarkan jumlah teman yang dia dimilki
 // Prekondisi: i adalah id user yang terdefinisi (efektif)
-    int j;
+    int j; //counter
     int sum = 0;
     for(j = 0; j<=getLastIdxColFriend(m); j++){
         if(i!=j){
