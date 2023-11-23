@@ -111,7 +111,7 @@ void dequeueReqFol(Prioreqfol *q, ElTypeReq *x){
 /* I.S. q tidak mungkin kosong */
 /* F.S. x = nilai elemen HEAD pd I.S., HEAD "mundur" */
     Address p;
-    *x = IDUSER(ADDR_HEAD(*q));
+    *x = IDFOLLOW(ADDR_HEAD(*q));
     p = ADDR_HEAD(*q);
     ADDR_HEAD(*q) = NEXT(ADDR_HEAD(*q));
     if(ADDR_HEAD(*q)==NULL){
@@ -124,6 +124,9 @@ void dequeueReqFol(Prioreqfol *q, ElTypeReq *x){
 void setujuiReqFol(Prioreqfol *q, FriendMatrix *m){
     //Menambahkan pertemanan kepada matriks pertemanan
     addFriend(m, IDUSER(ADDR_HEAD(*q)), IDFOLLOW(ADDR_HEAD(*q)));
+    int x;
+    dequeueReqFol(q, &x);
+    printf("Permintaan pertemanan dari %d sudah berhasil diterima!", x);
 }
 
 
