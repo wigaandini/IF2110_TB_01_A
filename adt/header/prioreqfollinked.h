@@ -36,7 +36,7 @@ typedef struct {
 #define ADDR_TAIL(q) (q).addrTail
 
 /* Prototype manajemen memori */
-Address newReq(FriendMatrix m, ElTypeReq idus, ElTypeReq ifol);
+Address newReq(FriendMatrix m, ElTypeReq idus, ElTypeReq ifol, ElTypeReq nfus);
 /* Mengembalikan alamat sebuah Node hasil alokasi dengan info = x, 
    atau NIL jika alokasi gagal */
 boolean isEmptyReqFol(Prioreqfol q);
@@ -52,7 +52,7 @@ void daftarPermintaan(Prioreqfol q);
 /*Menuliskan orang yang merequest kita dari yang teratas*/
 
 /*** Primitif Enqueue/Dequeue ***/
-void sendReqFol(Prioreqfol *q, FriendMatrix m, ElTypeReq idus, ElTypeReq ifol);
+void sendReqFol(Prioreqfol *q, FriendMatrix m, ElTypeReq idus, ElTypeReq ifol, ElTypeReq nfus);
 /* qfol adallah queue yang dimiliki orang yang ingin difollow
 Idus adalah orang yang merequest
 Ifol adalah orang yang direquest

@@ -6,17 +6,16 @@
 //13522040
 
 /* Prototype manajemen memori */
-Address newReq(FriendMatrix m, ElTypeReq idus, ElTypeReq ifol){
+Address newReq(FriendMatrix m, ElTypeReq idus, ElTypeReq ifol, ElTypeReq nfus){
 /* Mengembalikan alamat sebuah Node hasil alokasi dengan info = x, 
    atau NIL jika alokasi gagal */
     Address p;
-    ElTypeReq nfus = howMuchFriend(m, idus); //Jumlah follower orang yang merequest
     ElTypeReq nffol = howMuchFriend(m, ifol); //Jumlah follower orang yang direquest
     p = (Address)malloc(sizeof(req));
     if(p!=NULL){
         IDUSER(p) = idus;
         IDFOLLOW(p) = ifol;
-        NFRIENDUSER(p) = nfus;
+        NFRIENDUSER(p) = nfus;  //Jumlah follower orang yang merequest
         NFRIENDFOLLOW(p) = nffol;
         NEXT(p) = NULL;
     }
@@ -63,7 +62,7 @@ void daftarPermintaan(Prioreqfol q){
 }
 
 /*** Primitif Enqueue/Dequeue ***/
-void sendReqFol(Prioreqfol *qfol, FriendMatrix m, ElTypeReq idus, ElTypeReq ifol){
+void sendReqFol(Prioreqfol *qfol, FriendMatrix m, ElTypeReq idus, ElTypeReq ifol, ElTypeReq nfus){
 /* qfol adallah queue yang dimiliki orang yang ingin difollow
 Idus adalah orang yang merequest
 Ifol adalah orang yang direquest
@@ -71,7 +70,7 @@ Misal dhidit merequest follow kepada ucup
 Maka priority request follow pada adt pengguna ucup akan bertambah
 */
     Address p, pre, nex;
-    p = newReq(m, idus, ifol);
+    p = newReq(m, idus, ifol, nfus);
     if(p!=NULL){
         if(isEmptyReqFol(*qfol)){
             ADDR_HEAD(*qfol) = p;
@@ -83,7 +82,7 @@ Maka priority request follow pada adt pengguna ucup akan bertambah
         // Ada tiga kasus: insertfirst, insertbetween, insertlast
             pre = NIL;
             nex = ADDR_HEAD(*qfol);
-            while((NFRIENDUSER(p)<NFRIENDUSER(nex))&&(nex!=NULL)){
+            while((nex!=NULL)&&(NFRIENDUSER(p)<NFRIENDUSER(nex))){
             //pencarian tempat yang tepat
             pre = nex;
             nex = NEXT(nex);
