@@ -10,6 +10,7 @@
 #include "program/utas.c"
 #include "program/draf_fitur.c"
 #include "program/kicauan.c"
+#include "program/fyb.c"
 #include <sys/stat.h>
 
 // gcc main.c adt/configmachine.c adt/charmachine.c adt/liststatikuser.c adt/listdin.c adt/Matrix.c adt/friendmatrix.c adt/pcolor.c adt/prioreqfollinked.c adt/listdinkicauan.c adt/datetime.c adt/time.c adt/wordmachine.c -o tes
@@ -123,7 +124,8 @@ int main(){
         compareString(kata,"BALASAN")||compareString(kata,"HAPUS_BALASAN")||
         compareString(kata,"BUAT_DRAF")||compareString(kata,"LIHAT_DRAF")||
         compareString(kata,"UTAS")||compareString(kata,"SAMBUNG_UTAS")||
-        compareString(kata,"HAPUS_UTAS")||compareString(kata,"CETAK_UTAS"))&&
+        compareString(kata,"HAPUS_UTAS")||compareString(kata,"CETAK_UTAS")||
+        compareString(kata,"FYB"))&&
         !isLoggedIn){
             printf("\nAnda belum login! Masuk terlebih dahulu untuk menikmati layanan Burbir.\n\n");
         }
@@ -243,11 +245,7 @@ int main(){
 
         // BAGIAN PERINTAH (SIMPAN & MUAT)
         else if (compareString(kata,"SIMPAN")){ //SIMPAN
-            if (!isLoggedIn){
-                printf("\nSIMPAN\n");
-            } else{
-                printf("\nAnda harus keluar terlebih dahulu untuk melakukan pemuatan.\n");
-            }
+            printf("\nSIMPAN\n");
         }
 
         else if (compareString(kata,"MUAT")){ //MUAT
@@ -256,6 +254,11 @@ int main(){
             } else{
                 printf("\nAnda harus keluar terlebih dahulu untuk melakukan pemuatan.\n");
             }
+        }
+
+        // BAGIAN PERINTAH BONUSSSSS KIW KIW CUKURUKUK
+        else if (compareString(kata,"FYB")) {   // FYB
+            fyb(l, listKicau);
         }
 
         ADVWORD();
