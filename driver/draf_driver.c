@@ -46,7 +46,7 @@ int main() {
             } else if (compareString(action,"TERBIT")) {
                 time_t current_time;
                 time(&current_time);
-                current_time+=3600*10 + 7 *60;
+                current_time+=3600*7;
 
                 struct tm* timeinfo = gmtime(&current_time);
 
@@ -86,7 +86,7 @@ int main() {
                     } else if (compareString(action2,"TERBIT")) {
                         time_t current_time;
                         time(&current_time);
-                        current_time+=3600*10 + 7 *60;
+                        current_time+=3600*7;
 
                         struct tm* timeinfo = gmtime(&current_time);
 
@@ -108,7 +108,7 @@ int main() {
                 } else if (compareString(action,"TERBIT")) {
                     time_t current_time;
                     time(&current_time);
-                    current_time+=3600*10 + 7 *60;
+                    current_time+=3600*7;
 
                     struct tm* timeinfo = gmtime(&current_time);
 

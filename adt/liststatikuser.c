@@ -26,6 +26,7 @@ void CreateListStatikUser(ListStatikUser *l){
 
         UserTipe(*l, i) = PUBLIK;
         
+        CreateReqFol(&(l->data[i].userReq));
         CreateEmptyStack(&(l->data[i].drafuser));
 
         Matrix foto;

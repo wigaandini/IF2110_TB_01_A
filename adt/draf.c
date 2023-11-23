@@ -22,13 +22,12 @@ void LihatDraf(DrafStack S){
     else{
         printf("\nYah, anda belum memiliki draf apapun! Buat dulu ya :D\n");
     }
-
 }
 
 void AddDraf(DrafStack * S,Word word){
     time_t current_time;
     time(&current_time);
-    current_time+=3600*10+7*60;
+    current_time+=3600*7;
     DATETIME D;
 
     struct tm* timeinfo = gmtime(&current_time);
@@ -51,7 +50,7 @@ void EditDraf(DrafStack * S,Word word){
 
     time_t current_time;
     time(&current_time);
-    current_time+=3600*10+7*60;
+    current_time+=3600*7;
     DATETIME D;
 
     struct tm* timeinfo = gmtime(&current_time);
