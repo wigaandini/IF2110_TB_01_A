@@ -2,7 +2,7 @@
 #include "../adt/header/listlinierutas.h" 
 
 
-void ReadUtas(ListKicauan *kicau,ListStatikUser l,char* path){
+void ReadUtas(ListKicauan *kicau,ListStatikUser l,char *path){
     char realpath[200];
     concatenate(realpath, path, "/utas.config");
     STARTconfig(realpath);
@@ -90,6 +90,8 @@ void ReadUtas(ListKicauan *kicau,ListStatikUser l,char* path){
                 }
                 int k;
                 UtasType dummy;
+                
+                
                 for ( k = 0; k < banyakutas*3; k++)
                 {
                     Word temp;
@@ -182,12 +184,14 @@ void ReadUtas(ListKicauan *kicau,ListStatikUser l,char* path){
                         // printf("idutas:%d\n",dummy.idUtas);
                         // TulisDATETIME(dummy.waktu);
                         // printf("\n");
+                        
                         insertLastPers(&((*kicau).buffer[tempid-1].sambunganUtas),dummy);
                     }
 
                     while (currentChar == '\n') {
                         ADVconfig();
                     }
+
                 }
                 count++;
             }

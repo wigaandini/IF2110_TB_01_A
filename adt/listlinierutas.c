@@ -28,8 +28,9 @@ void CreateListUtasPers(ListLinierUtas *l){
 /* I.S. sembarang             */
 /* F.S. Terbentuk list kosong */
 
-void CreateUtas(UtasType *u, int idAuthor, int indexUtas, Word text, DATETIME waktu){
+void CreateUtas(UtasType *u, int idAuthor, int indexUtas, Word text, DATETIME waktu, int idUtas){
     AddressUtas p = newNodeUtas(*u);
+    idUtas(*u) = idUtas;
     idAuthor(*u) = idAuthor;
     idxUtas(*u) = indexUtas;
     Text(*u) = text;

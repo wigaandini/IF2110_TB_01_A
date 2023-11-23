@@ -61,7 +61,7 @@ void CreateListUtasPers(ListLinierUtas *l);
 /* I.S. sembarang             */
 /* F.S. Terbentuk list kosong */
 
-void CreateUtas(UtasType *u, int idAuthor, int indexUtas, Word text, DATETIME waktu);
+void CreateUtas(UtasType *u, int idAuthor, int indexUtas, Word text, DATETIME waktu, int idUtas);
 /* I.S. sembarang             */
 /* F.S. Terbentuk utas dengan elemen yang diinput */
 

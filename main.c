@@ -26,6 +26,7 @@ int main(){
     ListStatikUser l;
     ListKicauan listKicau;
     FriendMatrix F;
+    int idUtas;
 
     system("clear");
     printf(".______    __    __  .______      .______    __  .______\n");
@@ -78,7 +79,7 @@ int main(){
         boolean selesai=false, isLoggedIn=false;
         int id_login=-1;        // id_login = -1 berarti belum login. id_login yang digunakan [1..banyakUser]
         Word w, command, kata;
-        int idKicauan, idUtas, indexUtas;
+        int idKicauan, indexUtas;
         ListLinierUtas listUtas;
         UtasType u;
         Kicauan tweet;
@@ -86,12 +87,47 @@ int main(){
             printf("\n>> ");
             STARTSENTENCE();
             command = currentWord;
-
-        if (countWords(command) == 1) {
-            kata = command;
-        } else {
-            kata = splitCommand(&w, command, 1);
-        }
+            if(countWords(command) == 1){
+                kata = command;
+            }
+            else{
+                kata = splitCommand(&w, command, 1);
+            }
+            boolean benar = false;
+            while(!benar){
+                if ((compareString(kata,"LIHAT_PROFIL")||compareString(kata,"GANTI_PROFIL")||
+                compareString(kata,"ATUR_JENIS_AKUN")||compareString(kata,"UBAH_FOTO_PROFIL")||
+                compareString(kata,"DAFTAR_TEMAN")||compareString(kata,"HAPUS_TEMAN")||
+                compareString(kata,"TAMBAH_TEMAN")||compareString(kata,"DAFTAR_PERMINTAAN_TEMAN")||
+                compareString(kata,"SETUJUI_PERTEMANAN")||compareString(kata,"KICAU")||
+                compareString(kata,"KICAUAN")||
+                compareString(kata,"BUAT_DRAF")||compareString(kata,"LIHAT_DRAF")||
+                compareString(kata,"FYB")||compareString(kata,"MASUK")||compareString(kata,"KELUAR")||compareString(kata,"TUTUP_PROGRAM")||compareString(kata,"DAFTAR"))&&
+                countWords(command)!=1){
+                printf("Masukan tidak valid. Harap input kembali dengan format yang benar. \n\n");
+                printf(">> ");
+                STARTSENTENCE();
+                command = currentWord;
+                kata = splitCommand(&w, command, 1);
+                }
+                else if((compareString(kata,"SUKA_KICAUAN")||compareString(kata,"UBAH_KICAUAN")||compareString(kata,"BALASAN")||compareString(kata,"UTAS")||compareString(kata,"CETAK_UTAS")) && countWords(currentWord) != 2){
+                    printf("Masukan tidak valid. Harap input kembali dengan format yang benar.\n\n");
+                    printf(">> ");
+                    STARTSENTENCE();
+                    command = currentWord;
+                    kata = splitCommand(&w, command, 1);
+                }
+                else if((compareString(kata, "BALAS")||compareString(kata, "HAPUS_BALASAN")||compareString(kata, "SAMBUNG_UTAS")||compareString(kata, "HAPUS_UTAS")) && countWords(currentWord) != 3){
+                    printf("Masukan tidak valid. Harap input kembali dengan format yang benar.\n\n");
+                    printf(">> ");
+                    STARTSENTENCE();
+                    command = currentWord;
+                    kata = splitCommand(&w, command, 1);
+                }
+                else{
+                    benar = true;
+                }
+            }
         // BAGIAN PERINTAH (PENGGUNA)
         
         if (compareString(kata,"DAFTAR")){ //DAFTAR
@@ -220,8 +256,13 @@ int main(){
 
         // BAGIAN PERINTAH (UTAS)
         else if (compareString(kata,"UTAS")&&isLoggedIn){ //UTAS
+            printf("count utas : %d\n", countTypeUtas(listKicau));
             idKicauan = WordToInt(splitCommand(&w, command, 2));
             BIKIN_UTAS(idKicauan, &listKicau, &listUtas, id_login, &u);
+            idUtas = idUtas(INFOUtas(ADDRESSUTAS(ELMTLISTKICAU(listKicau, idKicauan-1))));
+            printf("id utas : %d\n", idUtas);
+            printf("count utas : %d\n", countTypeUtas(listKicau));
+            // idUtas ++;
         }
 
         else if (compareString(kata,"SAMBUNG_UTAS")&&isLoggedIn){ //SAMBUNG_UTAS
@@ -238,6 +279,8 @@ int main(){
 
         else if (compareString(kata,"CETAK_UTAS")&&isLoggedIn){ //CETAK_UTAS
             idUtas = WordToInt(splitCommand(&w, command, 2));
+            printf("id utas : %d\n", idUtas);
+            printf("id kicau %d\n", searchIdKicau(idUtas, listKicau));
             CETAK_UTAS(l, listUtas, id_login, idUtas, listKicau);
         }
 
