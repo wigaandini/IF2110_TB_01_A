@@ -90,6 +90,9 @@ void ReadUtas(ListKicauan *kicau,ListStatikUser l,char *path){
                 }
                 int k;
                 UtasType dummy;
+                DATETIME waktu;
+                int idUtas;
+                int indexUtas;
                 
                 
                 for ( k = 0; k < banyakutas*3; k++)
@@ -139,32 +142,32 @@ void ReadUtas(ListKicauan *kicau,ListStatikUser l,char *path){
                             if (i<2){
                                 totwaktu=totwaktu*10+charToInt(temp.TabWord[i]);
                             } else if (i==2){
-                                dummy.waktu.DD=totwaktu;
+                                waktu.DD=totwaktu;
                                 totwaktu=0;
                             } else if (i<5){                    
                                 totwaktu=totwaktu*10+charToInt(temp.TabWord[i]);
                             } else if (i==5){
-                                dummy.waktu.MM=totwaktu;
+                                waktu.MM=totwaktu;
                                 totwaktu=0;
                             } else if (i<10){                         
                                 totwaktu=totwaktu*10+charToInt(temp.TabWord[i]);
                             } else if (i==10){
-                                dummy.waktu.YYYY=totwaktu;
+                                waktu.YYYY=totwaktu;
                                 totwaktu=0;
                             } else if (i<13){
                                 totwaktu=totwaktu*10+charToInt(temp.TabWord[i]);
                             } else if (i==13){
-                                dummy.waktu.T.HH=totwaktu;
+                                waktu.T.HH=totwaktu;
                                 totwaktu=0;
                             } else if (i<16){
                                 totwaktu=totwaktu*10+charToInt(temp.TabWord[i]);
                             } else if (i==16){
-                                dummy.waktu.T.MM=totwaktu;
+                                waktu.T.MM=totwaktu;
                                 totwaktu=0;
                             } else if (i<19){
                                 totwaktu=totwaktu*10+charToInt(temp.TabWord[i]);
                             } else if (i==19){
-                                dummy.waktu.T.SS=totwaktu;
+                                waktu.T.SS=totwaktu;
                                 totwaktu=0;
                             }
                         }
@@ -174,8 +177,8 @@ void ReadUtas(ListKicauan *kicau,ListStatikUser l,char *path){
                         while (currentChar == '\n') {
                             ADVconfig();
                         }
-                        dummy.idUtas=(count+1)/2;
-                        dummy.indexUtas=(k+1)/3;
+                        idUtas=(count+1)/2;
+                        indexUtas=(k+1)/3;
                         // printf("indexutas:%d\n",(k+1)/3);
                         // printf("idutas:%d\n",(count+1)/2);
                         // printf("tempid:%d\n",tempid);
@@ -184,7 +187,10 @@ void ReadUtas(ListKicauan *kicau,ListStatikUser l,char *path){
                         // printf("idutas:%d\n",dummy.idUtas);
                         // TulisDATETIME(dummy.waktu);
                         // printf("\n");
-                        
+                        CreateUtas(&dummy, iduser, indexUtas, temp, waktu, idUtas);
+                        if(idUtas == 1){
+                            ADDRESSUTAS(ELMTLISTKICAU(*kicau, tempid)) = newNodeUtas(dummy);
+                        }
                         insertLastPers(&((*kicau).buffer[tempid-1].sambunganUtas),dummy);
                     }
 
