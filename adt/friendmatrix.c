@@ -55,7 +55,7 @@ boolean isFriend(FriendMatrix m, IdxType i, IdxType j){
     return ((ELMTFRIEND(m,i,j) == 1)&&(ELMTFRIEND(m,j,i) == 1));
 }
 
-void newUser(FriendMatrix *m){
+void addNeff(FriendMatrix *m){
 // Prekondisi: Jumlah user<20
 // Row efektid dan Col efektif akan ditambah
     ROW_EFFFRIEND(*m) ++;
