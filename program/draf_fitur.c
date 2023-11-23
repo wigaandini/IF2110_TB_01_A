@@ -31,7 +31,7 @@ void BUAT_DRAF(ListStatikUser *l,ListKicauan *k,int iduser){
             time_t current_time;
             Kicauan tweet;
             time(&current_time);
-            current_time+=3600*10+7*60;
+            current_time+=3600*7;
             struct tm* timeinfo = gmtime(&current_time);
             Year(waktu) = 1900 + timeinfo->tm_year;
             Month(waktu) = timeinfo->tm_mon + 1;
@@ -74,7 +74,7 @@ void LIHAT_DRAF(ListStatikUser *l, ListKicauan *k,int iduser){
                     Kicauan tweet;
                     time_t current_time;
                     time(&current_time);
-                    current_time+=3600*10+7*60;
+                    current_time+=3600*7;
                     struct tm* timeinfo = gmtime(&current_time);
                     Year(waktu) = 1900 + timeinfo->tm_year;
                     Month(waktu) = timeinfo->tm_mon + 1;
@@ -97,7 +97,7 @@ void LIHAT_DRAF(ListStatikUser *l, ListKicauan *k,int iduser){
                 Kicauan tweet;
                 time_t current_time;
                 time(&current_time);
-                current_time+=3600*10+7*60;
+                current_time+=3600*7;
                 struct tm* timeinfo = gmtime(&current_time);
                 Year(waktu) = 1900 + timeinfo->tm_year;
                 Month(waktu) = timeinfo->tm_mon + 1;
