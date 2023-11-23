@@ -44,7 +44,7 @@ AddressBalasan newBalasan(int id, Word teks, int idPenulis, DATETIME waktu);
 
 /* ***************************************************************** */
 
-void displayUnitBalasan(AddressBalasan a, ListStatikUser *lsu, boolean friend);
+void displayUnitBalasan(AddressBalasan a, ListStatikUser *lsu, boolean fren, int indent);
 
 void displaySemuaBalasan(AddressBalasan a, FriendMatrix *fh, ListStatikUser *lsu, int curUserId, int indent);
 
