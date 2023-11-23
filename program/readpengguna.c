@@ -310,6 +310,7 @@ void ReadUser(ListStatikUser *l,FriendMatrix *F, char *path) {
                     ELMTFRIEND(*F,friendcount,i/2)=charToInt(bacaan.TabWord[i]);
                 }
             }
+            addNeff(&F);
             // printf("\n");
 
             while (currentChar == '\n') {
@@ -355,6 +356,7 @@ void ReadUser(ListStatikUser *l,FriendMatrix *F, char *path) {
                 int space=0;
                 int idus=0;
                 int ifol=0;
+                int nfus = 0;
                 for (int i = 0; bacaan.TabWord[i] != '\0'; i++) {
                     // printf("cc:%c\n",bacaan.TabWord[i]);
                     // printf("space:%d\n",space);
@@ -370,11 +372,14 @@ void ReadUser(ListStatikUser *l,FriendMatrix *F, char *path) {
                         // printf("ifol:%c\n",bacaan.TabWord[i]);
                         ifol=ifol*10+charToInt(bacaan.TabWord[i]);
                     }else if(space==2 && bacaan.TabWord[i]!=' '){
-                        sendReqFol(&(l->data[ifol-1].userReq),*F,idus,ifol);
+                        nfus = nfus*10+charToInt(bacaan.TabWord[i]);
                     }
                     // printf("idus:%d\n",idus);
                     // printf("ifol:%d\n",ifol);
+                    
                 }
+                sendReqFol(&(l->data[ifol-1].userReq),*F,idus,ifol, nfus);
+                        
 
                 while (currentChar == '\n') {
                     ADVconfig();

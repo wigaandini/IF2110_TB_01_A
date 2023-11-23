@@ -53,7 +53,7 @@ boolean isFriend(FriendMatrix m, IdxType i, IdxType j);
 //    return ((ELMT(m,i,j) == 1)&&(ELMT(m,j,i) == 1));
 // }
 
-void newUser(FriendMatrix *m);
+void addNeff(FriendMatrix *m);
 // //Idx efektif diupdate
 
 void addFriend(FriendMatrix *m, IdxType i, IdxType j);
