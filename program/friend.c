@@ -57,7 +57,7 @@ void HAPUS_TEMAN(int idlogin, ListStatikUser l, FriendMatrix *m){
         STARTSENTENCE();
         keputusan = currentWord;
 
-        while((compareString(keputusan, "YA"))&&(compareString(keputusan, "TIDAK"))){
+        while((compareString(keputusan, "YA"))||(compareString(keputusan, "TIDAK"))){
             printf("Masukan anda tidak valid:\n");
             printf("Apakah anda yakin ingin menghapus ");
             displayWord(friendname);
@@ -151,7 +151,7 @@ void DAFTAR_PERMINTAAN_PERTEMANAN(int idlogin ,FriendMatrix m, Prioreqfol myQ, L
         
     }
 }
-
+#define here printf("here\n");
 void SETUJUI_PERTEMANAN(int idlogin, FriendMatrix m, Prioreqfol myQ, ListStatikUser l){    
     char friendname[21];
     Word keputusan;
@@ -162,15 +162,19 @@ void SETUJUI_PERTEMANAN(int idlogin, FriendMatrix m, Prioreqfol myQ, ListStatikU
     else{
         
         int i = 0;
-        for(i = 0; i<21; i++){
+        for(i = 0; i<20; i++){
             friendname[i] = l.data[IDUSER(p)].nama[i];
         }
-        i = 0;   
-        printf("Apakah anda yakin ingin menghapus %s dari daftar teman anda:\n", friendname);
+        // i = 0;   
+        // here
+        printf("\nApakah anda yakin ingin menghapus ");
+        printf(" dari daftar teman anda:\n");
+        printf("%s\n", l.data[IDUSER(p)].nama);
+        
         STARTSENTENCE();
         keputusan = currentWord;
 
-        while((compareString(keputusan, "YA"))&&(compareString(keputusan, "TIDAK"))){
+        while((!compareString(keputusan, "YA")) && (!compareString(keputusan, "TIDAK"))){
             printf("Masukan anda tidak valid:\n");
             printf("Apakah anda yakin ingin menghapus %s dari daftar teman anda:\n", friendname);
             STARTSENTENCE();
@@ -178,11 +182,12 @@ void SETUJUI_PERTEMANAN(int idlogin, FriendMatrix m, Prioreqfol myQ, ListStatikU
         }
 
         if(compareString(keputusan, "YA")){
-            deleteFriend(&m, idlogin, IDUSER(p));
-            printf("%s berhasil dihapus dari daftar teman anda\n", friendname);
+            addFriend(&m, idlogin-1, IDUSER(p));
+            
+            printf("%s berhasil ditambahkan menjadi daftar teman anda\n", friendname);
         }
         else{
-            printf("%s tidak jadi dihapus dari daftar teman anda\n", friendname);    
+            printf("Permintaan pertemanana dari %s berhasil ditolak\n", friendname);    
         }
 
     }
