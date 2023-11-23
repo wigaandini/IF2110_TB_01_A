@@ -109,8 +109,6 @@ void BIKIN_UTAS(int idKicau, ListKicauan *listKicau, ListLinierUtas *listUtasPer
 
                 CreateUtas(u, idAuthor, indexUtas, text, waktu);
                 insertLastPers(listUtasPers, *u);
-                printf(idUtas(*u));
-                printf("\n");
 
                 printf("Apakah Anda ingin melanjutkan utas ini? (YA/TIDAK) ");
                 STARTSENTENCE();
