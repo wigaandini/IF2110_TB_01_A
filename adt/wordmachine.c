@@ -95,6 +95,7 @@ void CopySpace(){
         currentWord.TabWord[i] = currentChar;
         ADV();
         i++;
+        IgnoreEnter();
     }
     if (i > NMax){
         currentWord.Length = NMax;
@@ -117,7 +118,7 @@ void STARTSENTENCE(){
     }
     else{
         EndWord = false;
-        CopySpace();
+        CopySpace();  
     }
 }
 

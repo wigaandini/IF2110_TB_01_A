@@ -10,6 +10,10 @@
 #include "../adt/header/datetime.h"
 #include "../adt/header/friendmatrix.h"
 
+void addUtas(ListKicauan *listKicau, int idAuthor, int indexUtas, Word text, DATETIME waktu, int idUtas){
+    
+}
+
 int searchIdKicau(int idUtas, ListKicauan l){
     int i = 0;
     boolean found = false;
