@@ -31,7 +31,7 @@ void BUAT_DRAF(DrafStack S, ListStatikUser U, ListKicauan l, int idUser){
 
         time_t current_time;
         time(&current_time);
-        current_time+=3600*10 + 7 *60;
+        current_time+=3600*7;
 
         struct tm* timeinfo = gmtime(&current_time);
 
@@ -78,7 +78,7 @@ void LIHAT_DRAF(DrafStack S, ListStatikUser U, ListKicauan l, int idUser){
 
                 time_t current_time;
                 time(&current_time);
-                current_time+=3600*10 + 7 *60;
+                current_time+=3600*7;
 
                 struct tm* timeinfo = gmtime(&current_time);
 
@@ -100,7 +100,7 @@ void LIHAT_DRAF(DrafStack S, ListStatikUser U, ListKicauan l, int idUser){
         } else if (compareString(action,"TERBIT")) {
             time_t current_time;
             time(&current_time);
-            current_time+=3600*10 + 7 *60;
+            current_time+=3600*7;
 
             struct tm* timeinfo = gmtime(&current_time);
 
