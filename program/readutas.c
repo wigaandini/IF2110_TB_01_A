@@ -10,6 +10,7 @@ void ReadUtas(ListKicauan *kicau,ListStatikUser l,char *path){
     int count=0;
     int tempid=0;
     boolean first=true;
+    int iduser;
     while (!EOP) {
         if (first)
         {
@@ -117,7 +118,7 @@ void ReadUtas(ListKicauan *kicau,ListStatikUser l,char *path){
                     else if (k%3==1){
                         Word namadicari;
                         int k;
-                        int iduser=-1;
+                        iduser=-1;
                         for ( k= 0; k < banyakUser(l); k++)
                         {
                             boolean tepat=true;
