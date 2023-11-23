@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include "../adt/header/listdinkicauan.h"
 #include "../adt/header/treebalasan.h"
+#include "balasan.c"
 
 void readOneNum(int *num, Word bacaan){
     int iteru;
@@ -83,8 +84,10 @@ void copyWord(Word *w1, Word w2){
     w1->TabWord[w2.Length + 1] = '\0';
 }
 
-void readbalasan(ListStatikUser *lsu, ListKicauan *lk){
-    STARTconfig("config/balasan.config");
+void readbalasan(ListStatikUser *lsu, ListKicauan *lk,char *path){
+    char realpath[200];
+    concatenate(realpath, path, "/balasan.config");
+    STARTconfig(realpath);
     Word bacaanStart;
     bacaanStart.Length = 0;
     int iterStart = 0;
@@ -188,8 +191,4 @@ void readbalasan(ListStatikUser *lsu, ListKicauan *lk){
             langsungAddBalasan(lk, textInput, d, idKicau, idPar, userId, &idCur);
         }
     }
-}
-
-int main(){
-    return 0;
 }

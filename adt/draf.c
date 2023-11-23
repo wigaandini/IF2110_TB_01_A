@@ -3,10 +3,12 @@
 
 void LihatDraf(DrafStack S){
     infotypeDraf X;
-    while (!IsEmptyStack(S))
-    {
+    // while (!IsEmptyStack(S))
+    // {
+    if(!IsEmptyStack(S)){
         Pop(&S,&X);
         int i;
+        printf("\nIni draf terakhir anda:\n");
         printf("| ");
         for ( i = 0; i < X.Text.Length; i++)
         {
@@ -17,7 +19,9 @@ void LihatDraf(DrafStack S){
         TulisDATETIME(X.Waktu);
         printf("\n");
     }
-
+    else{
+        printf("\nYah, anda belum memiliki draf apapun! Buat dulu ya :D\n");
+    }
 }
 
 void AddDraf(DrafStack * S,Word word){

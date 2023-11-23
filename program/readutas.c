@@ -176,14 +176,19 @@ void ReadUtas(ListKicauan *kicau,ListStatikUser l,char* path){
                         dummy.indexUtas=(k+1)/3;
                         // printf("indexutas:%d\n",(k+1)/3);
                         // printf("idutas:%d\n",(count+1)/2);
+                        // printf("tempid:%d\n",tempid);
+                        // printf("%s\n",dummy.text.TabWord);
+                        // printf("idauthor:%d\n",dummy.idAuthor);
+                        // printf("idutas:%d\n",dummy.idUtas);
+                        // TulisDATETIME(dummy.waktu);
+                        // printf("\n");
+                        insertLastPers(&((*kicau).buffer[tempid-1].sambunganUtas),dummy);
                     }
 
                     while (currentChar == '\n') {
                         ADVconfig();
                     }
                 }
-                // printf("tempid:%d\n",tempid);
-                insertLastPers(&((*kicau).buffer[tempid-1].sambunganUtas),dummy);
                 count++;
             }
         }

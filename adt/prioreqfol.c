@@ -82,8 +82,8 @@ void Enqueue(PrioQueueTime *Q, infotype X)
     /* F.S. X disisipkan pada posisi yang tepat sesuai dengan prioritas,
             TAIL "maju" dengan mekanisme circular buffer; */
 {
-    // boolean found;
-    // int idx;
+    boolean found;
+    int idx;
     int i, j;
     infotype temp;
 

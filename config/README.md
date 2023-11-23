@@ -1,1 +1,0 @@
-## Ini berisi file2 config kaya database gitu (kurang lebih hampir sama kaya txt untuk di load dan di write)

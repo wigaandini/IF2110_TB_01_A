@@ -61,6 +61,7 @@ void LIHAT_DRAF(DrafStack S, ListStatikUser U, ListKicauan l, int idUser){
         printf("Apakah anda ingin mengubah, menghapus, atau menerbitkan draf ini? (KEMBALI jika ingin kembali)\n");
         STARTSENTENCE();
         Word action = currentWord;
+        do {
         if(compareString(action,"UBAH")){
             printf("Masukkan draf yang baru: \n");
             STARTSENTENCE();
@@ -117,8 +118,9 @@ void LIHAT_DRAF(DrafStack S, ListStatikUser U, ListKicauan l, int idUser){
             DeleteDraf(&S, &poppedDraf);
             printf("Draf telah berhasil dihapus!\n");
         } else if (compareString(action,"KEMBALI")) {
-            exit;
+            STARTSENTENCE();
         }
+        } while (compareString(action, "KEMBALI"));
     } else {
         printf("Yah, anda belum memiliki draf apapun! Buat dulu ya :D\n");
     }
