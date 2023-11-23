@@ -310,7 +310,7 @@ void ReadUser(ListStatikUser *l,FriendMatrix *F, char *path) {
                     ELMTFRIEND(*F,friendcount,i/2)=charToInt(bacaan.TabWord[i]);
                 }
             }
-            addNeff(&F);
+            addNeff(F);
             // printf("\n");
 
             while (currentChar == '\n') {
