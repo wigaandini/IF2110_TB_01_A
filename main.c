@@ -91,7 +91,7 @@ int main(){
                 if ((compareString(kata,"LIHAT_PROFIL")||compareString(kata,"GANTI_PROFIL")||
                 compareString(kata,"ATUR_JENIS_AKUN")||compareString(kata,"UBAH_FOTO_PROFIL")||
                 compareString(kata,"DAFTAR_TEMAN")||compareString(kata,"HAPUS_TEMAN")||
-                compareString(kata,"TAMBAH_TEMAN")||compareString(kata,"DAFTAR_PERMINTAAN_TEMAN")||
+                compareString(kata,"TAMBAH_TEMAN")||compareString(kata,"DAFTAR_PERMINTAAN_PERTEMANAN")||
                 compareString(kata,"SETUJUI_PERTEMANAN")||compareString(kata,"KICAU")||
                 compareString(kata,"KICAUAN")||
                 compareString(kata,"BUAT_DRAF")||compareString(kata,"LIHAT_DRAF")||
@@ -145,7 +145,7 @@ int main(){
         else if((compareString(kata,"LIHAT_PROFIL")||compareString(kata,"GANTI_PROFIL")||
         compareString(kata,"ATUR_JENIS_AKUN")||compareString(kata,"UBAH_FOTO_PROFIL")||
         compareString(kata,"DAFTAR_TEMAN")||compareString(kata,"HAPUS_TEMAN")||
-        compareString(kata,"TAMBAH_TEMAN")||compareString(kata,"DAFTAR_PERMINTAAN_TEMAN")||
+        compareString(kata,"TAMBAH_TEMAN")||compareString(kata,"DAFTAR_PERMINTAAN_PERTEMANAN")||
         compareString(kata,"SETUJUI_PERTEMANAN")||compareString(kata,"KICAU")||
         compareString(kata,"KICAUAN")||compareString(kata,"SUKA_KICAUAN")||
         compareString(kata,"UBAH_KICAUAN")||compareString(kata,"BALAS")||
@@ -202,7 +202,7 @@ int main(){
             TAMBAH_TEMAN(id_login, &l, F, l.data[id_login-1].userReq);
         }
 
-        else if (compareString(kata,"DAFTAR_PERMINTAAN_TEMAN")&&isLoggedIn){ //DAFTAR_PERMINTAAN
+        else if (compareString(kata,"DAFTAR_PERMINTAAN_PERTEMANAN")&&isLoggedIn){ //DAFTAR_PERMINTAAN
             DAFTAR_PERMINTAAN_PERTEMANAN(id_login, F, l.data[id_login-1].userReq, l);
         }
         else if (compareString(kata,"SETUJUI_PERTEMANAN")&&isLoggedIn){ //SETUJUI_PERTEMANAN
