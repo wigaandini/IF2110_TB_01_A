@@ -194,10 +194,8 @@ void ReadUtas(ListKicauan *kicau,ListStatikUser l,char *path){
                         // else{
                         if(dummy.indexUtas == 1){
                             ADDRESSUTAS(ELMTLISTKICAU((*kicau),tempid-1)) = newNodeUtas(dummy);
-                            printf("neeeee\n");
                         }
                         else{
-                            printf("okeng\n");
                             insertLastPers(&listUtas, dummy);
                         }
                         // // else{

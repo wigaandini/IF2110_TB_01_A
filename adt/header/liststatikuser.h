@@ -126,7 +126,7 @@ int idOf(ListStatikUser l, Word name);
 // Mengembalikan ID dari user yang memiliki username bernilai name
 
 /* ********** MENAMBAH DATA USER ********** */
-void addUser(ListStatikUser *l, Word name, Word pw);
+void addUser(ListStatikUser *l, FriendMatrix *F, Word name, Word pw);
 /* I.S. l sembarang dan tidak penuh
    F.S. l bertambah satu user
    Proses: Pada user data yang masih kosong, UserName dan UserSandi diubah sesuai dengan masukkan terminal*/

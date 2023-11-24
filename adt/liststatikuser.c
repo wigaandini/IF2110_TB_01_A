@@ -194,7 +194,7 @@ int idOf(ListStatikUser l, Word name) {
 
 /* ********** MENAMBAH ELEMEN ********** */
 /* ********** MENAMBAH DATA USER ********** */
-void addUser(ListStatikUser *l, Word name, Word pw)         // Ini kayanya masukkan nya ga dalam Word dah, coba cari tau
+void addUser(ListStatikUser *l,FriendMatrix *F, Word name, Word pw)         // Ini kayanya masukkan nya ga dalam Word dah, coba cari tau
 {
     IdxType i, idx;
     for(i=0; i<CAPACITYUSER; i++){
@@ -211,6 +211,7 @@ void addUser(ListStatikUser *l, Word name, Word pw)         // Ini kayanya masuk
     for (int i=0; i<pw.Length; i++) {
         UserSandi(*l, idx, i) = pw.TabWord[i];
     }
+    addNeff(F);
 }
 
 boolean checkUserExist(ListStatikUser l, Word name){

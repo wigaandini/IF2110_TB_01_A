@@ -60,7 +60,7 @@ int main(){
             //DisplayAllKicauan(l,listKicau);
             //displaySemuaBalasan(listKicau.buffer[3].balasan, &F, &l, 3, 0);
             //printf("\n");
-            printf("File konfigurasi berhasil dimuat! Selamat berkicau!\n");
+            printf("\nFile konfigurasi berhasil dimuat! Selamat berkicau!\n");
             jalan=true; 
         }
         
@@ -125,7 +125,7 @@ int main(){
         // BAGIAN PERINTAH (PENGGUNA)
         
         if (compareString(kata,"DAFTAR")){ //DAFTAR
-            DAFTAR(&l, isLoggedIn);
+            DAFTAR(&l,&F ,isLoggedIn);
         }
 
         else if (compareString(kata,"MASUK")){ //MASUK
