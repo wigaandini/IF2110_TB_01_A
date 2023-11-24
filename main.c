@@ -17,6 +17,7 @@ int main(){
     ListKicauan listKicau;
     FriendMatrix F;
     int idUtas;
+    ListLinierUtas listUtas;
 
     int curIdBalasan = 0;
 
@@ -60,7 +61,17 @@ int main(){
             readbalasan(&l,&listKicau,fullPath, &curIdBalasan);
             ReadDraf(&l,fullPath);
             ReadUtas(&listKicau,l,fullPath);
-
+            // AddressUtas adu = ADDRESSUTAS(ELMTLISTKICAU(listKicau, 1));
+            // while(adu != NULL){
+            //     printf("id utas : %d\n", idUtas(INFOUtas(adu)));
+            //     adu = NEXTUtas(adu);
+            // }
+            // readUtasConfig(listKicau, &listUtas);
+            // while(adu != NULL){
+            //     printf("id utas : %d\n", idUtas(INFOUtas(adu)));
+            //     adu = NEXTUtas(adu);
+            // }
+            // printf("PANNG: %d\n", length(listUtas));
             //printListofUser(l);
             //DisplayAllKicauan(l,listKicau);
             //displaySemuaBalasan(listKicau.buffer[3].balasan, &F, &l, 3, 0);
@@ -78,11 +89,9 @@ int main(){
         int id_login=-1;        // id_login = -1 berarti belum login. id_login yang digunakan [1..banyakUser]
         Word w, command, kata;
         int idKicauan, indexUtas;
-        ListLinierUtas listUtas;
         UtasType u;
         Kicauan tweet;
         while (!selesai){
-            // printf("count utas awal : %d\n", countTypeUtas(listKicau));
             printf("\n>> ");
             STARTSENTENCE();
             command = currentWord;
@@ -101,7 +110,7 @@ int main(){
                 compareString(kata,"SETUJUI_PERTEMANAN")||compareString(kata,"KICAU")||
                 compareString(kata,"KICAUAN")||
                 compareString(kata,"BUAT_DRAF")||compareString(kata,"LIHAT_DRAF")||
-                compareString(kata,"FYB")||compareString(kata,"MASUK")||compareString(kata,"KELUAR")||compareString(kata,"TUTUP_PROGRAM")||compareString(kata,"DAFTAR")||compareString(kata, "CETAK_UTAS"))&&
+                compareString(kata,"FYB")||compareString(kata,"MASUK")||compareString(kata,"KELUAR")||compareString(kata,"TUTUP_PROGRAM")||compareString(kata,"DAFTAR"))&&
                 countWords(command)!=1){
                 printf("Masukan tidak valid. Harap input kembali dengan format yang benar. \n\n");
                 printf(">> ");
@@ -109,14 +118,14 @@ int main(){
                 command = currentWord;
                 kata = splitCommand(&w, command, 1);
                 }
-                else if((compareString(kata,"SUKA_KICAUAN")||compareString(kata,"UBAH_KICAUAN")||compareString(kata,"BALASAN")||compareString(kata,"UTAS")||compareString(kata,"CETAK_UTAS")) && countWords(currentWord) != 2){
+                else if((compareString(kata,"SUKA_KICAUAN")||compareString(kata,"UBAH_KICAUAN")||compareString(kata,"UTAS")||compareString(kata,"CETAK_UTAS")) && countWords(currentWord) != 2){
                     printf("Masukan tidak valid. Harap input kembali dengan format yang benar.\n\n");
                     printf(">> ");
                     STARTSENTENCE();
                     command = currentWord;
                     kata = splitCommand(&w, command, 1);
                 }
-                else if((compareString(kata, "BALAS")||compareString(kata, "HAPUS_BALASAN")||compareString(kata, "SAMBUNG_UTAS")||compareString(kata, "HAPUS_UTAS")) && countWords(currentWord) != 3){
+                else if((compareString(kata, "HAPUS_BALASAN")||compareString(kata, "SAMBUNG_UTAS")||compareString(kata, "HAPUS_UTAS")) && countWords(currentWord) != 3){
                     printf("Masukan tidak valid. Harap input kembali dengan format yang benar.\n\n");
                     printf(">> ");
                     STARTSENTENCE();
@@ -270,7 +279,7 @@ int main(){
             // printf("count utas : %d\n", countTypeUtas(listKicau));
             idKicauan = WordToInt(splitCommand(&w, command, 2));
             BIKIN_UTAS(idKicauan, &listKicau, &listUtas, id_login, &u);
-            // idUtas = idUtas(INFOUtas(ADDRESSUTAS(ELMTLISTKICAU(listKicau, idKicauan-1))));
+            idUtas = idUtas(INFOUtas(ADDRESSUTAS(ELMTLISTKICAU(listKicau, idKicauan-1))));
             // printf("id utas : %d\n", idUtas);
             // printf("count utas : %d\n", countTypeUtas(listKicau));
             // idUtas ++;

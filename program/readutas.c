@@ -10,6 +10,7 @@ void ReadUtas(ListKicauan *kicau,ListStatikUser l,char *path){
     int count=0;
     int tempid=0;
     boolean first=true;
+    
     while (!EOP) {
         if (first)
         {
@@ -110,7 +111,7 @@ void ReadUtas(ListKicauan *kicau,ListStatikUser l,char *path){
                     else if (k%3==1){
                         Word namadicari;
                         int k;
-                        iduser=-1;
+                        int iduser=-1;
                         for ( k= 0; k < banyakUser(l); k++)
                         {
                             boolean tepat=true;
@@ -170,7 +171,7 @@ void ReadUtas(ListKicauan *kicau,ListStatikUser l,char *path){
                                 totwaktu=0;
                             }
                         }
-                        // TulisDATETIME(dummy.waktu);
+                        // TulisDATETIME(dummy.waktu);create
                         // printf("\n");
                         
                         while (currentChar == '\n') {

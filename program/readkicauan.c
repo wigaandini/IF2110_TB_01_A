@@ -65,8 +65,8 @@ void ReadKicauan(ListKicauan *k, ListStatikUser l,FriendMatrix F, char* path){
                     }
                 }
                 ELMTLISTKICAU(*k,NEFFLISTKICAU(*k)).id=theid;
-                printf("neff:%d\n",NEFFLISTKICAU(*k));
-                printf("%d\n",ELMTLISTKICAU(*k,NEFFLISTKICAU(*k)).id);
+                // printf("neff:%d\n",NEFFLISTKICAU(*k));
+                // printf("%d\n",ELMTLISTKICAU(*k,NEFFLISTKICAU(*k)).id);
 
                 while (currentChar == '\n') {
                     ADVconfig();
