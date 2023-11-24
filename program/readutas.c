@@ -10,7 +10,6 @@ void ReadUtas(ListKicauan *kicau,ListStatikUser l,char *path){
     int count=0;
     int tempid=0;
     boolean first=true;
-    ListLinierUtas listUtas;
     while (!EOP) {
         if (first)
         {
@@ -83,7 +82,7 @@ void ReadUtas(ListKicauan *kicau,ListStatikUser l,char *path){
                         banyakutas=banyakutas*10+charToInt(bacaan.TabWord[i]);
                     }
                 }
-                printf("banyakutas:%d\n",banyakutas);
+                // printf("banyakutas:%d\n",banyakutas);
 
 
                 while (currentChar == '\n') {
@@ -91,16 +90,14 @@ void ReadUtas(ListKicauan *kicau,ListStatikUser l,char *path){
                 }
                 int k;
                 UtasType dummy;
-                printf("halooo\n");
                 
-                CreateListUtasPers(&listUtas);
-                // CreateListUtasPers(&((*kicau).buffer[tempid-1].sambunganUtas));
+                
                 for ( k = 0; k < banyakutas*3; k++)
                 {
                     Word temp;
                     int i = 0;
 
-                    while (!EOP && currentChar != '\n' && currentChar != '\r' && currentChar != '\0') {
+                    while (!EOP && currentChar != '\n') {
                         temp.TabWord[i] = currentChar;
                         i++;
                         ADVconfig();
@@ -179,36 +176,22 @@ void ReadUtas(ListKicauan *kicau,ListStatikUser l,char *path){
                         }
                         dummy.idUtas=(count+1)/2;
                         dummy.indexUtas=(k+1)/3;
-                        printf("indexutas:%d\n", dummy.indexUtas);
+                        // printf("indexutas:%d\n",(k+1)/3);
                         // printf("idutas:%d\n",(count+1)/2);
                         // printf("tempid:%d\n",tempid);
-                        printf("%s\n",dummy.text.TabWord);
-                        printf("idauthor:%d\n",dummy.idAuthor);
-                        printf("idutas:%d\n",dummy.idUtas);
-                        TulisDATETIME(dummy.waktu);
-                        printf("\n");
-                        // ELMTLISTKICAU((*kicau),tempid-1).sambunganUtas = newNodeUtas(dummy);
-                        // if(dummy.indexUtas == 1){
-                        //     addUtas(kicau, dummy.idAuthor, dummy.indexUtas, dummy.text, dummy.waktu, dummy.idUtas, tempid);
-                        // }
-                        // else{
-                        if(dummy.indexUtas == 1){
-                            ADDRESSUTAS(ELMTLISTKICAU((*kicau),tempid-1)) = newNodeUtas(dummy);
-                        }
-                        else{
-                            insertLastPers(&listUtas, dummy);
-                        }
-                        // // else{
-                        //     insertLastPers(&((*kicau).buffer[tempid-1].sambunganUtas),dummy);
-                        // // }
-                        // // }
-                        printf("count utas : %d\n", countTypeUtas(*kicau));
+                        // printf("%s\n",dummy.text.TabWord);
+                        // printf("idauthor:%d\n",dummy.idAuthor);
+                        // printf("idutas:%d\n",dummy.idUtas);
+                        // TulisDATETIME(dummy.waktu);
+                        // printf("\n");
+                        
+                        insertLastPers(&((*kicau).buffer[tempid-1].sambunganUtas),dummy);
                     }
-                    
 
                     while (currentChar == '\n') {
                         ADVconfig();
                     }
+
                 }
                 count++;
             }
