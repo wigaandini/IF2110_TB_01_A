@@ -63,7 +63,6 @@ void ReadDraf(ListStatikUser *l,char* path){
                     }
                 }
             }
-            // printf("temp:%d\n",temp);
 
             while (currentChar == '\n') {
                 ADVconfig();
@@ -83,23 +82,24 @@ void ReadDraf(ListStatikUser *l,char* path){
                 ADVconfig();
             }
             bacaan.TabWord[i] = '\0';
+
             int j;
             boolean space=false;
             boolean skipspace=false;
             Word revert;
-            for ( j = bacaan.Length-2; j >= 0  ; j--){
+            for ( j = bacaan.Length-1; j >= 0  ; j--){
                 if (bacaan.TabWord[j] == ' '){
                     space=true;
                 }
                 
                 if (!space){
                     if (charToInt(bacaan.TabWord[j])<=9 && charToInt(bacaan.TabWord[j])>=0){
-                        if (bacaan.Length-j==0)
+                        if (bacaan.Length-j-1==0)
                         {
                             totdraf+=charToInt(bacaan.TabWord[j]);
                         }
                         else{
-                            totdraf+=charToInt(bacaan.TabWord[j])*pangkat(10,bacaan.Length-j-2);
+                            totdraf+=charToInt(bacaan.TabWord[j])*pangkat(10,bacaan.Length-j-1);
                         }
                     }
                 }
@@ -116,7 +116,7 @@ void ReadDraf(ListStatikUser *l,char* path){
                 }
             }
             // printf("\n");
-            // printf("totdraf:%d\n",totdraf);
+    
             // printf("\n");
 
             int idmasuk=-1;
@@ -204,9 +204,10 @@ void ReadDraf(ListStatikUser *l,char* path){
                         } else if (i==16){
                             dummy.Waktu.T.MM=totwaktu;
                             totwaktu=0;
-                        } else if (i<19){
+                        } else if (i<18){
                             totwaktu=totwaktu*10+charToInt(bacaan2.TabWord[i]);
-                        } else if (i==19){
+                        } else if (i==18){
+                            totwaktu = totwaktu * 10 + charToInt(bacaan2.TabWord[i]);
                             dummy.Waktu.T.SS=totwaktu;
                             totwaktu=0;
                         }
@@ -218,7 +219,7 @@ void ReadDraf(ListStatikUser *l,char* path){
                 while (currentChar == '\n') {
                     ADVconfig();
                 }
-
+                //printf("idmasuk: %d\n", idmasuk);
                 if (idmasuk!=-1){
                     Push(&reverse,dummy);
                 }

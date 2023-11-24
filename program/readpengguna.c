@@ -66,9 +66,9 @@ void ReadUser(ListStatikUser *l,FriendMatrix *F, char *path) {
                 }
             }
 
-            while (currentChar == '\n') {
+            // while (currentChar == '\n') {
                 ADVconfig();
-            }
+            // }
             first=false;
         }
         if (count<(temp*11)){
@@ -83,15 +83,16 @@ void ReadUser(ListStatikUser *l,FriendMatrix *F, char *path) {
                 }
                 bacaan.TabWord[i] = '\0';
                 // printf("%s\n", bacaan.TabWord);
-                
+
                 for (int i = 0; bacaan.TabWord[i] != '\0' && bacaan.TabWord[i] != '\r'; i++) {
                     // printf("%c", bacaan.TabWord[i]);
                     UserName(*l,user,i)=bacaan.TabWord[i];
                 }
+                
                 // printf("\n");
-                while (currentChar == '\n') {
+                // while (currentChar == '\n') {
                     ADVconfig();
-                }
+                // }
                 count++;
                 // printf("%s\n",l.data[user].nama);
                 UserId(*l, user)=user+1;
@@ -106,15 +107,16 @@ void ReadUser(ListStatikUser *l,FriendMatrix *F, char *path) {
                     ADVconfig();
                 }
                 bacaan.TabWord[i] = '\0';
-                
+            
+
                 for (int i = 0; bacaan.TabWord[i] != '\0'; i++) {
                     // printf("%c", bacaan.TabWord[i]);
                     UserSandi(*l,user,i)=bacaan.TabWord[i];
                 }
                 // printf("\n");
-                while (currentChar == '\n') {
+                // while (currentChar == '\n') {
                     ADVconfig();
-                }
+                // }
                 count++;
                 // printf("%s\n",l.data[user].sandi);
             }
@@ -134,9 +136,9 @@ void ReadUser(ListStatikUser *l,FriendMatrix *F, char *path) {
                     UserBio(*l,user,i)=bacaan.TabWord[i];
                 }
                 // printf("\n");
-                while (currentChar == '\n') {
+                // while (currentChar == '\n') {
                     ADVconfig();
-                }
+                // }
                 count++;
 
                 // if (l.data[user].bio!="/0"){
@@ -189,9 +191,9 @@ void ReadUser(ListStatikUser *l,FriendMatrix *F, char *path) {
                 }
                 free(bacaan);
 
-                while (currentChar == '\n') {
+                // while (currentChar == '\n') {
                     ADVconfig();
-                }
+                // }
                 count++;
                 // printList(l.data[0].noHP);
             }
@@ -205,6 +207,7 @@ void ReadUser(ListStatikUser *l,FriendMatrix *F, char *path) {
                     ADVconfig();
                 }
                 bacaan.TabWord[i] = '\0';
+                
 
                 for (int i = 0; bacaan.TabWord[i] != '\0'; i++) {
                     if (i == 0 && bacaan.TabWord[i] == 'P' && bacaan.TabWord[i+1] != '\0') {
@@ -226,9 +229,9 @@ void ReadUser(ListStatikUser *l,FriendMatrix *F, char *path) {
                 }
                 // printf("\n");
 
-                while (currentChar == '\n') {
+                // while (currentChar == '\n') {
                     ADVconfig();
-                }
+                // }
                 count++;
             }                        
             else if (count%11==5){ //TIPEAKUN
@@ -241,6 +244,7 @@ void ReadUser(ListStatikUser *l,FriendMatrix *F, char *path) {
                 }
                 bacaan.TabWord[i] = '\0';
                 
+
                 for (int i = 0; bacaan.TabWord[i] != '\0'; i++) {
                     if (i == 0 && bacaan.TabWord[i] == 'P' && bacaan.TabWord[i+1] != '\0') {
                         if (i == 0 && bacaan.TabWord[i+1] == 'u' && bacaan.TabWord[i+2] != '\0') {
@@ -253,9 +257,9 @@ void ReadUser(ListStatikUser *l,FriendMatrix *F, char *path) {
                 }
                 // printf("\n");
 
-                while (currentChar == '\n') {
+                // while (currentChar == '\n') {
                     ADVconfig();
-                }
+                // }
                 count++;
             }
             else{ //PROFIL WARNA/FOTO
@@ -268,6 +272,7 @@ void ReadUser(ListStatikUser *l,FriendMatrix *F, char *path) {
                     ADVconfig();
                 }
                 bacaan.TabWord[i] = '\0';
+
                 
                 int j = (count%11)%6;
                 // printf("ini j :%d",j);
@@ -284,9 +289,9 @@ void ReadUser(ListStatikUser *l,FriendMatrix *F, char *path) {
                 }
                 // printf("\n");
 
-                while (currentChar == '\n') {
+                // while (currentChar == '\n') {
                     ADVconfig();
-                }
+                // }
                 if (count%11==10){
                     user++;
                 }
@@ -313,9 +318,9 @@ void ReadUser(ListStatikUser *l,FriendMatrix *F, char *path) {
             addNeff(F);
             // printf("\n");
 
-            while (currentChar == '\n') {
+            // while (currentChar == '\n') {
                 ADVconfig();
-            }
+            // }
             friendcount++;
         }
         else{ //MATRIKS REQUEST
@@ -337,9 +342,9 @@ void ReadUser(ListStatikUser *l,FriendMatrix *F, char *path) {
                 // }
                 // // printf("\n");
 
-                while (currentChar == '\n') {
+                // while (currentChar == '\n') {
                     ADVconfig();
-                }
+                // }
                 reqfirst=false;
             }
             else{
@@ -353,6 +358,7 @@ void ReadUser(ListStatikUser *l,FriendMatrix *F, char *path) {
                 }
                 bacaan.TabWord[i] = '\0';
 
+                
                 int space=0;
                 int idus=0;
                 int ifol=0;
@@ -388,9 +394,9 @@ void ReadUser(ListStatikUser *l,FriendMatrix *F, char *path) {
                 sendReqFol(&(l->data[ifol-1].userReq),*F,idus,ifol, nfus);
                         
 
-                while (currentChar == '\n') {
+                // while (currentChar == '\n') {
                     ADVconfig();
-                }
+                // }
                 // reqcount++;
                 }
         }

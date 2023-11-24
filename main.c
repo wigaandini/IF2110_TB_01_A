@@ -8,6 +8,7 @@
 #include "program/fyb.c"
 #include "program/muatsimpan.c"
 #include "program/friend.c"
+#include "program/printfile.c"
 #include <sys/stat.h>
 
 // gcc main.c adt/configmachine.c adt/charmachine.c adt/liststatikuser.c adt/listdin.c adt/Matrix.c adt/friendmatrix.c adt/pcolor.c adt/prioreqfollinked.c adt/listdinkicauan.c adt/datetime.c adt/time.c adt/wordmachine.c -o tes
@@ -50,7 +51,12 @@ int main(){
         if (!is_directory(fullPath)){
             printf("\nFolder config dengan nama '%s' tidak ditemukan\n\n", dirName);
         } else{
+            //printFile(fullPath);
+            //return 0;
             ReadUser(&l,&F,fullPath);
+
+            
+
             ReadKicauan(&listKicau,l,F,fullPath);
             readbalasan(&l,&listKicau,fullPath, &curIdBalasan);
             ReadDraf(&l,fullPath);

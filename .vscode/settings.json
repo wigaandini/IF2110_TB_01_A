@@ -64,6 +64,7 @@
     "charmachine.h": "c",
     "treebalasan.h": "c",
     "configmachine.h": "c",
-    "liststatikuser.h": "c"
+    "liststatikuser.h": "c",
+    "prioreqfollinked.h": "c"
   }
 }
