@@ -12,7 +12,7 @@
 /* ********* Prototype ********* */
 
 /* *** Konstruktor/Kreator *** */
-void CreateEmpty(HashMap *M) {
+void CreateEmptyHash(HashMap *M) {
     /* I.S. sembarang */
     /* F.S. M kosong */
     M->CountHash = 0;
@@ -32,7 +32,7 @@ hashAddress Hash(hashKeyType K) {
 }
 
 /* ********** Operator Dasar HashMap ********* */
-hashValueType Value(HashMap M, hashKeyType k) {
+hashValueType ValueHash(HashMap M, hashKeyType k) {
     /* Menghasilkan nilai dari element dengan key K */
     /* Jika tidak ada key k pada M, akan mengembalikan UndefinedHash */
     hashAddress i = Hash(k);
@@ -47,7 +47,7 @@ hashValueType Value(HashMap M, hashKeyType k) {
 }
 /* Mengembalikan nilai value dengan key k dari M */
 
-void Insert(HashMap *M, hashKeyType k, hashValueType v) {
+void InsertHash(HashMap *M, hashKeyType k, hashValueType v) {
     if (M->CountHash < MaxElHash) {
         hashAddress i = Hash(k);
         while (M->ElementsHash[i].Key != UndefinedHash && M->ElementsHash[i].Key != k) {

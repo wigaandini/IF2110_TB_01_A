@@ -38,7 +38,7 @@ typedef struct
 /* ********* Prototype ********* */
 
 /* *** Konstruktor/Kreator *** */
-void CreateEmpty(HashMap *M);
+void CreateEmptyHash(HashMap *M);
 /* I.S. Sembarang */
 /* F.S. Membuat sebuah HashMap M kosong berkapasitas MaxElHash */
 /* Ciri HashMap kosong : count bernilai NilHash dengan seluruh isi key & value map UndefinedHash */
@@ -48,11 +48,11 @@ hashAddress Hash(hashKeyType K);
 /* Menghasilkan indeks penyimpanan dengan operasi modulo ke MaxElHash */
 
 /* ********** Operator Dasar HashMap ********* */
-hashValueType Value(HashMap M, hashKeyType k);
+hashValueType ValueHash(HashMap M, hashKeyType k);
 /* Mengembalikan nilai value dengan key k dari M */
 /* Jika tidak ada key k pada M, akan mengembalikan UndefinedHash */
 
-void Insert(HashMap *M, hashKeyType k, hashValueType v);
+void InsertHash(HashMap *M, hashKeyType k, hashValueType v);
 /* Menambahkan Elmt sebagai elemen HashMap M. */
 /* I.S. M mungkin kosong, M tidak penuh
         M mungkin sudah beranggotakan v dengan key k */
