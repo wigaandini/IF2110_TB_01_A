@@ -136,6 +136,7 @@ void ReadKicauan(ListKicauan *k, ListStatikUser l,FriendMatrix F, char* path){
                     i++;
                     ADVconfig();
                 }
+                bacaan.TabWord[i - 1] = '\0';
                 bacaan.TabWord[i] = '\0';
 
                 boolean found =false;
@@ -158,6 +159,7 @@ void ReadKicauan(ListKicauan *k, ListStatikUser l,FriendMatrix F, char* path){
 
                 if (found)
                 {
+                    printf("AAAAAAAAAAAAAAAAAAAAA%d\n", user_now);
                     ELMTLISTKICAU(*k,NEFFLISTKICAU(*k)).idauthor=user_now;
                 }
                 

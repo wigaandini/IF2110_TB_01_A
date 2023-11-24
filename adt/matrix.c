@@ -414,6 +414,7 @@ void pTranspose(Matrix *m){
 
 void displayMatrixFoto(Matrix foto, Matrix warnaFoto){
     int i, j;
+    printf("%d %d\n", getLastIdxCol(foto), getLastIdxRow(foto));
     for(i = 0; i < 5; i++){
         for(j = 0; j < 5; j++){
             if(ELMT(warnaFoto, i, j) == 'R'){

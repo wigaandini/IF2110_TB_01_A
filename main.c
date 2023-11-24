@@ -95,7 +95,7 @@ int main(){
                 compareString(kata,"SETUJUI_PERTEMANAN")||compareString(kata,"KICAU")||
                 compareString(kata,"KICAUAN")||
                 compareString(kata,"BUAT_DRAF")||compareString(kata,"LIHAT_DRAF")||
-                compareString(kata,"FYB")||compareString(kata,"MASUK")||compareString(kata,"KELUAR")||compareString(kata,"TUTUP_PROGRAM")||compareString(kata,"DAFTAR"))&&
+                compareString(kata,"FYB")||compareString(kata,"MASUK")||compareString(kata,"KELUAR")||compareString(kata,"TUTUP_PROGRAM")||compareString(kata,"DAFTAR")||compareString(kata, "CETAK_UTAS"))&&
                 countWords(command)!=1){
                 printf("Masukan tidak valid. Harap input kembali dengan format yang benar. \n\n");
                 printf(">> ");
