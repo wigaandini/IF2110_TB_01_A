@@ -51,13 +51,8 @@ boolean isIdxEffFriend(FriendMatrix m, IdxType i, IdxType j){
 
 boolean isFriend(FriendMatrix m, IdxType i, IdxType j){
 // Prekondisi: i dan j adalah index yang efektif 
-// Mengirimkan true jika user id i dan id j saling berteman
-    if (i!=j){
-        return ((ELMTFRIEND(m,i,j) == 1)&&(ELMTFRIEND(m,j,i) == 1));
-    }
-    else{
-        return false;
-    }
+// Mengirimkan true jika user id i dan id j saling berteman  
+    return ((ELMTFRIEND(m,i,j) == 1)&&(ELMTFRIEND(m,j,i) == 1));
 }
 
 void addNeff(FriendMatrix *m){
