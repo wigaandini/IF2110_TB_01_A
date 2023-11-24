@@ -112,7 +112,7 @@ void SIMPAN(ListStatikUser l,ListKicauan k,FriendMatrix F){
         delay(0.5);
         printf("3...\n\n");
         delay(0.5);
-        printf("Penyimpanan telah berhasil dilakukan!\n\n",dirName);
+        printf("Penyimpanan telah berhasil dilakukan!\n\n");
 
     } else{
 
@@ -131,7 +131,7 @@ void SIMPAN(ListStatikUser l,ListKicauan k,FriendMatrix F){
         delay(0.5);
         printf("3...\n\n");
         delay(0.5);
-        printf("Penyimpanan telah berhasil dilakukan!\n\n",dirName);
+        printf("Penyimpanan telah berhasil dilakukan!\n\n");
     }
     free(dirName);
 }

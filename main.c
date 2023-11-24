@@ -91,7 +91,6 @@ int main(){
             else{
                 kata = splitCommand(&w, command, 1);
             }
-            boolean benar = false;
             //while(!benar){
                 /*if ((compareString(kata,"LIHAT_PROFIL")||compareString(kata,"GANTI_PROFIL")||
                 compareString(kata,"ATUR_JENIS_AKUN")||compareString(kata,"UBAH_FOTO_PROFIL")||

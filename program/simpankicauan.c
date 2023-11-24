@@ -22,7 +22,7 @@ char* namaFileKicauan = "/kicauan.config";
 // // }
 
 void simpankicauan(ListKicauan l, ListStatikUser lsu, char *namaFolder){
-    int ch = mkdir(namaFolder,0777);
+    mkdir(namaFolder,0777);
     // GAGAL MAKEDIR CONTINUE
     /*if(ch == -1){
         printf("Failed creating new directory\n");

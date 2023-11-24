@@ -129,8 +129,8 @@ void TAMBAH_TEMAN(int idlogin, ListStatikUser *l, FriendMatrix m, Prioreqfol q){
 }
 
 void DAFTAR_PERMINTAAN_PERTEMANAN(int idlogin ,FriendMatrix m, Prioreqfol myQ, ListStatikUser l){
-    int nfriend = howMuchFriend(m, idlogin);
-    Address p = ADDR_HEAD(myQ);
+    // int nfriend = howMuchFriend(m, idlogin);
+    // Address p = ADDR_HEAD(myQ);
     if(isEmptyReqFol(myQ)){
         printf("\nTidak ada permintaan pertemanan.\n");       
     }
@@ -188,7 +188,7 @@ void SETUJUI_PERTEMANAN(int idlogin, FriendMatrix *m, Prioreqfol *myQ, ListStati
 
         while((!compareString(keputusan, "YA")) && (!compareString(keputusan, "TIDAK"))){
             printf("Masukan anda tidak valid:\n");
-            printf("Apakah Anda ingin menyetujui permintaan pertemanan ini? (YA/TIDAK)  ", friendname);
+            printf("Apakah Anda ingin menyetujui permintaan pertemanan ini? (YA/TIDAK)\n");
             STARTSENTENCE();
             keputusan = currentWord;
         }
