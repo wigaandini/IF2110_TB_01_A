@@ -22,7 +22,7 @@ char* namaFileKicauan = "/kicauan.config";
 // // }
 
 void simpankicauan(ListKicauan l, ListStatikUser lsu, char *namaFolder){
-    int ch = mkdir(namaFolder,0777);
+    mkdir(namaFolder,0777);
     // GAGAL MAKEDIR CONTINUE
     /*if(ch == -1){
         printf("Failed creating new directory\n");
@@ -30,7 +30,7 @@ void simpankicauan(ListKicauan l, ListStatikUser lsu, char *namaFolder){
     }*/
     char namaFile[1000];
     concatString(namaFile, namaFolder, namaFileKicauan);
-    FILE* fptr = fopen(namaFile, "ab+");
+    FILE* fptr = fopen(namaFile, "w");
     if(fptr == NULL){
         printf("Failed making new file\n");
         return;

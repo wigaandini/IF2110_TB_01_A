@@ -275,6 +275,11 @@ void ReadUser(ListStatikUser *l,FriendMatrix *F, char *path) {
 
                 
                 int j = (count%11)%6;
+
+                COL_EFF(UserWarnaFoto(*l, user)) = 5;
+                ROW_EFF(UserWarnaFoto(*l, user)) = 5;
+                COL_EFF(UserFoto(*l, user)) = 5;
+                ROW_EFF(UserFoto(*l, user)) = 5;
                 // printf("ini j :%d",j);
                 for (int i = 0; bacaan.TabWord[i] != '\0'; i++) {
                     // printf("%c",bacaan.TabWord[i]);

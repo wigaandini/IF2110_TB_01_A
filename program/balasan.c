@@ -116,11 +116,15 @@ void HAPUS_BALASAN(ListKicauan *l, int curUserId, int idKicau, int idBalasan){
     AddressBalasan prev = findPrev(ELMTLISTKICAU(*l, idKicau - 1).balasan, NULL, &fd, idBalasan);
     AddressBalasan nxt = SIBLINGBALASAN(*resBalasan);
     hapusHelper(CHILDBALASAN(*resBalasan));
-    free(resBalasan);
     if(prev == NIL){
         ELMTLISTKICAU(*l, idKicau - 1).balasan = nxt;
     }else{
-        SIBLINGBALASAN(*prev) = nxt;
+        if(CHILDBALASAN(*prev) && CHILDBALASAN(*prev)->id == idBalasan){
+            CHILDBALASAN(*prev) = nxt;
+        }else{
+            SIBLINGBALASAN(*prev) = nxt;
+        }
     }
+    free(resBalasan);
     printf("\nBALASAN BERHASIL DIHAPUS\n");
 }

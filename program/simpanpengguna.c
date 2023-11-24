@@ -46,6 +46,7 @@ char* tipeAkunDecider(int x){
         ans = "Privat";
         return ans;
     default:
+        ans = "Publik";
         printf("Error, tipe akun di luar scope??\n");
     }
     return ans;
@@ -66,10 +67,10 @@ void concatString(char *ans, char *p1, char *p2){
 }
 
 void simpanpengguna(ListStatikUser lsu, FriendMatrix fm, char *namaFolder){
-    int ch = mkdir(namaFolder,0777);
+    mkdir(namaFolder,0777);
     char namaFile[1000];
     concatString(namaFile, namaFolder, namaFilePengguna);
-    FILE* fptr = fopen(namaFile, "ab+");
+    FILE* fptr = fopen(namaFile, "w");
     if(fptr == NULL){
         printf("Failed making new file\n");
         return;

@@ -5,7 +5,7 @@ CC=gcc
 CFLAGS=-Wall -g
 
 # Target executable name
-TARGET=tes
+TARGET=main
 
 # Source files
 SRCS=main.c \

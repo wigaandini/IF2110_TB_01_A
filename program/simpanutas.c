@@ -21,11 +21,10 @@ char* namaFileUtas = "/utas.config";
 // // }
 
 void simpanutas(ListKicauan l, ListStatikUser lsu, char *namaFolder){
-    
-    int ch = mkdir(namaFolder, 0777);
+    mkdir(namaFolder, 0777);
     char namaFile[1000];
     concatString(namaFile, namaFolder, namaFileUtas);
-    FILE* fptr = fopen(namaFile, "ab+");
+    FILE* fptr = fopen(namaFile, "w");
     if(fptr == NULL){
         printf("Failed making new file\n");
         return;

@@ -101,9 +101,8 @@ int main(){
             else{
                 kata = splitCommand(&w, command, 1);
             }
-            boolean benar = false;
-            while(!benar){
-                if ((compareString(kata,"LIHAT_PROFIL")||compareString(kata,"GANTI_PROFIL")||
+            //while(!benar){
+                /*if ((compareString(kata,"LIHAT_PROFIL")||compareString(kata,"GANTI_PROFIL")||
                 compareString(kata,"ATUR_JENIS_AKUN")||compareString(kata,"UBAH_FOTO_PROFIL")||
                 compareString(kata,"DAFTAR_TEMAN")||compareString(kata,"HAPUS_TEMAN")||
                 compareString(kata,"TAMBAH_TEMAN")||compareString(kata,"DAFTAR_PERMINTAAN_PERTEMANAN")||
@@ -125,7 +124,8 @@ int main(){
                     command = currentWord;
                     kata = splitCommand(&w, command, 1);
                 }
-                else if((compareString(kata, "HAPUS_BALASAN")||compareString(kata, "SAMBUNG_UTAS")||compareString(kata, "HAPUS_UTAS")) && countWords(currentWord) != 3){
+                else if((compareString(kata, "BALAS")||compareString(kata, "HAPUS_BALASAN")||compareString(kata, "SAMBUNG_UTAS")||compareString(kata, "HAPUS_UTAS")) && countWords(currentWord) != 3){
+                    printf("%d\n", countWords(currentWord));
                     printf("Masukan tidak valid. Harap input kembali dengan format yang benar.\n\n");
                     printf(">> ");
                     STARTSENTENCE();
@@ -134,8 +134,8 @@ int main(){
                 }
                 else{
                     benar = true;
-                }
-            }
+                }*/
+            //}
         // BAGIAN PERINTAH (PENGGUNA)
         
         if (compareString(kata,"DAFTAR")){ //DAFTAR
@@ -261,7 +261,6 @@ int main(){
         else if (compareString(kata,"HAPUS_BALASAN")&&isLoggedIn){ //HAPUSBALAS
             int idKicauanBalas = WordToInt(splitCommand(&w, command, 2));
             int idBalasanBalas = WordToInt(splitCommand(&w, command, 3));
-
             HAPUS_BALASAN(&listKicau, id_login, idKicauanBalas, idBalasanBalas);
             //printf("\nHAPUSBALASAN\n");
         }

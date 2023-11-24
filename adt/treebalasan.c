@@ -98,12 +98,15 @@ void displaySemuaBalasan(AddressBalasan a, FriendMatrix *fh, ListStatikUser *lsu
 
 
 AddressBalasan findPrev(AddressBalasan a, AddressBalasan prev, boolean *fd, int idBalasan){
+    if(a == NULL){
+        return NULL;
+    }
     if(IDBALASAN(*a) == idBalasan){
         *fd = true;
         return prev;
     }
     AddressBalasan a1 = findPrev(SIBLINGBALASAN(*a), a, fd, idBalasan);
-    if(*fd == true){
+    if(fd && *fd == true){
         return a1;
     }
     return findPrev(CHILDBALASAN(*a), a, fd, idBalasan);
