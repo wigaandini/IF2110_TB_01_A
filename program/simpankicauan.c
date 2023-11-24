@@ -30,7 +30,7 @@ void simpankicauan(ListKicauan l, ListStatikUser lsu, char *namaFolder){
     }*/
     char namaFile[1000];
     concatString(namaFile, namaFolder, namaFileKicauan);
-    FILE* fptr = fopen(namaFile, "ab+");
+    FILE* fptr = fopen(namaFile, "w");
     if(fptr == NULL){
         printf("Failed making new file\n");
         return;

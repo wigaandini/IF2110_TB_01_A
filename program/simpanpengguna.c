@@ -69,7 +69,7 @@ void simpanpengguna(ListStatikUser lsu, FriendMatrix fm, char *namaFolder){
     int ch = mkdir(namaFolder,0777);
     char namaFile[1000];
     concatString(namaFile, namaFolder, namaFilePengguna);
-    FILE* fptr = fopen(namaFile, "ab+");
+    FILE* fptr = fopen(namaFile, "w");
     if(fptr == NULL){
         printf("Failed making new file\n");
         return;

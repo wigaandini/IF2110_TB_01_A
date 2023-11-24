@@ -29,16 +29,6 @@ void MUAT(ListStatikUser *l,ListKicauan *k,FriendMatrix *F, int *curIdBalasan){
     char fullPath[200];
     char *dirName;
 
-    CreateListStatikUser(l);
-    int i;
-    for (i = 0; i < NEFFLISTKICAU(*k); i++) {
-        free(k->buffer[i].sambunganUtas);
-        free(k->buffer[i].balasan);
-    }
-    // free(k);
-
-    CreateListGlobalKicauan(k, CAPACITYMAXLISTKICAUAN);
-
     printf("\nMasukkan nama folder yang hendak dimuat.\n");
     Word config;
     STARTSENTENCE();
@@ -49,6 +39,16 @@ void MUAT(ListStatikUser *l,ListKicauan *k,FriendMatrix *F, int *curIdBalasan){
     if (!is_directory(fullPath)){
         printf("\nTidak ada folder yang dimaksud.\n\n");
     } else{
+        CreateListStatikUser(l);
+        int i;
+        for (i = 0; i < NEFFLISTKICAU(*k); i++) {
+            free(k->buffer[i].sambunganUtas);
+            free(k->buffer[i].balasan);
+        }
+        // free(k);
+
+        CreateListGlobalKicauan(k, CAPACITYMAXLISTKICAUAN);
+        
         ReadUser(l,F,fullPath);
         ReadKicauan(k,*l,*F,fullPath);
         readbalasan(l,k,fullPath, curIdBalasan);
@@ -85,7 +85,7 @@ void SIMPAN(ListStatikUser l,ListKicauan k,FriendMatrix F){
     dirName = WordToString(config);
     concatenate(fullPath, "config/", dirName);
     if (!is_directory(fullPath)){
-        printf("\nBelum terdapat Folder1. Akan dilakukan pembuatan Folder1 terlebih dahulu.\n\n");
+        printf("\nBelum terdapat %s. Akan dilakukan pembuatan %s terlebih dahulu.\n\n",dirName,dirName);
         delay(0.4);
         printf("Mohon tunggu...\n");
         delay(0.4);
@@ -103,8 +103,35 @@ void SIMPAN(ListStatikUser l,ListKicauan k,FriendMatrix F){
         simpanbalasan(k,l,fullPath);
         simpanutas(k,l,fullPath);
 
+        printf("\nAnda akan melakukan penyimpanan di %s\n",dirName);
+        printf("Mohon tunggu...\n");
+        delay(0.4);
+        printf("1...\n");
+        delay(0.5);
+        printf("2...\n");
+        delay(0.5);
+        printf("3...\n\n");
+        delay(0.5);
+        printf("Penyimpanan telah berhasil dilakukan!\n\n",dirName);
+
     } else{
-        printf("Pemuatan selesai !\n\n");
+
+        simpanpengguna(l,F,fullPath);
+        simpandraf(l,fullPath);
+        simpankicauan(k,l,fullPath);
+        simpanbalasan(k,l,fullPath);
+        simpanutas(k,l,fullPath);
+
+        printf("\nAnda akan melakukan penyimpanan di %s\n",dirName);
+        printf("Mohon tunggu...\n");
+        delay(0.4);
+        printf("1...\n");
+        delay(0.5);
+        printf("2...\n");
+        delay(0.5);
+        printf("3...\n\n");
+        delay(0.5);
+        printf("Penyimpanan telah berhasil dilakukan!\n\n",dirName);
     }
     free(dirName);
 }
