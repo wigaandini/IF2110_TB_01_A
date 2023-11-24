@@ -36,7 +36,8 @@ void Berkicau(ListStatikUser U, ListKicauan *l, Kicauan *k, int idauthor){
         printf("Kicauan tidak boleh hanya berisi spasi!\n");
     } else {
         CreateKicauan(k, id, text, idauthor, waktu);
-
+        printf("Masukkan tagar: \n");
+        STARTSENTENCE();
         printf("Selamat! kicauan telah diterbitkan!\nDetil kicauan:\n");
         DisplaySatuKicau(U, *k);
         insertLastKicauan(l, *k);
