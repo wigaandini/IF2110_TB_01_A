@@ -50,7 +50,12 @@ int main(){
         if (!is_directory(fullPath)){
             printf("\nFolder config dengan nama '%s' tidak ditemukan\n\n", dirName);
         } else{
+            //printFile(fullPath);
+            //return 0;
             ReadUser(&l,&F,fullPath);
+
+            
+
             ReadKicauan(&listKicau,l,F,fullPath);
             readbalasan(&l,&listKicau,fullPath, &curIdBalasan);
             ReadDraf(&l,fullPath);
@@ -92,11 +97,11 @@ int main(){
                 if ((compareString(kata,"LIHAT_PROFIL")||compareString(kata,"GANTI_PROFIL")||
                 compareString(kata,"ATUR_JENIS_AKUN")||compareString(kata,"UBAH_FOTO_PROFIL")||
                 compareString(kata,"DAFTAR_TEMAN")||compareString(kata,"HAPUS_TEMAN")||
-                compareString(kata,"TAMBAH_TEMAN")||compareString(kata,"DAFTAR_PERMINTAAN_TEMAN")||
+                compareString(kata,"TAMBAH_TEMAN")||compareString(kata,"DAFTAR_PERMINTAAN_PERTEMANAN")||
                 compareString(kata,"SETUJUI_PERTEMANAN")||compareString(kata,"KICAU")||
                 compareString(kata,"KICAUAN")||
                 compareString(kata,"BUAT_DRAF")||compareString(kata,"LIHAT_DRAF")||
-                compareString(kata,"FYB")||compareString(kata,"MASUK")||compareString(kata,"KELUAR")||compareString(kata,"TUTUP_PROGRAM")||compareString(kata,"DAFTAR"))&&
+                compareString(kata,"FYB")||compareString(kata,"MASUK")||compareString(kata,"KELUAR")||compareString(kata,"TUTUP_PROGRAM")||compareString(kata,"DAFTAR")||compareString(kata, "CETAK_UTAS"))&&
                 countWords(command)!=1){
                 printf("Masukan tidak valid. Harap input kembali dengan format yang benar. \n\n");
                 printf(">> ");
@@ -146,7 +151,7 @@ int main(){
         else if((compareString(kata,"LIHAT_PROFIL")||compareString(kata,"GANTI_PROFIL")||
         compareString(kata,"ATUR_JENIS_AKUN")||compareString(kata,"UBAH_FOTO_PROFIL")||
         compareString(kata,"DAFTAR_TEMAN")||compareString(kata,"HAPUS_TEMAN")||
-        compareString(kata,"TAMBAH_TEMAN")||compareString(kata,"DAFTAR_PERMINTAAN_TEMAN")||
+        compareString(kata,"TAMBAH_TEMAN")||compareString(kata,"DAFTAR_PERMINTAAN_PERTEMANAN")||
         compareString(kata,"SETUJUI_PERTEMANAN")||compareString(kata,"KICAU")||
         compareString(kata,"KICAUAN")||compareString(kata,"SUKA_KICAUAN")||
         compareString(kata,"UBAH_KICAUAN")||compareString(kata,"BALAS")||
@@ -203,7 +208,7 @@ int main(){
             TAMBAH_TEMAN(id_login, &l, F, l.data[id_login-1].userReq);
         }
 
-        else if (compareString(kata,"DAFTAR_PERMINTAAN_TEMAN")&&isLoggedIn){ //DAFTAR_PERMINTAAN
+        else if (compareString(kata,"DAFTAR_PERMINTAAN_PERTEMANAN")&&isLoggedIn){ //DAFTAR_PERMINTAAN
             DAFTAR_PERMINTAAN_PERTEMANAN(id_login, F, l.data[id_login-1].userReq, l);
         }
         else if (compareString(kata,"SETUJUI_PERTEMANAN")&&isLoggedIn){ //SETUJUI_PERTEMANAN

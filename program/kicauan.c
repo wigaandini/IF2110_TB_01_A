@@ -32,15 +32,15 @@ void Berkicau(ListStatikUser U, ListKicauan *l, Kicauan *k, int idauthor){
         Time(waktu) = DetikToTIME(current_time);
 
 
-        printf("Masukkan kicauan :\n");
+        printf("\nMasukkan kicauan :\n");
         STARTSENTENCE();
         text = currentWord;
         if (isEmptyWord(text)) {
-            printf("Kicauan tidak boleh hanya berisi spasi!\n");
+            printf("\nKicauan tidak boleh hanya berisi spasi!\n");
         } else {
             CreateKicauan(k, id, text, idauthor, waktu);
 
-            printf("Selamat! kicauan telah diterbitkan!\nDetil kicauan:\n");
+            printf("\nSelamat! kicauan telah diterbitkan!\nDetil kicauan:\n");
             DisplaySatuKicau(U, *k);
             insertLastKicauan(l, *k);
         }
@@ -72,7 +72,7 @@ void SUKA_KICAUAN(ListStatikUser l, ListKicauan *k, int idKicauan, int idUser, F
         printf("\nAnda belum masuk. Masuk dulu yuk!\n\n");
     } else {
         if (!isIdKicauanValid(*k, idKicauan)) {
-            printf("Tidak ditemukan kicauan dengan ID = %d\n", idKicauan);
+            printf("\nTidak ditemukan kicauan dengan ID = %d\n", idKicauan);
         } else {
             int idAuthor = IDAUTHOR(ELMTLISTKICAU(*k, idKicauan-1));
             if(UserTipe(l, idAuthor-1) == PUBLIK){
@@ -84,7 +84,7 @@ void SUKA_KICAUAN(ListStatikUser l, ListKicauan *k, int idKicauan, int idUser, F
                     if(isFriend(m, idAuthor, idUser)){
                         LIKE(ELMTLISTKICAU(*k, idKicauan-1))++;
                     } else {
-                        printf("Wah, kicauan tersebut dibuat oleh akun privat! Ikuti akun itu dulu ya\n");
+                        printf("\nWah, kicauan tersebut dibuat oleh akun privat! Ikuti akun itu dulu ya\n");
                     }
                 }
             }
@@ -103,16 +103,16 @@ void UBAH_KICAUAN(ListStatikUser l, ListKicauan *k, int idKicauan, int idUser){
         if (isIdKicauanValid(*k, idKicauan)) {
             int idAuthor = IDAUTHOR(ELMTLISTKICAU(*k, idKicauan-1));
             if (idAuthor == idUser) {
-                printf("Masukkan kicauan baru : \n");
+                printf("\nMasukkan kicauan baru : \n");
                 STARTSENTENCE();
                 newText = currentWord;
                 TEXT(ELMTLISTKICAU(*k,idKicauan-1)) = newText;
                 DisplaySatuKicau(l, ELMTLISTKICAU(*k, idKicauan-1));
             } else {
-                printf("Kicauan dengan ID = %d bukan milikmu!\n", idKicauan);
+                printf("\nKicauan dengan ID = %d bukan milikmu!\n", idKicauan);
             }
         } else {
-            printf("Tidak ditemukan kicauan dengan ID = %d!\n", idKicauan);
+            printf("\nTidak ditemukan kicauan dengan ID = %d!\n", idKicauan);
         }
     }
 }

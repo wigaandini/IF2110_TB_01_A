@@ -48,6 +48,7 @@ void simpanutas(ListKicauan l, ListStatikUser lsu, char *namaFolder){
                     fprintf(fptr, "%c", cur->info.text.TabWord[j]);
                 }
                 fprintf(fptr, "\n");
+                //fprintf(fptr, "%d", l.buffer[i].idauthor);
                 for(j = 0; lsu.data[l.buffer[i].idauthor - 1].nama[j] != '\0'; ++j){
                     fprintf(fptr, "%c", lsu.data[l.buffer[i].idauthor - 1].nama[j]);
                 }

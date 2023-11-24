@@ -27,7 +27,7 @@ void ReadKicauan(ListKicauan *k, ListStatikUser l,FriendMatrix F, char* path){
 
             for (int i = 0; bacaan.TabWord[i] != '\0'; i++) {
                 // CreateListGlobalKicauan(k,charToInt(bacaan.TabWord[i]));
-                if (bacaan.TabWord[i+1] != '\0')
+                if (bacaan.TabWord[i] != '\0')
                 {
                     tot=tot*10+charToInt(bacaan.TabWord[i]);
                     // printf("%c\n",bacaan.TabWord[i]);
@@ -59,7 +59,7 @@ void ReadKicauan(ListKicauan *k, ListStatikUser l,FriendMatrix F, char* path){
                 
                 int theid=0;
                 for (int i = 0; bacaan.TabWord[i] != '\0'; i++) {
-                    if (bacaan.TabWord[i+1] != '\0')
+                    if (bacaan.TabWord[i] != '\0')
                     {
                         theid=theid*10+charToInt(bacaan.TabWord[i]);
                     }
@@ -112,7 +112,7 @@ void ReadKicauan(ListKicauan *k, ListStatikUser l,FriendMatrix F, char* path){
 
                 int like=0;
                 for (int i = 0; bacaan.TabWord[i] != '\0'; i++) {
-                    if (bacaan.TabWord[i+1] != '\0')
+                    if (bacaan.TabWord[i] != '\0')
                     {
                         like=like*10+charToInt(bacaan.TabWord[i]);
                     }
@@ -213,6 +213,7 @@ void ReadKicauan(ListKicauan *k, ListStatikUser l,FriendMatrix F, char* path){
                     } else if (i<18){
                         tot=tot*10+charToInt(bacaan.TabWord[i]);
                     } else if (i==18){
+                        tot = tot * 10 + charToInt(bacaan.TabWord[i]);
                         ELMTLISTKICAU(*k,NEFFLISTKICAU(*k)).waktu.T.SS=tot;
                         tot=0;
                     }
