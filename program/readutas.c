@@ -26,7 +26,7 @@ void ReadUtas(ListKicauan *kicau,ListStatikUser l,char *path){
             int tot=0;
 
             for (int i = 0; bacaan.TabWord[i] != '\0'; i++) {
-                if (bacaan.TabWord[i+1] != '\0')
+                if (bacaan.TabWord[i] != '\0')
                 {
                     tot=tot*10+charToInt(bacaan.TabWord[i]);
                 }
@@ -51,7 +51,7 @@ void ReadUtas(ListKicauan *kicau,ListStatikUser l,char *path){
                 bacaan.TabWord[i] = '\0';
                 int idkicau=0;
                 for (int i = 0; bacaan.TabWord[i] != '\0'; i++) {
-                    if (bacaan.TabWord[i+1] != '\0')
+                    if (bacaan.TabWord[i] != '\0')
                     {
                         idkicau=idkicau*10+charToInt(bacaan.TabWord[i]);
                     }
@@ -77,12 +77,11 @@ void ReadUtas(ListKicauan *kicau,ListStatikUser l,char *path){
 
                 int banyakutas=0;
                 for (int i = 0; bacaan.TabWord[i] != '\0'; i++) {
-                    if (bacaan.TabWord[i+1] != '\0')
+                    if (bacaan.TabWord[i] != '\0')
                     {
                         banyakutas=banyakutas*10+charToInt(bacaan.TabWord[i]);
                     }
                 }
-                printf("banyakutas:%d\n",banyakutas);
 
 
                 while (currentChar == '\n') {
@@ -101,21 +100,17 @@ void ReadUtas(ListKicauan *kicau,ListStatikUser l,char *path){
                         i++;
                         ADVconfig();
                     }
-                    temp.TabWord[i - 1] = '\0';
                     temp.TabWord[i] = '\0';
-                    printf("length:%d\n", i);
                     if (k%3==0){
                         for (int p = 0; temp.TabWord[p] != '\0'; p++) {
                             dummy.text.TabWord[p]=temp.TabWord[p];
                             dummy.text.Length++;
                         }
-                        printf("dummy length: %d\n",dummy.text.Length);
                     }
                     else if (k%3==1){
                         Word namadicari;
                         int k;
                         int iduser=-1;
-                        printf("%d\n", banyakUser(l));
                         for ( k= 0; k < banyakUser(l); k++)
                         {
                             boolean tepat=true;
@@ -178,17 +173,9 @@ void ReadUtas(ListKicauan *kicau,ListStatikUser l,char *path){
                         }
                         dummy.idUtas=(count+1)/2;
                         dummy.indexUtas=(k+1)/3;
-                        printf("indexutas:%d\n", dummy.indexUtas);
                         // printf("idutas:%d\n",(count+1)/2);
                         // printf("tempid:%d\n",tempid);
-                        for(int uu = 0; uu < dummy.text.Length; ++uu){
-                            printf("%d ", dummy.text.TabWord[uu]);
-                        }
-                        printf("\n");
-                        printf("idauthor:%d\n",dummy.idAuthor);
-                        printf("idutas:%d\n",dummy.idUtas);
-                        TulisDATETIME(dummy.waktu);
-                        printf("\n");
+            
                         // ELMTLISTKICAU((*kicau),tempid-1).sambunganUtas = newNodeUtas(dummy);
                         // if(dummy.indexUtas == 1){
                         //     addUtas(kicau, dummy.idAuthor, dummy.indexUtas, dummy.text, dummy.waktu, dummy.idUtas, tempid);
@@ -196,7 +183,6 @@ void ReadUtas(ListKicauan *kicau,ListStatikUser l,char *path){
                         // else{
                             insertLastPers(&((*kicau).buffer[tempid-1].sambunganUtas),dummy);
                         // }
-                        printf("count utas : %d\n", countTypeUtas(*kicau));
                         dummy.text.Length = 0;
                     }
                     

@@ -52,6 +52,7 @@ void simpandraf(ListStatikUser lsu, char *namaFolder){
                 for(k = 0; k < topelem.Text.Length; ++k){
                     fprintf(fptr, "%c", topelem.Text.TabWord[k]);
                 }
+                fprintf(fptr, "\n");
                 DATETIME curWaktu = topelem.Waktu;
                 fprintf(fptr, "%d/%d/%d %02d:%02d:%02d", curWaktu.DD, curWaktu.MM, curWaktu.YYYY, curWaktu.T.HH, curWaktu.T.MM, curWaktu.T.SS);
                 fprintf(fptr, "\n");

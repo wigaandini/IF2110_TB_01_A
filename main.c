@@ -50,7 +50,12 @@ int main(){
         if (!is_directory(fullPath)){
             printf("\nFolder config dengan nama '%s' tidak ditemukan\n\n", dirName);
         } else{
+            //printFile(fullPath);
+            //return 0;
             ReadUser(&l,&F,fullPath);
+
+            
+
             ReadKicauan(&listKicau,l,F,fullPath);
             readbalasan(&l,&listKicau,fullPath, &curIdBalasan);
             ReadDraf(&l,fullPath);

@@ -14,19 +14,19 @@ char* wetonDecider(int x) {
             ans = "";
             break;
         case 1:
-            ans = "PAHING";
+            ans = "Pahing";
             break;
         case 2:
-            ans = "KLIWON";
+            ans = "Kliwon";
             break;
         case 3:
-            ans = "WAGE";
+            ans = "Wage";
             break;
         case 4:
-            ans = "PON";
+            ans = "Pon";
             break;
         case 5:
-            ans = "LEGI";
+            ans = "Legi";
             break;
         default:
             printf("Error, weton di luar scope??\n");
@@ -40,10 +40,10 @@ char* tipeAkunDecider(int x){
     char *ans;
     switch (x){
     case 0:
-        ans = "PUBLIK";
+        ans = "Publik";
         return ans;
     case 1:
-        ans = "PRIVAT";
+        ans = "Privat";
         return ans;
     default:
         printf("Error, tipe akun di luar scope??\n");
@@ -96,7 +96,6 @@ void simpanpengguna(ListStatikUser lsu, FriendMatrix fm, char *namaFolder){
         fprintf(fptr, "\n");
         char *weton = wetonDecider(lsu.data[i].weton);
         fprintf(fptr, "%s\n", weton);
-        fprintf(fptr, "\n");
         char *tipeAkun = tipeAkunDecider(lsu.data[i].tipe);
         fprintf(fptr, "%s\n", tipeAkun);
         int p, q;
@@ -112,7 +111,6 @@ void simpanpengguna(ListStatikUser lsu, FriendMatrix fm, char *namaFolder){
         }
     }
     int p, q;
-    printf("%d %d\n", ROW_EFFFRIEND(fm), COL_EFFFRIEND(fm));
     for(p = 0; p < ROW_EFFFRIEND(fm); ++p){
         for(q = 0; q < COL_EFFFRIEND(fm); ++q){
             fprintf(fptr, "%d", ELMTFRIEND(fm, p, q));
@@ -122,10 +120,19 @@ void simpanpengguna(ListStatikUser lsu, FriendMatrix fm, char *namaFolder){
         }
         fprintf(fptr, "\n");
     }
+    int cntReq = 0;
     for(i = 0; i < banyakUser(lsu); ++i){
         Address cur = lsu.data[i].userReq.addrHead;
         while(cur != NULL){
-            fprintf(fptr, "%d %d %d\n", cur->iduser, cur->idfollow, cur->nfriendfollow);
+            cntReq++;
+            cur = cur->next;
+        }
+    }
+    fprintf(fptr, "%d\n", cntReq);
+    for(i = 0; i < banyakUser(lsu); ++i){
+        Address cur = lsu.data[i].userReq.addrHead;
+        while(cur != NULL){
+            fprintf(fptr, "%d %d %d\n", cur->iduser, cur->idfollow, cur->nfrienduser);
             cur = cur->next;
         }
     }
