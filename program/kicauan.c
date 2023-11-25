@@ -52,13 +52,14 @@ void DisplayKicauan(ListStatikUser l, ListKicauan k, int idUser, FriendMatrix m)
     {
         printf("\nAnda belum masuk. Masuk dulu yuk!\n\n");
     } else {
+        printf("\n");
         int idAuthor;
         for (int i = NEFFLISTKICAU(k) - 1 ; i >= 0; i--) {
             idAuthor = IDAUTHOR(ELMTLISTKICAU(k, i));
             if (idAuthor == idUser) {
                 DisplaySatuKicau(l, ELMTLISTKICAU(k, i));
             } else {
-                if(isFriend(m, idAuthor, idUser)){
+                if(isFriend(m, idAuthor-1, idUser-1)){
                     DisplaySatuKicau(l, ELMTLISTKICAU(k, i));
                 }
             } 
@@ -77,18 +78,24 @@ void SUKA_KICAUAN(ListStatikUser l, ListKicauan *k, int idKicauan, int idUser, F
             int idAuthor = IDAUTHOR(ELMTLISTKICAU(*k, idKicauan-1));
             if(UserTipe(l, idAuthor-1) == PUBLIK){
                 LIKE(ELMTLISTKICAU(*k, idKicauan-1))++;
+                printf("\n");
+                DisplaySatuKicau(l, ELMTLISTKICAU(*k,idKicauan-1));
             }  else {
                 if (idAuthor == idUser) {
                     LIKE(ELMTLISTKICAU(*k, idKicauan-1))++;
+                    printf("\n");
+                    DisplaySatuKicau(l, ELMTLISTKICAU(*k,idKicauan-1));
                 } else {
                     if(isFriend(m, idAuthor, idUser)){
                         LIKE(ELMTLISTKICAU(*k, idKicauan-1))++;
+                        printf("\n");
+                        DisplaySatuKicau(l, ELMTLISTKICAU(*k,idKicauan-1));
                     } else {
                         printf("\nWah, kicauan tersebut dibuat oleh akun privat! Ikuti akun itu dulu ya\n");
                     }
                 }
             }
-            DisplaySatuKicau(l, ELMTLISTKICAU(*k,idKicauan-1));
+            
         }
     }
 }
@@ -99,7 +106,6 @@ void UBAH_KICAUAN(ListStatikUser l, ListKicauan *k, int idKicauan, int idUser){
         printf("\nAnda belum masuk. Masuk dulu yuk!\n\n");
     } else {
         Word newText;
-
         if (isIdKicauanValid(*k, idKicauan)) {
             int idAuthor = IDAUTHOR(ELMTLISTKICAU(*k, idKicauan-1));
             if (idAuthor == idUser) {
@@ -107,6 +113,7 @@ void UBAH_KICAUAN(ListStatikUser l, ListKicauan *k, int idKicauan, int idUser){
                 STARTSENTENCE();
                 newText = currentWord;
                 TEXT(ELMTLISTKICAU(*k,idKicauan-1)) = newText;
+                printf("\n");
                 DisplaySatuKicau(l, ELMTLISTKICAU(*k, idKicauan-1));
             } else {
                 printf("\nKicauan dengan ID = %d bukan milikmu!\n", idKicauan);

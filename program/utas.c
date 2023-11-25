@@ -10,6 +10,9 @@
 #include "../adt/header/datetime.h"
 #include "../adt/header/friendmatrix.h"
 
+void addUtas(ListKicauan *listKicau, int idAuthor, int indexUtas, Word text, DATETIME waktu, int idUtas, int idKicau){
+    ELMTLISTKICAU(*listKicau, idUtas-1).sambunganUtas = newUtas(idAuthor, indexUtas, text, waktu, idUtas);
+}
 
 int searchIdKicau(int idUtas, ListKicauan l){
     int i = 0;
@@ -116,7 +119,6 @@ void BIKIN_UTAS(int idKicau, ListKicauan *listKicau, ListLinierUtas *listUtasPer
                     printf("Apakah Anda ingin melanjutkan utas ini? (YA/TIDAK) ");
                     STARTSENTENCE();
                     if(compareString(currentWord, "TIDAK")){
-                        printf("Id utas ini adalah %d\n", idUtas);
                         printf("Utas selesai!\n\n");
                     }
                 }
@@ -205,13 +207,13 @@ void CETAK_UTAS(ListStatikUser l, ListLinierUtas listUtasPers, int idUser, int i
         printf("Utas tidak ditemukan!\n\n");
     }
     else{
+        // printf("ayayay\n");
         AddressUtas p;
         int idKicau = searchIdKicau(idUtas, listKicau), i;
         printf("%d\n", idKicau);
         if(IDAUTHOR(ELMTLISTKICAU(listKicau, idKicau-1)) == idUser){
             DisplaySatuKicau(l, ELMTLISTKICAU(listKicau, idKicau-1));
             p = FIRSTUtas(listUtasPers);
-            printf("length %d\n", length(listUtasPers));
             for (i = 0; i < length(listUtasPers); i++) {
                 DisplaySatuUtas(INFOUtas(p), l, idxUtas(INFOUtas(p)));
                 p = NEXTUtas(p);
@@ -229,20 +231,6 @@ void CETAK_UTAS(ListStatikUser l, ListLinierUtas listUtasPers, int idUser, int i
                     p = NEXTUtas(p);
                 }
             }
-        }
-    }
-}
-
-void readUtasConfig(ListKicauan listKicau, ListLinierUtas *listUtas){
-    int i;
-    for(i = 0; i < (NEFFLISTKICAU(listKicau)); i++){
-        if(ADDRESSUTAS(ELMTLISTKICAU(listKicau, i)) != NULL){
-            AddressUtas adu = ADDRESSUTAS(ELMTLISTKICAU(listKicau, i));
-            while(adu != NULL){
-                printf("%d\n", idUtas(INFOUtas(adu)));
-                adu = NEXTUtas(adu);
-            }
-            insertLastAddressPers(listUtas, ADDRESSUTAS(ELMTLISTKICAU(listKicau, i)));
         }
     }
 }

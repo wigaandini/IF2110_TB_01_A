@@ -316,31 +316,3 @@ int searchPositionIndex(ListLinierUtas listUtasPers, int indexUtas){
     }
     return i;
 }
-
-
-void insertFirstAddressPers(ListLinierUtas *l, AddressUtas val){
-    AddressUtas p = val;
-    if (p != NULL){
-        NEXTUtas(p) = FIRSTUtas(*l);
-        FIRSTUtas(*l) = p;
-    }
-}
-
-void insertLastAddressPers(ListLinierUtas *l, AddressUtas val){
-    AddressUtas p, last;
-    if (isListUtasPersEmpty(*l)){
-        printf("%d\n", idUtas(INFOUtas(val)));
-        insertFirstAddressPers(l, val);
-    }
-    else{
-        p = val;
-        printf("%d\n", idUtas(INFOUtas(val)));
-        if (p != NULL){
-            last = FIRSTUtas(*l);
-            while (NEXTUtas(last) != NULL){
-                last = NEXTUtas(last);
-            }
-            NEXTUtas(last) = p;
-        }
-    }
-}

@@ -35,7 +35,7 @@ AddressBalasan searchAddressBalasan(AddressBalasan a, int idBalasan){
 }
 
 AddressBalasan insertBalasan(AddressBalasan a, Word text, int curIdBalasan, int curUserId, DATETIME waktu){
-    if(a == NIL){ 
+    if(a == NIL){
         return newBalasan(curIdBalasan, text, curUserId, waktu);
     }
     SIBLINGBALASAN(*a) = insertBalasan(SIBLINGBALASAN(*a), text, curIdBalasan, curUserId, waktu);

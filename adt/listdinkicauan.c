@@ -29,7 +29,7 @@ void CreateListGlobalKicauan(ListKicauan *l, int capacity){
 
 /* ********** Test Indeks yang valid ********** */
 boolean isIdKicauanValid(ListKicauan l, int id){
-    return(id > 0 && id <= NEFFLISTKICAU(l));
+    return(id <= NEFFLISTKICAU(l));
 }
 /* Mengirimkan true jika id adalah indeks yang valid utk kapasitas list l */
 /* yaitu antara indeks yang terdefinisi utk container*/

@@ -10,7 +10,6 @@ void ReadUtas(ListKicauan *kicau,ListStatikUser l,char *path){
     int count=0;
     int tempid=0;
     boolean first=true;
-    
     while (!EOP) {
         if (first)
         {
@@ -137,30 +136,25 @@ void ReadUtas(ListKicauan *kicau,ListStatikUser l,char *path){
                                 totwaktu=totwaktu*10+charToInt(temp.TabWord[i]);
                             } else if (i==2){
                                 dummy.waktu.DD=totwaktu;
-                                dummy.waktu.DD=totwaktu;
                                 totwaktu=0;
                             } else if (i<5){                    
                                 totwaktu=totwaktu*10+charToInt(temp.TabWord[i]);
                             } else if (i==5){
-                                dummy.waktu.MM=totwaktu;
                                 dummy.waktu.MM=totwaktu;
                                 totwaktu=0;
                             } else if (i<10){                         
                                 totwaktu=totwaktu*10+charToInt(temp.TabWord[i]);
                             } else if (i==10){
                                 dummy.waktu.YYYY=totwaktu;
-                                dummy.waktu.YYYY=totwaktu;
                                 totwaktu=0;
                             } else if (i<13){
                                 totwaktu=totwaktu*10+charToInt(temp.TabWord[i]);
                             } else if (i==13){
                                 dummy.waktu.T.HH=totwaktu;
-                                dummy.waktu.T.HH=totwaktu;
                                 totwaktu=0;
                             } else if (i<16){
                                 totwaktu=totwaktu*10+charToInt(temp.TabWord[i]);
                             } else if (i==16){
-                                dummy.waktu.T.MM=totwaktu;
                                 dummy.waktu.T.MM=totwaktu;
                                 totwaktu=0;
                             } else if (i<18){
@@ -171,7 +165,7 @@ void ReadUtas(ListKicauan *kicau,ListStatikUser l,char *path){
                                 totwaktu=0;
                             }
                         }
-                        // TulisDATETIME(dummy.waktu);create
+                        // TulisDATETIME(dummy.waktu);
                         // printf("\n");
                         
                         while (currentChar == '\n') {
